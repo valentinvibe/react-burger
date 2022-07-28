@@ -4,6 +4,7 @@ import './index.css';
 import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
 import AppHeader from './components/app-header/AppHeader';
+import BurgerIngredients from './components/burger-ingredients/BurgerIngredients';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,6 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <AppHeader/>
+    <BurgerIngredients/>
     {/* <App /> */}
   </React.StrictMode>
 );
