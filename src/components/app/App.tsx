@@ -1,25 +1,18 @@
 import React from 'react';
-import logo from '../../images/logo.svg';
-import './App.css';
 
-function App() {
+import styles from './App';
+import AppHeader from '../app-header/AppHeader';
+import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
+
+const App = () => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <AppHeader/>
+      <main className={styles.main}>
+        <BurgerIngredients/>
+      </main>
     </div>
+
   );
 }
 

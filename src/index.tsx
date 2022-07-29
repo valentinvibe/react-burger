@@ -3,17 +3,13 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/app/App';
 import reportWebVitals from './reportWebVitals';
-import AppHeader from './components/app-header/AppHeader';
-import BurgerIngredients from './components/burger-ingredients/BurgerIngredients';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <AppHeader/>
-    <BurgerIngredients/>
-    {/* <App /> */}
+    <App />
   </React.StrictMode>
 );
 
