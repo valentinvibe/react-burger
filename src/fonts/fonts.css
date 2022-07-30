@@ -10,3 +10,9 @@
   font-weight: 700;
 }
 
+@font-face {
+  font-family: 'Iceland', cursive;
+  font-weight: 400;
+  src: url("./Iceland-Regular.ttf") format("ttf")
+}
+

@@ -3,9 +3,6 @@
   justify-content: center;
   align-items: center;
   background-color: #1c1c21;
-  max-width: 1920px;
-  width: 100%;
-  margin: auto;
 }
 
 .header__navigation {
@@ -13,7 +10,7 @@
   display: flex;
   align-items: center;
   padding: 16px;
-  justify-content:space-around;
+  justify-content: space-between;
 }
 
 .header__list {

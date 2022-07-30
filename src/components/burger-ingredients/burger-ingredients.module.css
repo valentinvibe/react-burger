@@ -1,0 +1,75 @@
+.constructor {
+  max-width: 600px;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 40px;
+  margin: 40px 0 0;
+}
+
+.navigation {
+
+}
+
+.menu {
+  list-style-type: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: flex;
+}
+
+.categories {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category {
+  margin-top: 40px;
+}
+
+
+.card {
+  position: relative;
+  margin: auto;
+  width: 272px;
+}
+
+.card__image {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+
+.cardsContainer {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 24px;
+  padding-bottom: 40px;
+  column-gap: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,272px);
+  justify-content: center;
+  row-gap: 32px;
+}
+
+.priceContainer {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.price {
+  font-family: 'Iceland', cursive;
+  font-size: 28px;
+  line-height: 24px;
+}
+
+.description {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  text-align: center;
+}
