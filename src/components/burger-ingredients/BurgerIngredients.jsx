@@ -27,7 +27,7 @@ const BurgerIngredients = () => {
       </nav>
 
       <ul className={styles.categories}>
-        <li className={styles.category}>
+        <li id="bun" className={styles.category}>
           <h2 className={styles.subtitle}>Булки</h2>
           <div className={styles.cardsContainer}>
             <div className={styles.card}>
@@ -50,7 +50,7 @@ const BurgerIngredients = () => {
               </div>
           </div>
         </li>
-        <li className={styles.categoty}>
+        <li id="sauce" className={styles.categoty}>
           <h2 className={styles.subtitle}>Соусы</h2>
           <div className={styles.cardsContainer}>
             <div className={styles.card}>
@@ -72,7 +72,7 @@ const BurgerIngredients = () => {
             </div>
           </div>
         </li>
-        <li className={styles.categoty}>
+        <li id="main" className={styles.categoty}>
           <h2 className={styles.subtitle}>Начинки</h2>
           <div className={styles.cardsContainer}>
 
