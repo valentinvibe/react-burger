@@ -17,9 +17,7 @@ const Ingredient = (props) => {
 }
 
 Ingredient.propTypes = {
-  image: burgerPropTypes,
-  name: burgerPropTypes,
-  price: burgerPropTypes
+  data: burgerPropTypes.isRequired
 }
 
 export default Ingredient
