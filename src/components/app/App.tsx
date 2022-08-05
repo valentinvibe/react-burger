@@ -1,21 +1,25 @@
 import React from 'react';
 
 import styles from './app.module.css';
-import AppHeader from '../app-header/AppHeader';
-import BurgerIngredients from '../burger-ingredients/BurgerIngredients';
-import BurgerConstructor from '../burger-constructor/BurgerConstructor';
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import data from '../../utils/data';
+
 
 const App = () => {
   return (
-    <div className="App">
+    <>
       <AppHeader/>
       <main className={styles.content}>
-        <BurgerIngredients/>
-        <BurgerConstructor/>
+        <BurgerIngredients data={data}/>
+        <BurgerConstructor data={data}/>
       </main>
-    </div>
+    </>
 
   );
 }
+
+
 
 export default App;

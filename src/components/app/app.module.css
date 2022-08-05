@@ -1,14 +1,12 @@
-.App {
+.app {
   margin: 0;
 }
 
 .content {
-  max-width: 1240px;
-  display: grid;
-  margin: auto;
-  grid-template-columns: repeat(2,1fr);
-  gap: 40px;
-  justify-content: center;
+  display: flex;
+  justify-content: space-between;
+  max-width: 1280px;
+  width: 100%;
 }
 
 *::-webkit-scrollbar {
