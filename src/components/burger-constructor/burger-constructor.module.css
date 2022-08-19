@@ -1,0 +1,61 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: 600px;
+  width: 100%;
+}
+
+.itemList {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+
+.item {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  column-gap: 8px;
+}
+
+.listScroll {
+  display: flex;
+  flex-direction: column;
+  line-height: 0;
+  list-style: none;
+  max-height: calc(100vh - 534px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding-left: 0;
+  row-gap: 16px;
+  scroll-behavior: smooth;
+}
+
+.order {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 52px;
+}
+
+.total {
+  display: flex;
+  align-items: center;
+  margin-right: 40px;
+}
+
+.currency {
+  width: 33px;
+  height: 33px;
+}
+
+.price {
+  font-family: 'Iceland', cursive;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 36px;
+  text-align: right;
+  margin-right: 9px;
+}
