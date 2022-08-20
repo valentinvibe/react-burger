@@ -284,10 +284,7 @@ const selectedIngredients = [
    }
 ]
 
-const url = 'https://norma.nomoreparties.space/api/ingredients';
-
 export {
   data,
-  selectedIngredients,
-  url
+  selectedIngredients
 }
