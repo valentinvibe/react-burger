@@ -6,17 +6,13 @@ const checkResponse = (res) => {
 }
 
 const getIngredients = (url) => {
-    return fetch(`${url}`, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
+    return fetch(`${url}`)
     .then((res) => checkResponse(res))
     .catch(err => {
         console.log(err);
     })
 }
-   
+
 
   export {
     getIngredients
