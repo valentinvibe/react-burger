@@ -50,7 +50,7 @@ const BurgerConstructor = (props) => {
             <span className={styles.price}>2000</span>
             <img className={styles.currency} src={currency} alt="#"/>
         </div>
-          <Button type="primary" size="large">
+          <Button type="primary" size="large" onClick={props.toggleModal}>
             Оформить заказ
           </Button>
         </div>

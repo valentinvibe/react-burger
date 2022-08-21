@@ -9,7 +9,7 @@
   align-items: center;
   border-radius: 40px;
   background-color: #1c1c21;
-  z-index: 1010;
+  z-index: 999;
   min-width: 720px;
   min-height: 300px;
 }
