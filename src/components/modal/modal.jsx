@@ -3,6 +3,7 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from "./modal.module.css";
 import { useEffect, useState } from 'react';
 import ModalOverlay from '../modal-overlay/modal-overlay';
+import PropTypes from 'prop-types';
 
 
 
@@ -43,6 +44,12 @@ const Modal = ({toggleModal, children, title=''}) => {
     ), container
     )
   )
+}
+
+Modal.propTypes = {
+  toggleModal: PropTypes.func.isRequired,
+  children: PropTypes.element,
+  title: PropTypes.string
 }
 
 export default Modal

@@ -8,6 +8,7 @@ import { getIngredients } from '../../utils/api';
 import { url } from '../../utils/variables';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderDetails from '../order-details/order-details';
 
 
 const App = () => {
@@ -54,8 +55,7 @@ const App = () => {
       </Modal>}
       {orderModal &&
       <Modal toggleModal={toggleOrderModal}>
-
-        Order
+        <OrderDetails/>
       </Modal>}
     </>
 

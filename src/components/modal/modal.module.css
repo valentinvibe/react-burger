@@ -12,6 +12,7 @@
   z-index: 2;
   min-width: 720px;
   min-height: 300px;
+  box-sizing: border-box;
 }
 
 .title {
@@ -28,7 +29,6 @@
 .closeButton {
   width: 24px;
   height: 24px;
-  transition: all 0.2s ease;
   background-color: transparent;
   border: 0;
 }

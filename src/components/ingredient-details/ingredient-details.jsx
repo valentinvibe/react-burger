@@ -1,8 +1,9 @@
 import styles from "./ingredient-details.module.css";
+import PropTypes from 'prop-types';
+import { burgerPropTypes } from "../../utils/prop-types";
 
 const IngredientDetails = ({ingredient}) => {
   return (
-    <>
       <div className={styles.content}>
         <img
           className={`mt-3 ${styles.content__image}`}
@@ -16,7 +17,7 @@ const IngredientDetails = ({ingredient}) => {
               Калории,ккал
             </p>
             <p className="text text text_type_digits-default text_color_inactive">
-              {ingredient?.calories}
+              {ingredient.calories}
             </p>
           </li>
           <li className={styles.content__nutritionItem}>
@@ -24,7 +25,7 @@ const IngredientDetails = ({ingredient}) => {
               Белки, г
             </p>
             <p className="text text text_type_digits-default text_color_inactive">
-              {ingredient?.proteins}
+              {ingredient.proteins}
             </p>
           </li>
           <li className={styles.content__nutritionItem}>
@@ -32,7 +33,7 @@ const IngredientDetails = ({ingredient}) => {
               Жиры, г
             </p>
             <p className="text text text_type_digits-default text_color_inactive">
-              {ingredient?.fat}
+              {ingredient.fat}
             </p>
           </li>
           <li className={styles.content__nutritionItem}>
@@ -40,13 +41,16 @@ const IngredientDetails = ({ingredient}) => {
               Углеводы, г
             </p>
             <p className="text text text_type_digits-default text_color_inactive">
-              {ingredient?.carbohydrates}
+              {ingredient.carbohydrates}
             </p>
           </li>
         </ul>
       </div>
-    </>
   );
+}
+
+IngredientDetails.propTypes = {
+  ingredient: burgerPropTypes.isRequired
 }
 
 export default IngredientDetails
