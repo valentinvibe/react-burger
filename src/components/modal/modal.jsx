@@ -8,21 +8,15 @@ import PropTypes from 'prop-types';
 
 
 const Modal = ({toggleModal, children, title=''}) => {
-  const [container] = useState(() => {
-    return document.createElement('div')
-  })
+  const container = document.getElementById('react-modals')
 
   useEffect(() => {
-    container.id = 'react-modals';
-    document.body.appendChild(container);
-
     const closeModalByEsc = (e) => {
       e.key === 'Escape' && toggleModal();
     };
     document.addEventListener('keydown', closeModalByEsc);
 
     return () => {
-      document.body.removeChild(container);
       document.removeEventListener('keydown', closeModalByEsc);
     }
   }, [container, toggleModal])
@@ -31,12 +25,12 @@ const Modal = ({toggleModal, children, title=''}) => {
     createPortal((
       <>
         <div className={`${modalStyles.container} pt-15 pr-10 pl-10 pb-15`}>
-          <header className={modalStyles.header}>
+          <div className={modalStyles.header}>
             {title && (<h2 className={`${modalStyles.title} text text_type_main-large`}>{title}</h2>)}
             <button onClick={toggleModal} className={modalStyles.closeButton}>
               <CloseIcon type="primary"/>
             </button>
-          </header>
+          </div>
           {children}
         </div>
         <ModalOverlay toggleModal={toggleModal}/>
