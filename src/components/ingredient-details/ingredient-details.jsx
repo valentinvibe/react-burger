@@ -3,9 +3,6 @@ import styles from "./ingredient-details.module.css";
 const IngredientDetails = ({ingredient}) => {
   return (
     <>
-      <h2 className={`text text_type_main-large mt-3 ${styles.content__title}`}>
-        Детали ингредиента
-      </h2>
       <div className={styles.content}>
         <img
           className={`mt-3 ${styles.content__image}`}

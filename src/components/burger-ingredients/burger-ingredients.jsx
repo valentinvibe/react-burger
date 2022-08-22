@@ -30,19 +30,19 @@ const BurgerIngredients = (props) => {
         <li id="bun" className={styles.category}>
           <h2 className="text text_type_main-medium mt-11 mb-6">Булки</h2>
           <ul className={`${styles.cardsContainer} ml-4 mb-10`}>
-            {buns.map(element => <Ingredient key={element._id} data={element} toggleModal={props.toggleModal}/>)}
+            {buns.map(element => <Ingredient key={element._id} data={element} toggleModal={props.toggleModal} setIngredient={props.setIngredient}/>)}
           </ul>
         </li>
         <li id="sauce" className={styles.categoty}>
           <h2 className="text text_type_main-medium mt-11 mb-6">Соусы</h2>
           <ul className={`${styles.cardsContainer} ml-4 mb-10`}>
-            {sauces.map(element => <Ingredient key={element._id} data={element} toggleModal={props.toggleModal}/>)}
+            {sauces.map(element => <Ingredient key={element._id} data={element} toggleModal={props.toggleModal} setIngredient={props.setIngredient}/>)}
           </ul>
         </li>
         <li id="main" className={styles.categoty}>
           <h2 className="text text_type_main-medium mt-11 mb-6">Начинки</h2>
           <ul className={`${styles.cardsContainer} ml-4 mb-10`}>
-            {mains.map(element => <Ingredient key={element._id} data={element} toggleModal={props.toggleModal}/>)}
+            {mains.map(element => <Ingredient key={element._id} data={element} toggleModal={props.toggleModal} setIngredient={props.setIngredient}/>)}
           </ul>
         </li>
       </ul>

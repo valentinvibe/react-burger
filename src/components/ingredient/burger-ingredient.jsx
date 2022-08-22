@@ -4,10 +4,9 @@ import PropTypes from 'prop-types';
 import { burgerPropTypes } from "../../utils/prop-types";
 
 const Ingredient = (props) => {
-
   const handleClick = () => {
     props.toggleModal();
-    props.selectIngredient(props.data)
+    props.setIngredient(props.data);
   }
 
   return (

@@ -15,7 +15,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [orderModal, setOrderModal] = useState(false);
-  const [ingredientId, setIngredient] = useState();
+  const [ingredient, setIngredient] = useState();
 
   const toggleModal = () => {
     setModal(!modal)
@@ -23,10 +23,6 @@ const App = () => {
 
   const toggleOrderModal = () => {
     setOrderModal(!orderModal)
-  }
-
-  const selectIngredient = (id) => {
-    setIngredient(id)
   }
 
   useEffect(() => {
@@ -49,12 +45,12 @@ const App = () => {
       <AppHeader/>
       <main className={styles.content}>
         {loading && <p>Loading</p>}
-        {!loading && <BurgerIngredients data={data} toggleModal={toggleModal} ingredient={selectIngredient}/>}
+        {!loading && <BurgerIngredients data={data} toggleModal={toggleModal} setIngredient={setIngredient}/>}
         {!loading && <BurgerConstructor data={data} toggleModal={toggleOrderModal}/>}
       </main>
       {modal &&
       <Modal title='Детали ингредиента' toggleModal={toggleModal}>
-        <IngredientDetails ingredient={ingredientId}/>
+        <IngredientDetails ingredient={ingredient}/>
       </Modal>}
       {orderModal &&
       <Modal toggleModal={toggleOrderModal}>
