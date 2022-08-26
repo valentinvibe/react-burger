@@ -9,6 +9,7 @@ import { url } from '../../utils/variables';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
+import { DataContext, IngredientContext} from '../services/data-context';
 
 
 const App = () => {
@@ -44,19 +45,23 @@ const App = () => {
   return (
     <>
       <AppHeader/>
-      <main className={styles.content}>
-        {loading && <p>Loading</p>}
-        {!loading && <BurgerIngredients data={data} toggleModal={toggleModal} setIngredient={setIngredient}/>}
-        {!loading && <BurgerConstructor data={data} toggleModal={toggleOrderModal}/>}
-      </main>
-      {modal &&
-      <Modal title='Детали ингредиента' toggleModal={toggleModal}>
-        <IngredientDetails ingredient={ingredient}/>
-      </Modal>}
-      {orderModal &&
-      <Modal toggleModal={toggleOrderModal}>
-        <OrderDetails/>
-      </Modal>}
+      <DataContext.Provider value={{data}}>
+        <IngredientContext.Provider value={{setIngredient}}>
+        <main className={styles.content}>
+          {loading && <p>Loading</p>}
+          {!loading && <BurgerIngredients toggleModal={toggleModal}/>}
+          {!loading && <BurgerConstructor toggleModal={toggleOrderModal}/>}
+        </main>
+        {modal &&
+        <Modal title='Детали ингредиента' toggleModal={toggleModal}>
+          <IngredientDetails ingredient={ingredient}/>
+        </Modal>}
+        {orderModal &&
+        <Modal toggleModal={toggleOrderModal}>
+          <OrderDetails/>
+        </Modal>}
+        </IngredientContext.Provider>
+      </DataContext.Provider>
     </>
 
   );

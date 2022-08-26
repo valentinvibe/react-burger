@@ -2,11 +2,15 @@ import styles from "./burger-ingredient.module.css";
 import currency from "../../images/currency.png";
 import PropTypes from 'prop-types';
 import { burgerPropTypes } from "../../utils/prop-types";
+import { IngredientContext } from "../services/data-context";
+import { useContext } from "react";
 
 const Ingredient = (props) => {
+  const { setIngredient } = useContext(IngredientContext);
+
   const handleClick = () => {
     props.toggleModal();
-    props.setIngredient(props.data);
+    setIngredient(props.data);
   }
 
   return (
