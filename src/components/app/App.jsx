@@ -47,19 +47,19 @@ const App = () => {
       <AppHeader/>
       <DataContext.Provider value={{data}}>
         <IngredientContext.Provider value={{setIngredient}}>
-        <main className={styles.content}>
-          {loading && <p>Loading</p>}
-          {!loading && <BurgerIngredients toggleModal={toggleModal}/>}
-          {!loading && <BurgerConstructor toggleModal={toggleOrderModal}/>}
-        </main>
-        {modal &&
-        <Modal title='Детали ингредиента' toggleModal={toggleModal}>
-          <IngredientDetails ingredient={ingredient}/>
-        </Modal>}
-        {orderModal &&
-        <Modal toggleModal={toggleOrderModal}>
-          <OrderDetails/>
-        </Modal>}
+          <main className={styles.content}>
+            {loading && <p>Loading</p>}
+            {!loading && <BurgerIngredients toggleModal={toggleModal}/>}
+            {!loading && <BurgerConstructor toggleModal={toggleOrderModal}/>}
+          </main>
+          {modal &&
+          <Modal title='Детали ингредиента' toggleModal={toggleModal}>
+            <IngredientDetails ingredient={ingredient}/>
+          </Modal>}
+          {orderModal &&
+          <Modal toggleModal={toggleOrderModal}>
+            <OrderDetails/>
+          </Modal>}
         </IngredientContext.Provider>
       </DataContext.Provider>
     </>
