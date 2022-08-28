@@ -20,7 +20,7 @@ const App = () => {
   const [orderModal, setOrderModal] = useState(false);
   const [ingredient, setIngredient] = useState();
   const [order, setOrder] = useState();
-  const [newOrder, setNewOrder] = useState();
+  const [newOrder, setNewOrder] = useState(null);
 
   const toggleModal = () => {
     setModal(!modal)
@@ -34,14 +34,10 @@ const App = () => {
     toggleOrderModal();
       addNewOrder(baseUrl, order)
       .then((res) => {
-        console.log(res)
         setNewOrder(res.order.number)
       })
       .catch(err => {
         console.log(err)
-      })
-      .finally(() => {
-        console.log(newOrder)
       })
     }
 

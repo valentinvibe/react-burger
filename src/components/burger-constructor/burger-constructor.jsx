@@ -7,9 +7,9 @@ import { DataContext } from '../services/data-context';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { OrderContext } from "../services/order-context";
 
-const BurgerConstructor = (props) => {
+const BurgerConstructor = ({toggleModal}) => {
   const {data} = useContext(DataContext);
-  const {order, setOrder} = useContext(OrderContext);
+  const {setOrder} = useContext(OrderContext);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
   const selectBun = (ingredient) => {
@@ -90,7 +90,7 @@ const BurgerConstructor = (props) => {
             <span className={styles.price}>{totalSum}</span>
             <img className={styles.currency} src={currency} alt="#"/>
         </div>
-          <Button type="primary" size="large" onClick={props.toggleModal}>
+          <Button type="primary" size="large" onClick={toggleModal}>
             Оформить заказ
           </Button>
         </div>
@@ -99,7 +99,11 @@ const BurgerConstructor = (props) => {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes)
+  data: PropTypes.arrayOf(burgerPropTypes),
+  setOrder: PropTypes.func,
+  selectedIngredients : PropTypes.array,
+  setSelectedIngredients : PropTypes.func,
+  toggleModal : PropTypes.func
 }
 
 
