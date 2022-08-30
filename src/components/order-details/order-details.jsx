@@ -1,11 +1,14 @@
 import styles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
+import PropTypes from 'prop-types'
 
-const OrderDetails = () => {
+const OrderDetails = ({order}) => {
 
   return(
     <div className={`${styles.content} pt-9`}>
-      <h2 className={`${styles.title} text text_type_digits-large`}>034536</h2>
+      <h2 className={`${styles.title} text text_type_digits-large`}>{
+      order ? order : 'Error'
+      }</h2>
       <p className={`text text_type_main-medium mt-8`}>идентификатор заказа</p>
       <img className={`${styles.image} mt-15`} src={doneImg} alt="done"/>
       <div className={`${styles.details} mt-15`}>
@@ -18,6 +21,10 @@ const OrderDetails = () => {
       </div>
     </div>
   )
+}
+
+OrderDetails.propTypes = {
+  order : PropTypes.number
 }
 
 export default OrderDetails
