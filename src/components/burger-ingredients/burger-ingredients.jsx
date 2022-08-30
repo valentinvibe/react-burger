@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/burger-ingredient";
@@ -10,22 +10,31 @@ const BurgerIngredients = ({ toggleModal }) => {
   const { data } = useContext(DataContext);
 
   const [current, setCurrent] = React.useState('bun');
-  const buns = data.filter(item => item.type === 'bun');
-  const sauces = data.filter(item => item.type === 'sauce');
-  const mains = data.filter(item => item.type === 'main');
+  const buns = useMemo(() => data.filter(item => item.type === 'bun'),[data]);
+  const sauces = useMemo(()=> data.filter(item => item.type === 'sauce'),[data]);
+  const mains = useMemo(()=> data.filter(item => item.type === 'main'),[data]);
+
+  // const tabRef = useRef(null);
+
+  const handleTabClick = (e) => {
+    setCurrent(e);
+    document.querySelector(`#${e}`).scrollIntoView({ block: "start", behavior: "smooth" });
+  }
+
+  useEffect(()=>{console.log(`dfdf`)},[])
 
   return (
     <section className={`${styles.constructor} mt-10 ml-5`}>
       <h1 className="text text_type_main-large">Соберите бургер</h1>
       <nav className="mt-5">
         <div className={styles.menu}>
-          <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+          <Tab value="bun" active={current === 'bun'} onClick={handleTabClick}>
             Булки
           </Tab>
-          <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+          <Tab value="sauce" active={current === 'sauce'} onClick={handleTabClick}>
             Соусы
           </Tab>
-          <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+          <Tab value="main" active={current === 'main'} onClick={handleTabClick}>
             Начинки
           </Tab>
         </div>
@@ -56,7 +65,6 @@ const BurgerIngredients = ({ toggleModal }) => {
 }
 
 BurgerIngredients.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes),
   toggleModal: PropTypes.func.isRequired
 }
 

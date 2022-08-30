@@ -26,9 +26,18 @@ const BurgerConstructor = ({toggleModal}) => {
     [selectedIngredients, selectedBun]
   );
 
+  const insideIngredients = useMemo(()=>
+      data.filter(element => element.type !== 'bun'),
+      [data]
+    );
+
+  const orderIngredients = useMemo(
+    () =>
+    insideIngredients.map(element => element._id),
+    [insideIngredients]
+  );
+
   const addNewOrder = () => {
-    let orderIngredients = data.filter(element => element.type !== 'bun');
-    orderIngredients = orderIngredients.map(element => element._id);
     orderIngredients.push(selectedBun._id)
     return orderIngredients
   }
@@ -37,7 +46,6 @@ const BurgerConstructor = ({toggleModal}) => {
   useEffect(() => {
     setOrder(addNewOrder());
     setSelectedIngredients(data.filter(element => element.type !== 'bun'));
-
   }, []);
 
   return (
@@ -99,11 +107,7 @@ const BurgerConstructor = ({toggleModal}) => {
 }
 
 BurgerConstructor.propTypes = {
-  data: PropTypes.arrayOf(burgerPropTypes),
-  setOrder: PropTypes.func,
-  selectedIngredients : PropTypes.array,
-  setSelectedIngredients : PropTypes.func,
-  toggleModal : PropTypes.func
+  toggleModal : PropTypes.func.isRequired
 }
 
 
