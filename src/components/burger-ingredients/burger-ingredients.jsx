@@ -6,22 +6,26 @@ import PropTypes from 'prop-types'
 import { burgerPropTypes } from '../../utils/prop-types';
 import { DataContext } from '../services/data-context';
 
+import {useSelector} from 'react-redux';
+
 const BurgerIngredients = ({ toggleModal }) => {
-  const { data } = useContext(DataContext);
+  // const { data } = useContext(DataContext);
+
+  
+  const data = useSelector(store => store.data.ingredients);
 
   const [current, setCurrent] = React.useState('bun');
   const buns = useMemo(() => data.filter(item => item.type === 'bun'),[data]);
   const sauces = useMemo(()=> data.filter(item => item.type === 'sauce'),[data]);
   const mains = useMemo(()=> data.filter(item => item.type === 'main'),[data]);
 
-  // const tabRef = useRef(null);
 
   const handleTabClick = (e) => {
     setCurrent(e);
     document.querySelector(`#${e}`).scrollIntoView({ block: "start", behavior: "smooth" });
+    
   }
 
-  useEffect(()=>{console.log(`dfdf`)},[])
 
   return (
     <section className={`${styles.constructor} mt-10 ml-5`}>

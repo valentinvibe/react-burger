@@ -9,18 +9,24 @@ import { baseUrl } from '../../utils/variables';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
-import { DataContext, IngredientContext} from '../services/data-context';
+import { IngredientContext} from '../services/data-context';
 import { OrderContext } from "../services/order-context";
+import { useDispatch, useSelector } from 'react-redux';
+import { getItems } from '../../services/actions/actions';
 
 
 const App = () => {
-  const [data, setData] = useState([]);
+  const [data1, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [orderModal, setOrderModal] = useState(false);
   const [ingredient, setIngredient] = useState();
   const [order, setOrder] = useState();
   const [newOrder, setNewOrder] = useState(null);
+
+  const dispatch = useDispatch();
+
+  const data = useSelector(store => store.data.ingredients);
 
   const toggleModal = () => {
     setModal(!modal)
@@ -47,7 +53,8 @@ const App = () => {
    setLoading(true);
    getIngredients(baseUrl)
     .then((item) => {
-      setData(item.data)
+      setData(item.data);
+      dispatch(getItems());
     })
     .catch(err => {
       console.log(err);
@@ -55,12 +62,12 @@ const App = () => {
     .finally(() => {
       setLoading(false)
     })
+    
   },[])
 
   return (
     <>
       <AppHeader/>
-      <DataContext.Provider value={{data}}>
         <IngredientContext.Provider value={{setIngredient}}>
           <OrderContext.Provider value={{order,setOrder}}>
             <main className={styles.content}>
@@ -78,7 +85,6 @@ const App = () => {
             <IngredientDetails ingredient={ingredient}/>
           </Modal>}
         </IngredientContext.Provider>
-      </DataContext.Provider>
     </>
 
   );

@@ -3,12 +3,14 @@ import { ConstructorElement, Button, DragIcon } from '@ya.praktikum/react-develo
 import currency from "../../images/currency.png";
 import PropTypes from 'prop-types';
 import { burgerPropTypes } from '../../utils/prop-types';
-import { DataContext } from '../services/data-context';
+// import { DataContext } from '../services/data-context';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { OrderContext } from "../services/order-context";
+import {useSelector} from 'react-redux';
 
 const BurgerConstructor = ({toggleModal}) => {
-  const {data} = useContext(DataContext);
+  const data = useSelector(store => store.data.ingredients);
+  // const {data} = useContext(DataContext);
   const {setOrder} = useContext(OrderContext);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
 
