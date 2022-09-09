@@ -4,14 +4,10 @@ import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components
 import Ingredient from "../ingredient/burger-ingredient";
 import PropTypes from 'prop-types'
 import { burgerPropTypes } from '../../utils/prop-types';
-import { DataContext } from '../services/data-context';
 
 import {useSelector} from 'react-redux';
 
 const BurgerIngredients = ({ toggleModal }) => {
-  // const { data } = useContext(DataContext);
-
-  
   const data = useSelector(store => store.data.ingredients);
 
   const [current, setCurrent] = React.useState('bun');
@@ -23,8 +19,28 @@ const BurgerIngredients = ({ toggleModal }) => {
   const handleTabClick = (e) => {
     setCurrent(e);
     document.querySelector(`#${e}`).scrollIntoView({ block: "start", behavior: "smooth" });
-    
+
   }
+
+  
+
+  const listenScrollEvent = e => {
+    // if (container.scrollY > 400) {
+    //   setCurrent(e)
+    // } else {
+    //   setCurrent(e)
+    // }
+    console.log(e);
+  }
+
+  // useEffect(()=> {
+  //   const container = document.querySelector(`${styles.constructor}`);
+  //   container.addEventListener('scroll', listenScrollEvent);
+  //   console.log(container)
+
+  //   return () => container.removeEventListener('scroll', listenScrollEvent)
+    
+  // },[])
 
 
   return (

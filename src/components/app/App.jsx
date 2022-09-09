@@ -16,7 +16,6 @@ import { getItems } from '../../services/actions/actions';
 
 
 const App = () => {
-  const [data1, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modal, setModal] = useState(false);
   const [orderModal, setOrderModal] = useState(false);
@@ -26,7 +25,7 @@ const App = () => {
 
   const dispatch = useDispatch();
 
-  const data = useSelector(store => store.data.ingredients);
+  // const data = useSelector(store => store.data.ingredients);
 
   const toggleModal = () => {
     setModal(!modal)
@@ -53,7 +52,6 @@ const App = () => {
    setLoading(true);
    getIngredients(baseUrl)
     .then((item) => {
-      setData(item.data);
       dispatch(getItems());
     })
     .catch(err => {
@@ -62,7 +60,8 @@ const App = () => {
     .finally(() => {
       setLoading(false)
     })
-    
+
+
   },[])
 
   return (

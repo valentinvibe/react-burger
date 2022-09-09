@@ -3,7 +3,7 @@ import {GET_INGREDIENTS_REQUEST, GET_INGREDIENTS_SUCCESS, GET_INGREDIENTS_FAILED
 const initialState = {
   ingredients: [],
   selectedIngredient: null,
-  chosenIngredients: [],
+  detailsIngredient: [],
   order: {},
   ingredientsRequest: false,
   ingredientsFailed: false,
