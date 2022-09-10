@@ -1,7 +1,7 @@
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import currency from "../../images/currency.png";
-import { useEffect, useMemo } from 'react';
+import { useMemo,useEffect,useCallback } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import { OPEN_ORDER_MODAL, addOrder } from '../../services/actions/actions';
 
@@ -11,8 +11,9 @@ const BurgerConstructor = () => {
 
   const selectedIngredients = useSelector(store => store.data.selectedIngredient);
 
+
   const selectBun = (ingredient) => {
-    return ingredient.type == 'bun'
+    return ingredient.type === 'bun'
   }
   let selectedBun = selectedIngredients.find(selectBun);
 
@@ -36,16 +37,17 @@ const BurgerConstructor = () => {
     [selectedIngredients]
   );
 
-  const addNewOrder = () => {
+  const addNewOrder = useCallback(() => {
     if (selectedBun) {
       orderIngredients.push(selectedBun._id)
     }
-  }
+  }, [orderIngredients,selectedBun])
 
 
   useEffect(() => {
     addNewOrder();
-  }, []);
+    console.log(orderIngredients)
+  }, [addNewOrder,orderIngredients]);
 
   return (
       <section className={`${styles.container} mr-5 pl-4`}>
