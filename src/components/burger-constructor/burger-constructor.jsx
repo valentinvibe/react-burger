@@ -1,21 +1,20 @@
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import currency from "../../images/currency.png";
-import PropTypes from 'prop-types';
-import { burgerPropTypes } from '../../utils/prop-types';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { OrderContext } from "../services/order-context";
-import {useSelector} from 'react-redux';
+import { useEffect, useMemo } from 'react';
+import { useSelector, useDispatch} from 'react-redux';
+import { OPEN_ORDER_MODAL, addOrder } from '../../services/actions/actions';
 
-const BurgerConstructor = ({toggleModal}) => {
+const BurgerConstructor = () => {
   const data = useSelector(store => store.data.ingredients);
-  const {setOrder} = useContext(OrderContext);
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
+  const dispatch = useDispatch();
+
+  const selectedIngredients = useSelector(store => store.data.selectedIngredient);
 
   const selectBun = (ingredient) => {
     return ingredient.type == 'bun'
   }
-  let selectedBun = data.find(selectBun);
+  let selectedBun = selectedIngredients.find(selectBun);
 
   const totalSum = useMemo(
     () =>
@@ -26,31 +25,32 @@ const BurgerConstructor = ({toggleModal}) => {
     [selectedIngredients, selectedBun]
   );
 
-  const insideIngredients = useMemo(()=>
-      data.filter(element => element.type !== 'bun'),
-      [data]
-    );
+  const handleSubmitOrderClick = () => {
+    dispatch({type: OPEN_ORDER_MODAL});
+    dispatch(addOrder(orderIngredients));
+  }
 
   const orderIngredients = useMemo(
     () =>
-    insideIngredients.map(element => element._id),
-    [insideIngredients]
+    selectedIngredients.map(element => element._id),
+    [selectedIngredients]
   );
 
   const addNewOrder = () => {
-    orderIngredients.push(selectedBun._id)
-    return orderIngredients
+    if (selectedBun) {
+      orderIngredients.push(selectedBun._id)
+    }
   }
 
 
   useEffect(() => {
-    setOrder(addNewOrder());
-    setSelectedIngredients(data.filter(element => element.type !== 'bun'));
+    addNewOrder();
   }, []);
 
   return (
       <section className={`${styles.container} mr-5 pl-4`}>
         <ul className={`${styles.itemList} mt-25`}>
+          {selectedBun === 'undefined' ? (
           <li className={`${styles.item} mr-4`}>
               <ConstructorElement
                 type="top"
@@ -60,6 +60,17 @@ const BurgerConstructor = ({toggleModal}) => {
                 thumbnail={selectedBun.image_mobile}
               />
           </li>
+          ) : (
+            <li className={`${styles.item} mr-4`}>
+              <ConstructorElement
+                type="top"
+                isLocked={true}
+                text={`добавьте булочку`}
+                price={undefined}
+                thumbnail={undefined}
+              />
+          </li>
+          )}
 
           <li>
           {selectedIngredients.length === 0 ? (<div style={{ textAlign : "center" }} className="p-5">
@@ -67,7 +78,7 @@ const BurgerConstructor = ({toggleModal}) => {
           </div>) : (
             <ul className={`${styles.listScroll} mt-4 mb-4`}>
 
-              {selectedIngredients ? selectedIngredients.map(element => {
+              {selectedIngredients.length > 0 ? selectedIngredients.map(element => {
                 return(
                   <li key={element._id} className={`${styles.item} mr-2`}>
                     <DragIcon type="primary" />
@@ -82,6 +93,7 @@ const BurgerConstructor = ({toggleModal}) => {
             )}
           </li>
 
+          {selectedBun === 'undefined' ? (
           <li className={`${styles.item} mr-4`}>
             <ConstructorElement
               type="bottom"
@@ -90,7 +102,17 @@ const BurgerConstructor = ({toggleModal}) => {
               price={selectedBun.price ? data[0].price : 0}
               thumbnail={selectedBun.image_mobile}
             />
+          </li>) : (
+            <li className={`${styles.item} mr-4`}>
+              <ConstructorElement
+                 type="bottom"
+                isLocked={true}
+                text={`добавьте булочку`}
+                price={undefined}
+                thumbnail={undefined}
+              />
           </li>
+          )}
         </ul>
 
         <div className={`${styles.order} mr-4 mt-10`}>
@@ -98,16 +120,12 @@ const BurgerConstructor = ({toggleModal}) => {
             <span className={styles.price}>{totalSum}</span>
             <img className={styles.currency} src={currency} alt="#"/>
         </div>
-          <Button type="primary" size="large" onClick={toggleModal}>
+          <Button type="primary" size="large" onClick={handleSubmitOrderClick}>
             Оформить заказ
           </Button>
         </div>
       </section>
   )
-}
-
-BurgerConstructor.propTypes = {
-  toggleModal : PropTypes.func.isRequired
 }
 
 

@@ -1,9 +1,19 @@
-import { getIngredients } from "../../utils/api";
+import { getIngredients, addNewOrder} from "../../utils/api";
 import { baseUrl } from "../../utils/variables";
+import { useSelector } from "react-redux";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
+export const CLOSE_INGREDIENT_MODAL = 'CLOSE_INGREDIENT_MODAL';
+export const OPEN_INGREDIENT_MODAL = 'OPEN_INGREDIENT_MODAL';
+export const OPEN_ORDER_MODAL = 'OPEN_ORDER_MODAL';
+export const CLOSE_ORDER_MODAL = 'CLOSE_ORDER_MODAL';
+export const SET_INGREDIENT_INFO = 'SET_INGREDIENT_INFO';
+export const SET_ORDER_INFO = 'SET_ORDER_INFO';
+export const CREATE_ORDER_SUCCESS = 'CREATE_ORDER_SUCCESS';
+export const CREATE_ORDER_FAILED = 'CREATE_ORDER_FAILED';
+
 
 
 export function getItems() {
@@ -22,11 +32,21 @@ export function getItems() {
             dispatch({type: GET_INGREDIENTS_FAILED})
         }
     })
-    } 
+    }
 }
 
-// export function getConstructorItems() {
-//     return function(dispatch) {
-//         dispatch
-//     }
-// }
+export function addOrder(order) {
+  return function(dispatch) {
+    addNewOrder(baseUrl, order)
+      .then(res=> {
+        if (res && res.success) {
+          dispatch({
+            type: CREATE_ORDER_SUCCESS,
+            item: res.order.number
+          })
+        } else {
+            dispatch({type: CREATE_ORDER_FAILED})
+        }
+      })
+  }
+}

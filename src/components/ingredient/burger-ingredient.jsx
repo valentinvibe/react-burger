@@ -2,15 +2,17 @@ import styles from "./burger-ingredient.module.css";
 import currency from "../../images/currency.png";
 import PropTypes from 'prop-types';
 import { burgerPropTypes } from "../../utils/prop-types";
-import { IngredientContext } from "../services/data-context";
-import { useContext } from "react";
+import { useDispatch } from "react-redux";
+import { OPEN_INGREDIENT_MODAL, SET_INGREDIENT_INFO } from '../../services/actions/actions'
 
-const Ingredient = ({toggleModal, data}) => {
-  const { setIngredient } = useContext(IngredientContext);
-
+const Ingredient = ({data}) => {
+  const dispatch = useDispatch();
   const handleClick = () => {
-    toggleModal();
-    setIngredient(data);
+    dispatch({
+      type: SET_INGREDIENT_INFO,
+      item: data
+    })
+    dispatch({type: OPEN_INGREDIENT_MODAL})
   }
 
   return (
@@ -26,8 +28,7 @@ const Ingredient = ({toggleModal, data}) => {
 }
 
 Ingredient.propTypes = {
-  data : burgerPropTypes.isRequired,
-  toggleModal : PropTypes.func.isRequired
+  data : burgerPropTypes.isRequired
 }
 
 export default Ingredient
