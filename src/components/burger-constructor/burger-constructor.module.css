@@ -59,3 +59,28 @@
   text-align: right;
   margin-right: 9px;
 }
+
+.bunNotSelected {
+  max-width: 536px;
+  min-height: 80px;
+  background-color: #2f2f37;
+  border: 1px dashed #fff;
+  align-items: center;
+  box-sizing: border-box;
+  color: #f2f2f3;
+  display: flex;
+  flex-grow: 1;
+  font-family: Jet Brains Mono;
+  font-size: 16px;
+  justify-content: center;
+  line-height: 24px;
+  padding: 16px 24px;
+}
+
+.bunNotSelected_type_top {
+  border-radius: 88px 88px 40px 40px;
+}
+
+.bunNotSelected_type_bottom {
+  border-radius: 40px 40px 88px 88px;
+}

@@ -1,6 +1,5 @@
 import { getIngredients, addNewOrder} from "../../utils/api";
 import { baseUrl } from "../../utils/variables";
-import { useSelector } from "react-redux";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';

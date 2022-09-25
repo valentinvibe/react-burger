@@ -46,32 +46,25 @@ const BurgerConstructor = () => {
 
   useEffect(() => {
     addNewOrder();
-    console.log(orderIngredients)
-  }, [addNewOrder,orderIngredients]);
+  }, [addNewOrder]);
 
   return (
       <section className={`${styles.container} mr-5 pl-4`}>
         <ul className={`${styles.itemList} mt-25`}>
-          {selectedBun === 'undefined' ? (
+        { selectedBun.price ? (
           <li className={`${styles.item} mr-4`}>
-              <ConstructorElement
-                type="top"
-                isLocked={true}
-                text={`${selectedBun.name} (верх)`}
-                price={selectedBun.price ? data[0].price : 0}
-                thumbnail={selectedBun.image_mobile}
-              />
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${selectedBun.name} (верх)`}
+              price={selectedBun.price ? selectedBun.price : null}
+              thumbnail={selectedBun.image_mobile}
+            />
           </li>
           ) : (
             <li className={`${styles.item} mr-4`}>
-              <ConstructorElement
-                type="top"
-                isLocked={true}
-                text={`добавьте булочку`}
-                price={undefined}
-                thumbnail={undefined}
-              />
-          </li>
+              <div className={`${styles.bunNotSelected} ${styles.bunNotSelected_type_top}`}>Добавьте булочку</div>
+            </li>
           )}
 
           <li>
@@ -95,24 +88,18 @@ const BurgerConstructor = () => {
             )}
           </li>
 
-          {selectedBun === 'undefined' ? (
+          {selectedBun ? (
           <li className={`${styles.item} mr-4`}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
               text={`${selectedBun.name} (низ)`}
-              price={selectedBun.price ? data[0].price : 0}
+              price={selectedBun.price ? selectedBun.price : null}
               thumbnail={selectedBun.image_mobile}
             />
           </li>) : (
             <li className={`${styles.item} mr-4`}>
-              <ConstructorElement
-                 type="bottom"
-                isLocked={true}
-                text={`добавьте булочку`}
-                price={undefined}
-                thumbnail={undefined}
-              />
+              <div className={`${styles.bunNotSelected} ${styles.bunNotSelected_type_bottom}`}>Добавьте булочку</div>
           </li>
           )}
         </ul>
