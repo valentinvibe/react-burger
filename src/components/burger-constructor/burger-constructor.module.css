@@ -84,3 +84,10 @@
 .bunNotSelected_type_bottom {
   border-radius: 40px 40px 88px 88px;
 }
+
+.nonIngredients {
+  min-height: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

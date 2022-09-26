@@ -50,13 +50,21 @@ const BurgerConstructor = () => {
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item) {
-      dispatch({
-        type: ADD_INGREDIENT_ORDER,
-        payload: item
-      })
-      console.log(selectedIngredients)
+      if (item.data.type === 'bun') {
+        console.log('buuuuuuuuLochKaaaaaaa')
+      } else {
+        dispatch({
+          type: ADD_INGREDIENT_ORDER,
+          payload: item
+        })
+      }
+
     }
-});
+  });
+
+  const onHandleClose = () => {
+    console.log('priveeeeeeet')
+  }
 
 
   useEffect(() => {
@@ -84,7 +92,7 @@ const BurgerConstructor = () => {
 
           <li>
           {selectedIngredients.length === 0 ? (<div style={{ textAlign : "center" }} className="p-5">
-            <p className={`text text_type_main-small`}>Добавьте ингредиенты</p>
+            <p className={`${styles.nonIngredients} text text_type_main-small`}>Добавьте ингредиенты</p>
           </div>) : (
             <ul className={`${styles.listScroll} mt-4 mb-4`}>
 
@@ -96,6 +104,7 @@ const BurgerConstructor = () => {
                       text={element.name}
                       price={element.price ? element.price : 0}
                       thumbnail={element.image_mobile}
+                      handleClose={onHandleClose}
                     />
                   </li>)
               }) : null}
