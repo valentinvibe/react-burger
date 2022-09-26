@@ -10,6 +10,9 @@ import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/actions';
 
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 
 const App = () => {
   const {modal, orderModal, } = useSelector(store => ({
@@ -27,8 +30,10 @@ const App = () => {
     <>
       <AppHeader/>
           <main className={styles.content}>
-            <BurgerIngredients/>
-            <BurgerConstructor/>
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients/>
+              <BurgerConstructor/>
+            </DndProvider>
           </main>
           {orderModal &&
           <Modal>

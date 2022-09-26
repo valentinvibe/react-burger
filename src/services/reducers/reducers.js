@@ -7,7 +7,10 @@ import {
   OPEN_ORDER_MODAL,
   CLOSE_ORDER_MODAL,
   SET_INGREDIENT_INFO,
-  CREATE_ORDER_SUCCESS
+  CREATE_ORDER_SUCCESS,
+
+  ADD_INGREDIENT_ORDER,
+  REMOVE_INGREDIENT_ORDER
 } from '../actions/actions'
 
 const initialState = {
@@ -108,6 +111,16 @@ export const ingredientsReducer = (state = initialState, action) => {
       return {
         ...state,
         order: action.item
+      }
+    }
+
+    case ADD_INGREDIENT_ORDER: {
+      return {
+        ...state,
+        selectedIngredient: [
+          ...state.selectedIngredient,
+          action.payload.data
+        ]
       }
     }
     default: {

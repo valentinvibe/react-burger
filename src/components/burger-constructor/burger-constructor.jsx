@@ -3,12 +3,16 @@ import { ConstructorElement, Button, DragIcon } from '@ya.praktikum/react-develo
 import currency from "../../images/currency.png";
 import { useMemo,useEffect,useCallback } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
-import { OPEN_ORDER_MODAL, addOrder } from '../../services/actions/actions';
+import {
+  OPEN_ORDER_MODAL,
+  addOrder,
+  ADD_INGREDIENT_ORDER
+} from '../../services/actions/actions';
+import { useDrop } from 'react-dnd/dist/hooks/useDrop';
 
 const BurgerConstructor = () => {
   const data = useSelector(store => store.data.ingredients);
   const dispatch = useDispatch();
-
   const selectedIngredients = useSelector(store => store.data.selectedIngredient);
 
 
@@ -43,15 +47,26 @@ const BurgerConstructor = () => {
     }
   }, [orderIngredients,selectedBun])
 
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      dispatch({
+        type: ADD_INGREDIENT_ORDER,
+        payload: item
+      })
+      console.log(selectedIngredients)
+    }
+});
+
 
   useEffect(() => {
     addNewOrder();
   }, [addNewOrder]);
 
   return (
-      <section className={`${styles.container} mr-5 pl-4`}>
+      <section ref={dropTarget} className={`${styles.container} mr-5 pl-4`}>
         <ul className={`${styles.itemList} mt-25`}>
-        { selectedBun.price ? (
+        { selectedBun ? (
           <li className={`${styles.item} mr-4`}>
             <ConstructorElement
               type="top"
