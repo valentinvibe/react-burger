@@ -1,7 +1,7 @@
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import currency from "../../images/currency.png";
-import { useMemo, useEffect, useCallback } from 'react';
+import { useMemo, useEffect, useCallback, useRef } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import {
   OPEN_ORDER_MODAL,
@@ -15,12 +15,12 @@ const BurgerConstructor = () => {
   const data = useSelector(store => store.data.ingredients);
   const dispatch = useDispatch();
   const selectedIngredients = useSelector(store => store.data.selectedIngredient.data);
-  const selectedBun = useSelector(store => store.data.selectedIngredient.bun)
+  const selectedBun = useSelector(store => store.data.selectedIngredient.bun);
+  const itemRef = useRef(null);
 
   const totalSum = useMemo(() => 
       selectedIngredients.reduce(
-        (sum, ingredient) => sum + ingredient.price, selectedBun.price ? selectedBun.price * 2 : 0 )
-    ,
+        (sum, ingredient) => sum + ingredient.price, selectedBun.price ? selectedBun.price * 2 : 0 ),
     [selectedIngredients, selectedBun]
   );
 
@@ -59,19 +59,13 @@ const BurgerConstructor = () => {
   });
 
   const onHandleClose = () => {
-    console.log('priveeeeeeet')
+    console.log(itemRef.current.key)
   }
-  // let totalSum = selectedIngredients.reduce((sum, ingredient) => sum + ingredient.price, 0 ) + selectedBun.price*2;
-
+  
   // useEffect(() => {
   //   addNewOrder();
   // }, [addNewOrder]);
-  // useEffect(()=> {
-  //   totalSum = selectedIngredients.reduce(
-  //     (sum, ingredient) => sum + ingredient.price, selectedBun.price ? selectedBun.price * 2 : 0 )
-  //   console.log(selectedIngredients)
-  //   console.log(selectedBun)
-  // },[totalSum,selectedIngredients,selectedBun])
+ 
 
   return (
       <section ref={dropTarget} className={`${styles.container} mr-5 pl-4`}>
@@ -98,9 +92,9 @@ const BurgerConstructor = () => {
           </div>) : (
             <ul className={`${styles.listScroll} mt-4 mb-4`}>
 
-              {selectedIngredients.length > 0 ? selectedIngredients.map(element => {
+              {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) => {
                 return(
-                  <li key={element._id} className={`${styles.item} mr-2`}>
+                  <li key={element._id+index} index ref={itemRef} className={`${styles.item} mr-2`}>
                     <DragIcon type="primary" />
                     <ConstructorElement
                       text={element.name}
