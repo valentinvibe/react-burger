@@ -10,43 +10,17 @@ import {
   CREATE_ORDER_SUCCESS,
 
   ADD_INGREDIENT_ORDER,
-  REMOVE_INGREDIENT_ORDER
+  REMOVE_INGREDIENT_ORDER,
+
+  ADD_INGREDIENT_BUN_ORDER
 } from '../actions/actions'
 
 const initialState = {
   ingredients: [],
-  selectedIngredient: [
-    // bun: [],
-    // data: []
-    // {
-    //   "_id":"60666c42cc7b410027a1a9b2",
-    //   "name":"Флюоресцентная булка R2-D3",
-    //   "type":"bun",
-    //   "proteins":44,
-    //   "fat":26,
-    //   "carbohydrates":85,
-    //   "calories":643,
-    //   "price":988,
-    //   "image":"https://code.s3.yandex.net/react/code/bun-01.png",
-    //   "image_mobile":"https://code.s3.yandex.net/react/code/bun-01-mobile.png",
-    //   "image_large":"https://code.s3.yandex.net/react/code/bun-01-large.png",
-    //   "__v":0
-    //  },
-    //  {
-    //   "_id":"60666c42cc7b410027a1a9b9",
-    //   "name":"Соус традиционный галактический",
-    //   "type":"sauce",
-    //   "proteins":42,
-    //   "fat":24,
-    //   "carbohydrates":42,
-    //   "calories":99,
-    //   "price":15,
-    //   "image":"https://code.s3.yandex.net/react/code/sauce-03.png",
-    //   "image_mobile":"https://code.s3.yandex.net/react/code/sauce-03-mobile.png",
-    //   "image_large":"https://code.s3.yandex.net/react/code/sauce-03-large.png",
-    //   "__v":0
-    //  }
-  ],
+  selectedIngredient: {
+    bun: {},
+    data: []  
+  },
   detailsIngredient: [],
   order: 0,
   ingredientsRequest: false,
@@ -119,10 +93,22 @@ export const ingredientsReducer = (state = initialState, action) => {
     case ADD_INGREDIENT_ORDER: {
       return {
         ...state,
-        selectedIngredient: [
+        selectedIngredient: {
           ...state.selectedIngredient,
-          action.payload.data
-        ]
+          data: [
+	          ...state.selectedIngredient.data,
+	          action.payload.data
+          ]
+        }
+      }
+    }
+    case ADD_INGREDIENT_BUN_ORDER: {
+      return {
+        ...state,
+        selectedIngredient: {
+          ...state.selectedIngredient,
+          bun: action.payload.data
+        }
       }
     }
     default: {

@@ -1,80 +1,82 @@
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import currency from "../../images/currency.png";
-import { useMemo,useEffect,useCallback } from 'react';
+import { useMemo, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import {
   OPEN_ORDER_MODAL,
   addOrder,
-  ADD_INGREDIENT_ORDER
+  ADD_INGREDIENT_ORDER,
+  ADD_INGREDIENT_BUN_ORDER
 } from '../../services/actions/actions';
 import { useDrop } from 'react-dnd/dist/hooks/useDrop';
 
 const BurgerConstructor = () => {
   const data = useSelector(store => store.data.ingredients);
   const dispatch = useDispatch();
-  const selectedIngredients = useSelector(store => store.data.selectedIngredient);
+  const selectedIngredients = useSelector(store => store.data.selectedIngredient.data);
+  const selectedBun = useSelector(store => store.data.selectedIngredient.bun)
 
-
-  const selectBun = (ingredient) => {
-    return ingredient.type === 'bun'
-  }
-  let selectedBun = selectedIngredients.find(selectBun);
-
-  const totalSum = useMemo(
-    () =>
+  const totalSum = useMemo(() => 
       selectedIngredients.reduce(
-        (sum, ingredient) => sum + ingredient.price,
-        selectedBun ? selectedBun.price * 2 : 0
-      ),
+        (sum, ingredient) => sum + ingredient.price, selectedBun.price ? selectedBun.price * 2 : 0 )
+    ,
     [selectedIngredients, selectedBun]
   );
 
   const handleSubmitOrderClick = () => {
     dispatch({type: OPEN_ORDER_MODAL});
-    dispatch(addOrder(orderIngredients));
+    // dispatch(addOrder(orderIngredients));
   }
 
-  const orderIngredients = useMemo(
-    () =>
-    selectedIngredients.map(element => element._id),
-    [selectedIngredients]
-  );
+  // const orderIngredients = useMemo(
+  //   () =>
+  //   selectedIngredients.map(element => element._id),
+  //   [selectedIngredients]
+  // );
 
-  const addNewOrder = useCallback(() => {
-    if (selectedBun) {
-      orderIngredients.push(selectedBun._id)
-    }
-  }, [orderIngredients,selectedBun])
+  // const addNewOrder = useCallback(() => {
+  //   if (selectedBun) {
+  //     orderIngredients.push(selectedBun._id)
+  //   }
+  // }, [orderIngredients,selectedBun])
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item) {
       if (item.data.type === 'bun') {
-        console.log('buuuuuuuuLochKaaaaaaa')
+        dispatch({
+          type: ADD_INGREDIENT_BUN_ORDER,
+          payload: item
+        })
       } else {
         dispatch({
           type: ADD_INGREDIENT_ORDER,
           payload: item
         })
       }
-
     }
   });
 
   const onHandleClose = () => {
     console.log('priveeeeeeet')
   }
+  // let totalSum = selectedIngredients.reduce((sum, ingredient) => sum + ingredient.price, 0 ) + selectedBun.price*2;
 
-
-  useEffect(() => {
-    addNewOrder();
-  }, [addNewOrder]);
+  // useEffect(() => {
+  //   addNewOrder();
+  // }, [addNewOrder]);
+  // useEffect(()=> {
+  //   totalSum = selectedIngredients.reduce(
+  //     (sum, ingredient) => sum + ingredient.price, selectedBun.price ? selectedBun.price * 2 : 0 )
+  //   console.log(selectedIngredients)
+  //   console.log(selectedBun)
+  // },[totalSum,selectedIngredients,selectedBun])
 
   return (
       <section ref={dropTarget} className={`${styles.container} mr-5 pl-4`}>
         <ul className={`${styles.itemList} mt-25`}>
-        { selectedBun ? (
+        { selectedBun._id ? (
           <li className={`${styles.item} mr-4`}>
             <ConstructorElement
               type="top"
@@ -112,7 +114,7 @@ const BurgerConstructor = () => {
             )}
           </li>
 
-          {selectedBun ? (
+          { selectedBun._id ? (
           <li className={`${styles.item} mr-4`}>
             <ConstructorElement
               type="bottom"
@@ -130,7 +132,7 @@ const BurgerConstructor = () => {
 
         <div className={`${styles.order} mr-4 mt-10`}>
           <div className={styles.total}>
-            <span className={styles.price}>{totalSum}</span>
+            <span className={styles.price}>{totalSum ? totalSum : 0}</span>
             <img className={styles.currency} src={currency} alt="#"/>
         </div>
           <Button type="primary" size="large" onClick={handleSubmitOrderClick}>
