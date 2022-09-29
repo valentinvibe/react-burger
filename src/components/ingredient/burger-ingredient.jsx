@@ -5,7 +5,6 @@ import { burgerPropTypes } from "../../utils/prop-types";
 import { useDispatch } from "react-redux";
 import { OPEN_INGREDIENT_MODAL, SET_INGREDIENT_INFO } from '../../services/actions/actions';
 import { useDrag } from "react-dnd/dist/hooks";
-import { useEffect } from "react";
 
 const Ingredient = ({data}) => {
   const dispatch = useDispatch();
@@ -17,7 +16,6 @@ const Ingredient = ({data}) => {
     dispatch({type: OPEN_INGREDIENT_MODAL})
   }
 
-  const { _id } = data;
   const [, dragRef] = useDrag({
     type: "ingredient",
     item: {data},

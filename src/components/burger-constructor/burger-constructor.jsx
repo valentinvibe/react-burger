@@ -7,7 +7,9 @@ import {
   OPEN_ORDER_MODAL,
   addOrder,
   ADD_INGREDIENT_ORDER,
-  ADD_INGREDIENT_BUN_ORDER
+  ADD_INGREDIENT_BUN_ORDER,
+  REMOVE_INGREDIENT_ORDER,
+  delOrderIngredient
 } from '../../services/actions/actions';
 import { useDrop } from 'react-dnd/dist/hooks/useDrop';
 
@@ -18,7 +20,7 @@ const BurgerConstructor = () => {
   const selectedBun = useSelector(store => store.data.selectedIngredient.bun);
   const itemRef = useRef(null);
 
-  const totalSum = useMemo(() => 
+  const totalSum = useMemo(() =>
       selectedIngredients.reduce(
         (sum, ingredient) => sum + ingredient.price, selectedBun.price ? selectedBun.price * 2 : 0 ),
     [selectedIngredients, selectedBun]
@@ -58,14 +60,14 @@ const BurgerConstructor = () => {
     }
   });
 
-  const onHandleClose = () => {
-    console.log(itemRef.current.key)
+  const onHandleClose = (index) => {
+   dispatch(delOrderIngredient(selectedIngredients, index))
   }
-  
+
   // useEffect(() => {
   //   addNewOrder();
   // }, [addNewOrder]);
- 
+
 
   return (
       <section ref={dropTarget} className={`${styles.container} mr-5 pl-4`}>
@@ -94,13 +96,13 @@ const BurgerConstructor = () => {
 
               {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) => {
                 return(
-                  <li key={element._id+index} index ref={itemRef} className={`${styles.item} mr-2`}>
+                  <li key={index} className={`${styles.item} mr-2`}>
                     <DragIcon type="primary" />
                     <ConstructorElement
                       text={element.name}
                       price={element.price ? element.price : 0}
                       thumbnail={element.image_mobile}
-                      handleClose={onHandleClose}
+                      handleClose={() => onHandleClose(index)}
                     />
                   </li>)
               }) : null}
