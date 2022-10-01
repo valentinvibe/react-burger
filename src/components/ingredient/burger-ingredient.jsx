@@ -47,7 +47,7 @@ const Ingredient = ({data}) => {
         <img className={styles.currency} src={currency} alt="Валюта"/>
       </div>
       <p className="text text text_type_main-default">{data.name}</p>
-      { counter && <Counter count={counter} size="default" />}
+      { counter ? <Counter count={counter} size="default" /> : null}
     </li>
   )
 }

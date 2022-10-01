@@ -8,6 +8,11 @@
   max-width: 272px;
   position: relative;
   cursor: grab;
+  transition: transform .5s;
+}
+
+.card:hover {
+  transform: scale(1.035);
 }
 
 .priceContainer {
