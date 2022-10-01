@@ -1,15 +1,24 @@
+import {useEffect} from 'react';
 import styles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
 import PropTypes from 'prop-types'
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { DEL_ORDER_NUMBER } from '../../services/actions/actions'
 
 const OrderDetails = () => {
   const order = useSelector(store => store.data.order);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => {
+      dispatch({type: DEL_ORDER_NUMBER})
+    }
+  },[])
 
   return(
     <div className={`${styles.content} pt-9`}>
       <h2 className={`${styles.title} text text_type_digits-large`}>{
-      order > 0 ? order : 'Error'
+      order > 0 ? order : null
       }</h2>
       <p className={`text text_type_main-medium mt-8`}>идентификатор заказа</p>
       <img className={`${styles.image} mt-15`} src={doneImg} alt="done"/>
@@ -24,6 +33,8 @@ const OrderDetails = () => {
     </div>
   )
 }
+
+
 
 OrderDetails.propTypes = {
   order : PropTypes.number

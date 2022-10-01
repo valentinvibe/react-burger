@@ -10,7 +10,8 @@ import {
   CREATE_ORDER_SUCCESS,
   ADD_INGREDIENT_ORDER,
   REMOVE_INGREDIENT_ORDER,
-  ADD_INGREDIENT_BUN_ORDER
+  ADD_INGREDIENT_BUN_ORDER,
+  DEL_ORDER_NUMBER
 } from '../actions/actions'
 
 const initialState = {
@@ -20,7 +21,7 @@ const initialState = {
     data: []
   },
   detailsIngredient: [],
-  order: 0,
+  order: null,
   ingredientsRequest: false,
   ingredientsFailed: false,
   ingredientModal: false,
@@ -116,6 +117,12 @@ export const ingredientsReducer = (state = initialState, action) => {
           ...state.selectedIngredient,
           data: action.payload
         }
+      }
+    }
+    case DEL_ORDER_NUMBER: {
+      return {
+        ...state,
+        order: null
       }
     }
     default: {

@@ -8,7 +8,6 @@ import {
   addOrder,
   ADD_INGREDIENT_ORDER,
   ADD_INGREDIENT_BUN_ORDER,
-  REMOVE_INGREDIENT_ORDER,
   delOrderIngredient
 } from '../../services/actions/actions';
 import { useDrop } from 'react-dnd/dist/hooks/useDrop';
@@ -18,7 +17,6 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const selectedIngredients = useSelector(store => store.data.selectedIngredient.data);
   const selectedBun = useSelector(store => store.data.selectedIngredient.bun);
-  const itemRef = useRef(null);
 
   const totalSum = useMemo(() =>
       selectedIngredients.reduce(
@@ -28,20 +26,20 @@ const BurgerConstructor = () => {
 
   const handleSubmitOrderClick = () => {
     dispatch({type: OPEN_ORDER_MODAL});
-    // dispatch(addOrder(orderIngredients));
+    dispatch(addOrder(orderIngredients));
   }
 
-  // const orderIngredients = useMemo(
-  //   () =>
-  //   selectedIngredients.map(element => element._id),
-  //   [selectedIngredients]
-  // );
+  const orderIngredients = useMemo(
+    () =>
+    selectedIngredients.map(element => element._id),
+    [selectedIngredients]
+  );
 
-  // const addNewOrder = useCallback(() => {
-  //   if (selectedBun) {
-  //     orderIngredients.push(selectedBun._id)
-  //   }
-  // }, [orderIngredients,selectedBun])
+  const addNewOrder = useCallback(() => {
+    if (selectedBun) {
+      orderIngredients.push(selectedBun._id)
+    }
+  }, [orderIngredients,selectedBun])
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
@@ -64,9 +62,9 @@ const BurgerConstructor = () => {
    dispatch(delOrderIngredient(selectedIngredients, index))
   }
 
-  // useEffect(() => {
-  //   addNewOrder();
-  // }, [addNewOrder]);
+  useEffect(() => {
+    addNewOrder();
+  }, [addNewOrder]);
 
 
   return (

@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { CLOSE_INGREDIENT_MODAL, CLOSE_ORDER_MODAL } from '../../services/actions/actions';
+import { CLOSE_INGREDIENT_MODAL, CLOSE_ORDER_MODAL, DEL_ORDER_NUMBER } from '../../services/actions/actions';
 
 
 
@@ -16,6 +16,7 @@ const Modal = ({children, title=''}) => {
   function handleCloseModal() {
     dispatch({type: CLOSE_INGREDIENT_MODAL})
     dispatch({type: CLOSE_ORDER_MODAL})
+    dispatch({type: DEL_ORDER_NUMBER})
 
   }
 
