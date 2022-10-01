@@ -2,11 +2,14 @@ import styles from "./burger-ingredient.module.css";
 import currency from "../../images/currency.png";
 import PropTypes from 'prop-types';
 import { burgerPropTypes } from "../../utils/prop-types";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { OPEN_INGREDIENT_MODAL, SET_INGREDIENT_INFO } from '../../services/actions/actions';
-import { useDrag } from "react-dnd/dist/hooks";
+import { useDrag } from "react-dnd";
+import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import {useEffect, useMemo} from 'react'
 
 const Ingredient = ({data}) => {
+  const ingredients = useSelector(store => store.data.selectedIngredient)
   const dispatch = useDispatch();
   const handleClick = () => {
     dispatch({
@@ -21,6 +24,21 @@ const Ingredient = ({data}) => {
     item: {data},
   });
 
+  const counter = useMemo(()=> {
+    let result = null
+    if (data.type === "bun" && ingredients.bun._id === data._id) {
+      result = 1
+    } else {
+      result = ingredients.data.filter(item => item._id === data._id).length
+    }
+
+    return result
+  },[data,ingredients])
+
+  useEffect(()=> {
+    console.log(ingredients)
+  },[ingredients])
+
   return (
     <li ref={dragRef} className={styles.card} onClick={handleClick}>
       <img className="ml-4 mr-4" src={data.image} alt={data.name}/>
@@ -29,6 +47,7 @@ const Ingredient = ({data}) => {
         <img className={styles.currency} src={currency} alt="Валюта"/>
       </div>
       <p className="text text text_type_main-default">{data.name}</p>
+      { counter && <Counter count={counter} size="default" />}
     </li>
   )
 }
