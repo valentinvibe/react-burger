@@ -19,9 +19,12 @@ const Ingredient = ({data}) => {
     dispatch({type: OPEN_INGREDIENT_MODAL})
   }
 
-  const [, dragRef] = useDrag({
+  const [{isDragging}, dragRef] = useDrag({
     type: "ingredient",
     item: {data},
+    collect: (monitor) => ({
+      isDragging: monitor.isDragging(),
+    }),
   });
 
   const counter = useMemo(()=> {
@@ -36,7 +39,7 @@ const Ingredient = ({data}) => {
   },[data,ingredients])
 
   useEffect(()=> {
-    console.log(ingredients)
+    // console.log(ingredients)
   },[ingredients])
 
   return (
@@ -47,7 +50,7 @@ const Ingredient = ({data}) => {
         <img className={styles.currency} src={currency} alt="Валюта"/>
       </div>
       <p className="text text text_type_main-default">{data.name}</p>
-      { counter ? <Counter count={counter} size="default" /> : null}
+      { !isDragging && counter ? <Counter count={counter} size="default" /> : null}
     </li>
   )
 }
