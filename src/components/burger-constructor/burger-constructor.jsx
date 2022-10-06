@@ -130,15 +130,7 @@ const opacity = isDragging ? 0 : 1
 
               {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) => {
                 return(
-                  <li 
-                    key={index} 
-                    className={`${styles.item} mr-2`}
-                    draggable
-                    onDragStart={(e) => (dragItem.current = index)}
-                    onDragEnter={(e) => (dragOverItem.current = index)}
-                    onDragEnd={handleSort}
-                    onDragOver={(e) => e.preventDefault()} 
-                  >
+                  <li ref={dragDropRef} key={index} className={`${styles.item} mr-2`}>
                     <DragIcon type="primary" />
                     <ConstructorElement
                       text={element.name}
