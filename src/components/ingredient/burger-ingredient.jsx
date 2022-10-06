@@ -35,9 +35,6 @@ const Ingredient = ({data}) => {
     return result
   },[data,ingredients])
 
-  useEffect(()=> {
-    console.log(ingredients)
-  },[ingredients])
 
   return (
     <li ref={dragRef} className={styles.card} onClick={handleClick}>

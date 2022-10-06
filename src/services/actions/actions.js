@@ -16,7 +16,7 @@ export const ADD_INGREDIENT_ORDER = 'ADD_INGREDIENT_ORDER';
 export const REMOVE_INGREDIENT_ORDER = 'REMOVE_INGREDIENT_ORDER';
 export const ADD_INGREDIENT_BUN_ORDER = 'ADD_INGREDIENT_BUN_ORDER';
 export const DEL_ORDER_NUMBER = 'DEL_ORDER_NUMBER';
-
+export const SORT_INGREDIENTS = 'SORT_INGREDIENTS';
 
 
 
@@ -66,3 +66,5 @@ export function delOrderIngredient(selectedIngredients, index) {
     })
   }
 }
+
+

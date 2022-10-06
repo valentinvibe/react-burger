@@ -8,12 +8,12 @@ import {
   addOrder,
   ADD_INGREDIENT_ORDER,
   ADD_INGREDIENT_BUN_ORDER,
-  delOrderIngredient
+  delOrderIngredient,
+  SORT_INGREDIENTS
 } from '../../services/actions/actions';
 import { useDrop, useDrag } from 'react-dnd';
 
 const BurgerConstructor = () => {
-  // const data = useSelector(store => store.data.ingredients);
   const dispatch = useDispatch();
   const selectedIngredients = useSelector(store => store.data.selectedIngredient.data);
   const selectedBun = useSelector(store => store.data.selectedIngredient.bun);
@@ -57,45 +57,26 @@ const BurgerConstructor = () => {
       }
     }
   });
-///////////////////////////////////////////////////////////////
-const [{ isDragging }, adragRef] = useDrag({
-  type: 'item',
-  // item: dragDropRef.current,
-  collect: (monitor) => ({
-    isDragging: monitor.isDragging(),
-  }),
-})
 
-const [spec, dropRef] = useDrop({
-  accept: 'item',
-  hover: (item, monitor) => {
-    const dragIndex = item.key
-    const hoverIndex = item.key
-    const hoverBoundingRect = ref.current.getBoundingClientRect()
-    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-    const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top
-
-
-    if (dragIndex < hoverIndex && hoverActualY < hoverMiddleY) return
-
-    if (dragIndex > hoverIndex && hoverActualY > hoverMiddleY) return
-
-    // moveListItem(dragIndex, hoverIndex)
-    item.index = hoverIndex
-  },
-})
-
-const ref = useRef(null)
-const dragDropRef = adragRef(dropRef(ref))
-const opacity = isDragging ? 0 : 1
-
-
-///////////////////////////////////////////////////////////////
   const onHandleClose = (index) => {
    dispatch(delOrderIngredient(selectedIngredients, index))
 
   }
 
+  const dragItem = useRef(null)
+	const dragOverItem = useRef(null)
+
+  const handleSort = () => {
+    let selectedItems = [...selectedIngredients]
+    const draggedItemContent = selectedItems.splice(dragItem.current, 1)[0]
+    selectedItems.splice(dragOverItem.current, 0, draggedItemContent)
+    dragItem.current = null
+    dragOverItem.current = null
+    dispatch({
+      type: SORT_INGREDIENTS,
+      payload: selectedItems
+    })
+	}
 
 
   useEffect(() => {
@@ -130,7 +111,15 @@ const opacity = isDragging ? 0 : 1
 
               {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) => {
                 return(
-                  <li ref={dragDropRef} key={index} className={`${styles.item} mr-2`}>
+                  <li 
+                    key={index}
+                    draggable
+                    className={`${styles.item} mr-2`}
+                    onDragStart={(e) => (dragItem.current = index)}
+						        onDragEnter={(e) => (dragOverItem.current = index)}
+						        onDragEnd={handleSort}
+						        onDragOver={(e) => e.preventDefault()}
+                    >
                     <DragIcon type="primary" />
                     <ConstructorElement
                       text={element.name}
