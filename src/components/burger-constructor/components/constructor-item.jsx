@@ -15,15 +15,12 @@ const ConstructorItem = ({element, index, moveListItem}) => {
         dispatch(delOrderIngredient(selectedIngredients, index))
     }
 
-    const [{ isDragging }, dragRef] = useDrag({
+    const [, dragRef] = useDrag({
         type: 'item',
         item: { index },
-        collect: (monitor) => ({
-            isDragging: monitor.isDragging(),
-        }),
     })
 
-    const [spec, dropRef] = useDrop({
+    const [{ isOver }, dropRef] = useDrop({
         accept: 'item',
         hover: (item, monitor) => {
             const dragIndex = item.index
@@ -38,28 +35,28 @@ const ConstructorItem = ({element, index, moveListItem}) => {
             moveListItem(dragIndex, hoverIndex)
             item.index = hoverIndex
         },
+        collect: (monitor) => ({
+            isOver: monitor.isOver(),
+            canDrop: monitor.canDrop()
+        })
     })
 
     const ref = useRef(null)
     const dragDropRef = dragRef(dropRef(ref))
 
-    const opacity = isDragging ? 0.5 : 1
+    const opacity = isOver ? 0.7 : 1
 
     return (
-        <div ref={dragDropRef} style={{opacity}}>
-        <li 
-          key={index}
-          className={`${styles.item} mr-2`}
-          ref={dragDropRef}
-        >
+        <div ref={dragDropRef} style={{opacity}} key={index}>
+          <li className={`${styles.item} mr-2`}>
             <DragIcon type="primary" />
             <ConstructorElement
-                text={element.name}
-                price={element.price ? element.price : 0}
-                thumbnail={element.image_mobile}
-                handleClose={() => onHandleClose(index)}
+              text={element.name}
+              price={element.price ? element.price : 0}
+              thumbnail={element.image_mobile}
+              handleClose={() => onHandleClose(index)}
             />
-        </li>
+          </li>
         </div>
     )
 }

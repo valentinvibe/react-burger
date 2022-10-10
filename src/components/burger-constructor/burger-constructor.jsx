@@ -1,17 +1,16 @@
 import styles from './burger-constructor.module.css';
-import { ConstructorElement, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import currency from "../../images/currency.png";
-import { useMemo, useEffect, useCallback, useRef, useState } from 'react';
+import { useMemo, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import {
   OPEN_ORDER_MODAL,
   addOrder,
   ADD_INGREDIENT_ORDER,
   ADD_INGREDIENT_BUN_ORDER,
-  delOrderIngredient,
   SORT_INGREDIENTS
 } from '../../services/actions/actions';
-import { useDrop, useDrag } from 'react-dnd';
+import { useDrop } from 'react-dnd';
 
 import ConstructorItem from './components/constructor-item';
 
@@ -76,27 +75,6 @@ const BurgerConstructor = () => {
     }
   });
 
-  // const onHandleClose = (index) => {
-  //  dispatch(delOrderIngredient(selectedIngredients, index))
-
-  // }
-
-  // const dragItem = useRef(null)
-	// const dragOverItem = useRef(null)
-
-  // const handleSort = () => {
-  //   let selectedItems = [...selectedIngredients]
-  //   const draggedItemContent = selectedItems.splice(dragItem.current, 1)[0]
-  //   selectedItems.splice(dragOverItem.current, 0, draggedItemContent)
-  //   dragItem.current = null
-  //   dragOverItem.current = null
-  //   dispatch({
-  //     type: SORT_INGREDIENTS,
-  //     payload: selectedItems
-  //   })
-	// }
-
-
   useEffect(() => {
     addNewOrder();
   }, [addNewOrder]);
@@ -126,9 +104,8 @@ const BurgerConstructor = () => {
             <p className={`${styles.nonIngredients} text text_type_main-small`}>Добавьте ингредиенты</p>
           </div>) : (
             <ul className={`${styles.listScroll} mt-4 mb-4`}>
-
               {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) => 
-                <ConstructorItem element={element} index={index} moveListItem={moveListItem}/>
+                <ConstructorItem key={index} element={element} index={index} moveListItem={moveListItem}/>
               ) : null}
             </ul>
             )}
