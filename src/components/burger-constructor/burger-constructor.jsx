@@ -1,7 +1,7 @@
 import styles from './burger-constructor.module.css';
 import { ConstructorElement, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import currency from "../../images/currency.png";
-import { useMemo, useEffect, useCallback, useRef } from 'react';
+import { useMemo, useEffect, useCallback, useRef, useState } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import {
   OPEN_ORDER_MODAL,
@@ -13,10 +13,28 @@ import {
 } from '../../services/actions/actions';
 import { useDrop, useDrag } from 'react-dnd';
 
+import ConstructorItem from './components/constructor-item';
+
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const selectedIngredients = useSelector(store => store.data.selectedIngredient.data);
   const selectedBun = useSelector(store => store.data.selectedIngredient.bun);
+
+  const moveListItem = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragItem = selectedIngredients[dragIndex]
+      const hoverItem = selectedIngredients[hoverIndex]
+
+      const updatedIngredients = [...selectedIngredients]
+            updatedIngredients[dragIndex] = hoverItem
+            updatedIngredients[hoverIndex] = dragItem
+      
+      dispatch({
+        type: SORT_INGREDIENTS,
+        payload: updatedIngredients
+      })
+    }, [selectedIngredients]
+  )
 
   const totalSum = useMemo(() =>
       selectedIngredients.reduce(
@@ -58,25 +76,25 @@ const BurgerConstructor = () => {
     }
   });
 
-  const onHandleClose = (index) => {
-   dispatch(delOrderIngredient(selectedIngredients, index))
+  // const onHandleClose = (index) => {
+  //  dispatch(delOrderIngredient(selectedIngredients, index))
 
-  }
+  // }
 
-  const dragItem = useRef(null)
-	const dragOverItem = useRef(null)
+  // const dragItem = useRef(null)
+	// const dragOverItem = useRef(null)
 
-  const handleSort = () => {
-    let selectedItems = [...selectedIngredients]
-    const draggedItemContent = selectedItems.splice(dragItem.current, 1)[0]
-    selectedItems.splice(dragOverItem.current, 0, draggedItemContent)
-    dragItem.current = null
-    dragOverItem.current = null
-    dispatch({
-      type: SORT_INGREDIENTS,
-      payload: selectedItems
-    })
-	}
+  // const handleSort = () => {
+  //   let selectedItems = [...selectedIngredients]
+  //   const draggedItemContent = selectedItems.splice(dragItem.current, 1)[0]
+  //   selectedItems.splice(dragOverItem.current, 0, draggedItemContent)
+  //   dragItem.current = null
+  //   dragOverItem.current = null
+  //   dispatch({
+  //     type: SORT_INGREDIENTS,
+  //     payload: selectedItems
+  //   })
+	// }
 
 
   useEffect(() => {
@@ -109,26 +127,9 @@ const BurgerConstructor = () => {
           </div>) : (
             <ul className={`${styles.listScroll} mt-4 mb-4`}>
 
-              {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) => {
-                return(
-                  <li 
-                    key={index}
-                    draggable
-                    className={`${styles.item} mr-2`}
-                    onDragStart={(e) => (dragItem.current = index)}
-						        onDragEnter={(e) => (dragOverItem.current = index)}
-						        onDragEnd={handleSort}
-						        onDragOver={(e) => e.preventDefault()}
-                    >
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      text={element.name}
-                      price={element.price ? element.price : 0}
-                      thumbnail={element.image_mobile}
-                      handleClose={() => onHandleClose(index)}
-                    />
-                  </li>)
-              }) : null}
+              {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) => 
+                <ConstructorItem element={element} index={index} moveListItem={moveListItem}/>
+              ) : null}
             </ul>
             )}
           </li>
