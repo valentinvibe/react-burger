@@ -1,10 +1,14 @@
 import {
   CREATE_ORDER_SUCCESS,
-  DEL_ORDER_NUMBER
+  DEL_ORDER_NUMBER,
+  CREATE_ORDER_REQUEST,
+  CREATE_ORDER_FAILED
 } from '../actions/actions'
 
 const initialState = {
-  order: null
+  order: null,
+  orderRequest: false,
+  orderFailed: false,
 }
 
 export const orderReducer = (state = initialState, action) => {
@@ -12,6 +16,7 @@ export const orderReducer = (state = initialState, action) => {
     case CREATE_ORDER_SUCCESS: {
       return {
         ...state,
+        orderRequest: false,
         order: action.item
       }
     }
@@ -19,6 +24,20 @@ export const orderReducer = (state = initialState, action) => {
       return {
         ...state,
         order: null
+      }
+    }
+    case CREATE_ORDER_REQUEST: {
+      return {
+        ...state,
+        orderRequest: true,
+        orderFailed: false
+      }
+    }
+    case CREATE_ORDER_FAILED: {
+      return {
+        ...state,
+        orderRequest: false,
+        orderFailed: true
       }
     }
     default: {

@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -8,11 +7,9 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderDetails from '../order-details/order-details';
 import { useDispatch, useSelector } from 'react-redux';
-import { getItems } from '../../services/actions/actions';
-
+import { getItems } from '../../services/actions/get-data'
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-
 
 const App = () => {
   const {modal, orderModal } = useSelector(store => ({

@@ -1,7 +1,6 @@
 import {useEffect} from 'react';
 import styles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
-import PropTypes from 'prop-types'
 import { useDispatch, useSelector } from "react-redux";
 import { DEL_ORDER_NUMBER } from '../../services/actions/actions'
 
@@ -32,12 +31,6 @@ const OrderDetails = () => {
       </div>
     </div>
   )
-}
-
-
-
-OrderDetails.propTypes = {
-  order : PropTypes.number
 }
 
 export default OrderDetails

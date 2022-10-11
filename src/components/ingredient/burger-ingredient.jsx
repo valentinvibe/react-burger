@@ -1,6 +1,5 @@
 import styles from "./burger-ingredient.module.css";
 import currency from "../../images/currency.png";
-import PropTypes from 'prop-types';
 import { burgerPropTypes } from "../../utils/prop-types";
 import { useDispatch, useSelector } from "react-redux";
 import { OPEN_INGREDIENT_MODAL, SET_INGREDIENT_INFO } from '../../services/actions/actions';

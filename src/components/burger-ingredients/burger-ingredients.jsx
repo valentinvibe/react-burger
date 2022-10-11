@@ -1,8 +1,9 @@
 import React, { useMemo, useRef } from 'react';
 import styles from './burger-ingredients.module.css';
-import { Tab, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/burger-ingredient";
 import {useSelector} from 'react-redux';
+import { baseRefHeight } from '../../utils/variables';
 
 const BurgerIngredients = () => {
   const data = useSelector(store => store.data.ingredients);
@@ -10,7 +11,6 @@ const BurgerIngredients = () => {
   const bunRef = useRef(null);
   const sauceRef = useRef(null);
   const mainRef = useRef(null);
-
 
   const [current, setCurrent] = React.useState('bun');
   const buns = useMemo(() => data.filter(item => item.type === 'bun'),[data]);
@@ -24,20 +24,19 @@ const BurgerIngredients = () => {
   }
 
   const scrollHandler = () => {
-    let bun = bunRef.current.getBoundingClientRect().top;
-    let sauce = sauceRef.current.getBoundingClientRect().top;
-    let main = mainRef.current.getBoundingClientRect().top;
+    const bun = bunRef.current.getBoundingClientRect().top;
+    const sauce = sauceRef.current.getBoundingClientRect().top;
+    const main = mainRef.current.getBoundingClientRect().top;
 
-    if (bun <= 250) {
+    if (bun <= baseRefHeight) {
       setCurrent('bun')
     }
-    if (sauce <= 250) {
+    if (sauce <= baseRefHeight) {
       setCurrent('sauce')
     }
-    if (main <= 250) {
+    if (main <= baseRefHeight) {
       setCurrent('main')
     }
-
   }
 
 
