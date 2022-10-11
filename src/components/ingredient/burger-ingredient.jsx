@@ -6,10 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { OPEN_INGREDIENT_MODAL, SET_INGREDIENT_INFO } from '../../services/actions/actions';
 import { useDrag } from "react-dnd";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
-import {useEffect, useMemo} from 'react'
+import { useMemo } from 'react'
 
 const Ingredient = ({data}) => {
-  const ingredients = useSelector(store => store.data.selectedIngredient)
+  const ingredients = useSelector(store => store.construct)
   const dispatch = useDispatch();
   const handleClick = () => {
     dispatch({

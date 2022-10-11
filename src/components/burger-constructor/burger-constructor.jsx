@@ -16,8 +16,8 @@ import ConstructorItem from './components/constructor-item';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const selectedIngredients = useSelector(store => store.data.selectedIngredient.data);
-  const selectedBun = useSelector(store => store.data.selectedIngredient.bun);
+  const selectedIngredients = useSelector(store => store.construct.data);
+  const selectedBun = useSelector(store => store.construct.bun);
 
   const moveListItem = useCallback(
     (dragIndex, hoverIndex) => {
@@ -27,12 +27,12 @@ const BurgerConstructor = () => {
       const updatedIngredients = [...selectedIngredients]
             updatedIngredients[dragIndex] = hoverItem
             updatedIngredients[hoverIndex] = dragItem
-      
+
       dispatch({
         type: SORT_INGREDIENTS,
         payload: updatedIngredients
       })
-    }, [selectedIngredients]
+    }, [selectedIngredients, dispatch]
   )
 
   const totalSum = useMemo(() =>
@@ -104,7 +104,7 @@ const BurgerConstructor = () => {
             <p className={`${styles.nonIngredients} text text_type_main-small`}>Добавьте ингредиенты</p>
           </div>) : (
             <ul className={`${styles.listScroll} mt-4 mb-4`}>
-              {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) => 
+              {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) =>
                 <ConstructorItem key={index} element={element} index={index} moveListItem={moveListItem}/>
               ) : null}
             </ul>

@@ -15,9 +15,9 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 
 
 const App = () => {
-  const {modal, orderModal, } = useSelector(store => ({
-    modal: store.data.ingredientModal,
-    orderModal: store.data.orderModal
+  const {modal, orderModal } = useSelector(store => ({
+    modal: store.modal.ingredientModal,
+    orderModal: store.modal.orderModal
   }))
 
   const dispatch = useDispatch();
@@ -29,20 +29,20 @@ const App = () => {
   return (
     <>
       <AppHeader/>
-          <main className={styles.content}>
-            <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients/>
-              <BurgerConstructor/>
-            </DndProvider>
-          </main>
-          {orderModal &&
-          <Modal>
-            <OrderDetails/>
-          </Modal>}
-        {modal &&
-        <Modal title='Детали ингредиента'>
-          <IngredientDetails/>
-        </Modal>}
+      <main className={styles.content}>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients/>
+          <BurgerConstructor/>
+        </DndProvider>
+      </main>
+      {orderModal &&
+      <Modal>
+        <OrderDetails/>
+      </Modal>}
+      {modal &&
+      <Modal title='Детали ингредиента'>
+        <IngredientDetails/>
+      </Modal>}
     </>
 
   );

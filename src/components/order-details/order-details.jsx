@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { DEL_ORDER_NUMBER } from '../../services/actions/actions'
 
 const OrderDetails = () => {
-  const order = useSelector(store => store.data.order);
+  const order = useSelector(store => store.order.order);
   const dispatch = useDispatch();
 
   useEffect(() => {

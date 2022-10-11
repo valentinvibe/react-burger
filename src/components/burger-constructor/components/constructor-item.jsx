@@ -9,7 +9,7 @@ import { useRef } from 'react';
 
 const ConstructorItem = ({element, index, moveListItem}) => {
     const dispatch = useDispatch();
-    const selectedIngredients = useSelector(store => store.data.selectedIngredient.data)
+    const selectedIngredients = useSelector(store => store.construct.data)
 
     const onHandleClose = (index) => {
         dispatch(delOrderIngredient(selectedIngredients, index))
