@@ -23,7 +23,7 @@ const ConstructorItem = ({element, index, moveListItem}) => {
     hover: (item, monitor) => {
       const dragIndex = item.index
       const hoverIndex = index
-      const hoverBoundingRect = ref.current?.getBoundingClientRect()
+      const hoverBoundingRect = ref.current.getBoundingClientRect()
       const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
       const hoverActualY = monitor.getClientOffset().y - hoverBoundingRect.top
 

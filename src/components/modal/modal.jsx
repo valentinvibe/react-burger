@@ -1,24 +1,33 @@
 import {createPortal} from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from "./modal.module.css";
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { CLOSE_INGREDIENT_MODAL, CLOSE_ORDER_MODAL, DEL_ORDER_NUMBER } from '../../services/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  CLOSE_INGREDIENT_MODAL,
+  CLOSE_ORDER_MODAL,
+  DEL_ORDER_NUMBER,
+  CLEAR_CHOOSEN_INGREDIENTS
+ } from '../../services/actions/actions';
 
 
 
 const Modal = ({children, title=''}) => {
   const container = document.getElementById('react-modals');
   const dispatch = useDispatch();
+  const modalState = useSelector(store => store.modal)
 
-  function handleCloseModal() {
-    dispatch({type: CLOSE_INGREDIENT_MODAL})
-    dispatch({type: CLOSE_ORDER_MODAL})
-    dispatch({type: DEL_ORDER_NUMBER})
-
-  }
+  const handleCloseModal = useCallback(() => {
+    if (modalState.ingredientModal) {
+      dispatch({type: CLOSE_INGREDIENT_MODAL})
+    } else if (modalState.orderModal) {
+      dispatch({type: CLOSE_ORDER_MODAL})
+      dispatch({type: DEL_ORDER_NUMBER})
+      dispatch({type: CLEAR_CHOOSEN_INGREDIENTS})
+    }
+  },[modalState, dispatch])
 
   useEffect(() => {
     const closeModalByEsc = (e) => {
@@ -29,7 +38,7 @@ const Modal = ({children, title=''}) => {
     return () => {
       document.removeEventListener('keydown', closeModalByEsc);
     }
-  }, [container])
+  }, [container, handleCloseModal])
 
   return(
     createPortal((

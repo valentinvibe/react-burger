@@ -1,20 +1,13 @@
-import {useEffect} from 'react';
 import styles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
-import { useDispatch, useSelector } from "react-redux";
-import { DEL_ORDER_NUMBER } from '../../services/actions/actions'
+import { useSelector } from "react-redux";
 
 const OrderDetails = () => {
   const order = useSelector(store => store.order.order);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    return () => {
-      dispatch({type: DEL_ORDER_NUMBER})
-    }
-  },[])
+  const orderFailed = useSelector(store => store.order.orderFailed);
 
   return(
+    !orderFailed ? (
     <div className={`${styles.content} pt-9`}>
       <h2 className={`${styles.title} text text_type_digits-large`}>{
       order > 0 ? order : null
@@ -30,6 +23,12 @@ const OrderDetails = () => {
         </p>
       </div>
     </div>
+    ) : (
+      <>
+        <p className={`text text_type_main-medium mt-8`}>Хьюстон! У нас проблемы. Попробуйте еще раз</p>
+      </>
+
+    )
   )
 }
 

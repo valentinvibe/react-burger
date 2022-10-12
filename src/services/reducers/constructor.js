@@ -2,7 +2,8 @@ import {
   ADD_INGREDIENT_ORDER,
   ADD_INGREDIENT_BUN_ORDER,
   REMOVE_INGREDIENT_ORDER,
-  SORT_INGREDIENTS
+  SORT_INGREDIENTS,
+  CLEAR_CHOOSEN_INGREDIENTS
 } from '../actions/actions'
 
 const initialState = {
@@ -37,6 +38,13 @@ export const constructorReducer = (state = initialState, action) => {
       return {
         ...state,
         data: action.payload
+      }
+    }
+    case CLEAR_CHOOSEN_INGREDIENTS: {
+      return {
+        ...state,
+        data: [],
+        bun: {}
       }
     }
     default: {

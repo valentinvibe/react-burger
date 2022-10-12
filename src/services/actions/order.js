@@ -19,9 +19,10 @@ export function addOrder(order) {
             type: CREATE_ORDER_SUCCESS,
             item: res.order.number
           })
-        } else {
-            dispatch({type: CREATE_ORDER_FAILED})
         }
+      })
+      .catch(() => {
+        dispatch({type: CREATE_ORDER_FAILED})
       })
   }
 }

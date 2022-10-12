@@ -18,6 +18,7 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const selectedIngredients = useSelector(store => store.construct.data);
   const selectedBun = useSelector(store => store.construct.bun);
+  let stateOrder = useSelector(store => store.construct.data)
 
   const moveListItem = useCallback(
     (dragIndex, hoverIndex) => {
@@ -42,8 +43,11 @@ const BurgerConstructor = () => {
   );
 
   const handleSubmitOrderClick = () => {
-    dispatch({type: OPEN_ORDER_MODAL});
-    dispatch(addOrder(orderIngredients));
+    console.log(stateOrder)
+    if (stateOrder.length !== 0) {
+      dispatch(addOrder(orderIngredients));
+      dispatch({type: OPEN_ORDER_MODAL})
+    }
   }
 
   const orderIngredients = useMemo(
@@ -98,7 +102,7 @@ const BurgerConstructor = () => {
         </div>) : (
           <ul className={`${styles.listScroll} mt-4 mb-4`}>
             {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) =>
-              <ConstructorItem key={element._id} element={element} index={index} moveListItem={moveListItem}/>
+              <ConstructorItem key={element._id+index} element={element} index={index} moveListItem={moveListItem}/>
             ) : null}
           </ul>
           )}
@@ -125,7 +129,7 @@ const BurgerConstructor = () => {
           <span className={styles.price}>{totalSum}</span>
           <img className={styles.currency} src={currency} alt="#"/>
       </div>
-        <Button type="primary" size="large" onClick={handleSubmitOrderClick}>
+        <Button type="primary" size="large" onClick={() => stateOrder ? handleSubmitOrderClick() : null}>
           Оформить заказ
         </Button>
       </div>
