@@ -1,13 +1,16 @@
 import styles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
-import PropTypes from 'prop-types'
+import { useSelector } from "react-redux";
 
-const OrderDetails = ({order}) => {
+const OrderDetails = () => {
+  const order = useSelector(store => store.order.order);
+  const orderFailed = useSelector(store => store.order.orderFailed);
 
   return(
+    !orderFailed ? (
     <div className={`${styles.content} pt-9`}>
       <h2 className={`${styles.title} text text_type_digits-large`}>{
-      order ? order : 'Error'
+      order > 0 ? order : null
       }</h2>
       <p className={`text text_type_main-medium mt-8`}>идентификатор заказа</p>
       <img className={`${styles.image} mt-15`} src={doneImg} alt="done"/>
@@ -20,11 +23,13 @@ const OrderDetails = ({order}) => {
         </p>
       </div>
     </div>
-  )
-}
+    ) : (
+      <>
+        <p className={`text text_type_main-medium mt-8`}>Хьюстон! У нас проблемы. Попробуйте еще раз</p>
+      </>
 
-OrderDetails.propTypes = {
-  order : PropTypes.number
+    )
+  )
 }
 
 export default OrderDetails

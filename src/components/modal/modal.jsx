@@ -1,25 +1,44 @@
 import {createPortal} from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import modalStyles from "./modal.module.css";
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  CLOSE_INGREDIENT_MODAL,
+  CLOSE_ORDER_MODAL,
+  DEL_ORDER_NUMBER,
+  CLEAR_CHOOSEN_INGREDIENTS
+ } from '../../services/actions/actions';
 
 
 
-const Modal = ({toggleModal, children, title=''}) => {
-  const container = document.getElementById('react-modals')
+const Modal = ({children, title=''}) => {
+  const container = document.getElementById('react-modals');
+  const dispatch = useDispatch();
+  const modalState = useSelector(store => store.modal)
+
+  const handleCloseModal = useCallback(() => {
+    if (modalState.ingredientModal) {
+      dispatch({type: CLOSE_INGREDIENT_MODAL})
+    } else if (modalState.orderModal) {
+      dispatch({type: CLOSE_ORDER_MODAL})
+      dispatch({type: DEL_ORDER_NUMBER})
+      dispatch({type: CLEAR_CHOOSEN_INGREDIENTS})
+    }
+  },[modalState, dispatch])
 
   useEffect(() => {
     const closeModalByEsc = (e) => {
-      e.key === 'Escape' && toggleModal();
+      e.key === 'Escape' && handleCloseModal();
     };
     document.addEventListener('keydown', closeModalByEsc);
 
     return () => {
       document.removeEventListener('keydown', closeModalByEsc);
     }
-  }, [container, toggleModal])
+  }, [container, handleCloseModal])
 
   return(
     createPortal((
@@ -27,13 +46,13 @@ const Modal = ({toggleModal, children, title=''}) => {
         <div className={`${modalStyles.container} pt-15 pr-10 pl-10 pb-15`}>
           <div className={modalStyles.header}>
             {title && (<h2 className={`${modalStyles.title} text text_type_main-large`}>{title}</h2>)}
-            <button onClick={toggleModal} className={modalStyles.closeButton}>
+            <button onClick={handleCloseModal} className={modalStyles.closeButton}>
               <CloseIcon type="primary"/>
             </button>
           </div>
           {children}
         </div>
-        <ModalOverlay toggleModal={toggleModal}/>
+        <ModalOverlay/>
       </>
     ), container
     )
@@ -41,7 +60,6 @@ const Modal = ({toggleModal, children, title=''}) => {
 }
 
 Modal.propTypes = {
-  toggleModal: PropTypes.func.isRequired,
   children: PropTypes.element,
   title: PropTypes.string
 }

@@ -1,113 +1,140 @@
 import styles from './burger-constructor.module.css';
-import { ConstructorElement, Button, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import currency from "../../images/currency.png";
-import PropTypes from 'prop-types';
-import { burgerPropTypes } from '../../utils/prop-types';
-import { DataContext } from '../services/data-context';
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { OrderContext } from "../services/order-context";
+import { useMemo, useEffect, useCallback } from 'react';
+import { useSelector, useDispatch} from 'react-redux';
+import {
+  OPEN_ORDER_MODAL,
+  ADD_INGREDIENT_ORDER,
+  ADD_INGREDIENT_BUN_ORDER,
+  SORT_INGREDIENTS
+} from '../../services/actions/actions';
+import { addOrder } from '../../services/actions/order';
+import { useDrop } from 'react-dnd';
 
-const BurgerConstructor = ({toggleModal}) => {
-  const {data} = useContext(DataContext);
-  const {setOrder} = useContext(OrderContext);
-  const [selectedIngredients, setSelectedIngredients] = useState([]);
+import ConstructorItem from './components/constructor-item';
 
-  const selectBun = (ingredient) => {
-    return ingredient.type == 'bun'
-  }
-  let selectedBun = data.find(selectBun);
+const BurgerConstructor = () => {
+  const dispatch = useDispatch();
+  const selectedIngredients = useSelector(store => store.construct.data);
+  const selectedBun = useSelector(store => store.construct.bun);
+  let stateOrder = useSelector(store => store.construct.data)
 
-  const totalSum = useMemo(
-    () =>
-      selectedIngredients.reduce(
-        (sum, ingredient) => sum + ingredient.price,
-        selectedBun ? selectedBun.price * 2 : 0
-      ),
+  const moveListItem = useCallback(
+    (dragIndex, hoverIndex) => {
+      const dragItem = selectedIngredients[dragIndex]
+      const hoverItem = selectedIngredients[hoverIndex]
+
+      const updatedIngredients = [...selectedIngredients]
+      updatedIngredients[dragIndex] = hoverItem
+      updatedIngredients[hoverIndex] = dragItem
+
+      dispatch({
+        type: SORT_INGREDIENTS,
+        payload: updatedIngredients
+      })
+    }, [selectedIngredients, dispatch]
+  )
+
+  const totalSum = useMemo(() =>
+    selectedIngredients.reduce(
+      (sum, ingredient) => sum + ingredient.price, selectedBun.price ? selectedBun.price * 2 : 0 ),
     [selectedIngredients, selectedBun]
   );
 
-  const insideIngredients = useMemo(()=>
-      data.filter(element => element.type !== 'bun'),
-      [data]
-    );
+  const handleSubmitOrderClick = () => {
+    console.log(stateOrder)
+    if (stateOrder.length !== 0) {
+      dispatch(addOrder(orderIngredients));
+      dispatch({type: OPEN_ORDER_MODAL})
+    }
+  }
 
   const orderIngredients = useMemo(
     () =>
-    insideIngredients.map(element => element._id),
-    [insideIngredients]
+    selectedIngredients.map(element => element._id),
+    [selectedIngredients]
   );
 
-  const addNewOrder = () => {
-    orderIngredients.push(selectedBun._id)
-    return orderIngredients
-  }
+  const addNewOrder = useCallback(() => {
+    if (selectedBun) {
+      orderIngredients.push(selectedBun._id)
+    }
+  }, [orderIngredients,selectedBun])
 
+  const [, dropTarget] = useDrop({
+    accept: "ingredient",
+    drop(item) {
+      dispatch({
+        type: item.data.type === 'bun' ? ADD_INGREDIENT_BUN_ORDER : ADD_INGREDIENT_ORDER,
+        payload: item
+      })
+    }
+  });
 
   useEffect(() => {
-    setOrder(addNewOrder());
-    setSelectedIngredients(data.filter(element => element.type !== 'bun'));
-  }, []);
+    addNewOrder();
+  }, [addNewOrder]);
+
 
   return (
-      <section className={`${styles.container} mr-5 pl-4`}>
-        <ul className={`${styles.itemList} mt-25`}>
+    <section ref={dropTarget} className={`${styles.container} mr-5 pl-4`}>
+      <ul className={`${styles.itemList} mt-25`}>
+      { selectedBun._id ? (
+        <li className={`${styles.item} mr-4`}>
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={`${selectedBun.name} (верх)`}
+            price={selectedBun.price ? selectedBun.price : null}
+            thumbnail={selectedBun.image_mobile}
+          />
+        </li>
+        ) : (
           <li className={`${styles.item} mr-4`}>
-              <ConstructorElement
-                type="top"
-                isLocked={true}
-                text={`${selectedBun.name} (верх)`}
-                price={selectedBun.price ? data[0].price : 0}
-                thumbnail={selectedBun.image_mobile}
-              />
+            <div className={`${styles.bunNotSelected} ${styles.bunNotSelected_type_top}`}>Добавьте булочку</div>
           </li>
+        )}
 
-          <li>
-          {selectedIngredients.length === 0 ? (<div style={{ textAlign : "center" }} className="p-5">
-            <p className={`text text_type_main-small`}>Добавьте ингредиенты</p>
-          </div>) : (
-            <ul className={`${styles.listScroll} mt-4 mb-4`}>
+        <li>
+        {selectedIngredients.length === 0 ? (<div style={{ textAlign : "center" }} className="p-5">
+          <p className={`${styles.nonIngredients} text text_type_main-small`}>Добавьте ингредиенты</p>
+        </div>) : (
+          <ul className={`${styles.listScroll} mt-4 mb-4`}>
+            {selectedIngredients.length > 0 ? selectedIngredients.map((element,index) =>
+              <ConstructorItem key={element._id+index} element={element} index={index} moveListItem={moveListItem}/>
+            ) : null}
+          </ul>
+          )}
+        </li>
 
-              {selectedIngredients ? selectedIngredients.map(element => {
-                return(
-                  <li key={element._id} className={`${styles.item} mr-2`}>
-                    <DragIcon type="primary" />
-                    <ConstructorElement
-                      text={element.name}
-                      price={element.price ? element.price : 0}
-                      thumbnail={element.image_mobile}
-                    />
-                  </li>)
-              }) : null}
-            </ul>
-            )}
-          </li>
-
+        { selectedBun._id ? (
+        <li className={`${styles.item} mr-4`}>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text={`${selectedBun.name} (низ)`}
+            price={selectedBun.price ? selectedBun.price : null}
+            thumbnail={selectedBun.image_mobile}
+          />
+        </li>) : (
           <li className={`${styles.item} mr-4`}>
-            <ConstructorElement
-              type="bottom"
-              isLocked={true}
-              text={`${selectedBun.name} (низ)`}
-              price={selectedBun.price ? data[0].price : 0}
-              thumbnail={selectedBun.image_mobile}
-            />
-          </li>
-        </ul>
+            <div className={`${styles.bunNotSelected} ${styles.bunNotSelected_type_bottom}`}>Добавьте булочку</div>
+        </li>
+        )}
+      </ul>
 
-        <div className={`${styles.order} mr-4 mt-10`}>
-          <div className={styles.total}>
-            <span className={styles.price}>{totalSum}</span>
-            <img className={styles.currency} src={currency} alt="#"/>
-        </div>
-          <Button type="primary" size="large" onClick={toggleModal}>
-            Оформить заказ
-          </Button>
-        </div>
-      </section>
+      <div className={`${styles.order} mr-4 mt-10`}>
+        <div className={styles.total}>
+          <span className={styles.price}>{totalSum}</span>
+          <img className={styles.currency} src={currency} alt="#"/>
+      </div>
+        <Button type="primary" size="large" onClick={() => stateOrder ? handleSubmitOrderClick() : null}>
+          Оформить заказ
+        </Button>
+      </div>
+    </section>
   )
-}
-
-BurgerConstructor.propTypes = {
-  toggleModal : PropTypes.func.isRequired
 }
 
 
