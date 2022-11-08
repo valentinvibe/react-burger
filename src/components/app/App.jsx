@@ -14,6 +14,8 @@ import { Switch, Route} from 'react-router-dom';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
 import LoginPage from '../../pages/login-page/login-page';
 import RegisterPage from '../../pages/register-page/register-page';
+import ForgotPassword from '../../pages/forgot-password/forgot-password';
+import ResetPassword from '../../pages/reset-password/reset-password';
 
 const App = () => {
   const {modal, orderModal } = useSelector(store => ({
@@ -46,10 +48,10 @@ const App = () => {
           <RegisterPage/>
         </Route>
         <Route exact path="/forgot-password">
-          {/* <ForgotPassword/> */}
+          <ForgotPassword/>
         </Route>
         <Route exact path="/reset-password">
-          {/* <ResetPassword/> */}
+          <ResetPassword/>
         </Route>
         <Route exact path="/profile">
           {/* <ProfilePage/> */}
