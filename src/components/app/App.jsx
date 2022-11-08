@@ -10,6 +10,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/get-data'
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Switch, Route} from 'react-router-dom';
+import NotFound404 from '../../pages/not-found-404/not-found-404';
+import LoginPage from '../../pages/login-page/login-page';
 
 const App = () => {
   const {modal, orderModal } = useSelector(store => ({
@@ -26,12 +29,38 @@ const App = () => {
   return (
     <>
       <AppHeader/>
-      <main className={styles.content}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients/>
-          <BurgerConstructor/>
-        </DndProvider>
-      </main>
+      <Switch>
+        <Route exact path="/">
+          <main className={styles.content}>
+            <DndProvider backend={HTML5Backend}>
+              <BurgerIngredients/>
+              <BurgerConstructor/>
+            </DndProvider>
+          </main>
+        </Route>
+        <Route exact path="/login">
+          <LoginPage/>
+        </Route>
+        <Route exact path="/register">
+          {/* <RegisterPage/> */}
+        </Route>
+        <Route exact path="/forgot-password">
+          {/* <ForgotPassword/> */}
+        </Route>
+        <Route exact path="/reset-password">
+          {/* <ResetPassword/> */}
+        </Route>
+        <Route exact path="/profile">
+          {/* <ProfilePage/> */}
+        </Route>
+        <Route exact path="/ingredients/:id">
+          {/* <IngredientPage/> */}
+        </Route>
+        <Route>
+          <NotFound404/>
+        </Route>
+      </Switch>
+     
       {orderModal &&
       <Modal>
         <OrderDetails/>
