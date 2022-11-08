@@ -13,6 +13,7 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Switch, Route} from 'react-router-dom';
 import NotFound404 from '../../pages/not-found-404/not-found-404';
 import LoginPage from '../../pages/login-page/login-page';
+import RegisterPage from '../../pages/register-page/register-page';
 
 const App = () => {
   const {modal, orderModal } = useSelector(store => ({
@@ -42,7 +43,7 @@ const App = () => {
           <LoginPage/>
         </Route>
         <Route exact path="/register">
-          {/* <RegisterPage/> */}
+          <RegisterPage/>
         </Route>
         <Route exact path="/forgot-password">
           {/* <ForgotPassword/> */}
