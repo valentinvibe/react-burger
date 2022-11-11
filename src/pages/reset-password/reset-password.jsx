@@ -6,15 +6,23 @@ import {
   PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from "react-router-dom";
+import { resetPassword } from "../../utils/api";
+import { baseUrl } from "../../utils/variables";
 
 const ResetPassword = () => {
-  const [code, setCode] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [password, setPassword] = useState('');
+  const [code, setCode] = useState('');
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+    resetPassword(baseUrl, password, /*token*/);
+  }
+
 
   return (
     <div className={styles.wrapper}>
       <h2 className="text text_type_main-medium">Восстановление пароля</h2>
-      <form className={styles.form}>
+      <form onSubmit={handleFormSubmit} className={styles.form}>
         <div className="mt-6 mb-6">
         <PasswordInput
           placeholder={'Введите новый пароль'}

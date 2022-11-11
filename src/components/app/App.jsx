@@ -63,7 +63,7 @@ const App = () => {
           <NotFound404/>
         </Route>
       </Switch>
-     
+
       {orderModal &&
       <Modal>
         <OrderDetails/>
