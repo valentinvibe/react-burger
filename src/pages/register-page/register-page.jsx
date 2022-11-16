@@ -7,15 +7,29 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link } from 'react-router-dom';
 
+import { registration } from '../../services/actions/user';
+import { useSelector, useDispatch } from 'react-redux';
+
 const RegisterPage = () => {
-  const [email, setEmail] = useState(null);
-  const [password, setPassword] = useState(null);
-  const [name, setName ] = useState(null);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName ] = useState("");
+  const dispatch = useDispatch()
+
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    if (!email || !password || !name) {
+      return;
+    }
+
+    dispatch(registration(email, password, name))
+  }
 
   return (
     <div className={styles.wrapper}>
       <h2 className="text text_type_main-medium">Регистрация</h2>
-      <form className={styles.form}>
+      <form onSubmit={handleFormSubmit} className={styles.form}>
       <div className="mt-6 mb-6">
           <Input
             type={'text'}

@@ -30,7 +30,7 @@ const forgotPassword = (url, email) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "email": email
+      email
     })
   })
   .then((res) => checkResponse(res))
@@ -43,14 +43,15 @@ const resetPassword = (url, password, token) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "password": password,
-      "token": token
+      password,
+      token
     })
   })
   .then((res) => checkResponse(res))
 }
 
-const registerNewUser = (url, name, email, password) => {
+//Регистрация пользователя
+const registerNewUser = (url, email, name, password) => {
   return fetch(`${url}auth/register`, {
     method: 'POST',
     headers: {
@@ -58,19 +59,36 @@ const registerNewUser = (url, name, email, password) => {
     },
     body: JSON.stringify({
       "email": email,
-      "password": password,
-      "name": name
+      "password" : password,
+      "name" : name
     })
   })
   .then((res) => checkResponse(res))
 }
+
+//Авторизация пользователя
+const loginUser = (url, email, password) => {
+  return fetch(`${url}auth/login`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "email": email,
+      "password": password
+    }),
+  }).then((res) => checkResponse(res));
+}
+
+
 
 export {
   getIngredients,
   addNewOrder,
   forgotPassword,
   resetPassword,
-  registerNewUser
+  registerNewUser,
+  loginUser
 }
 
 

@@ -16,6 +16,7 @@ import LoginPage from '../../pages/login-page/login-page';
 import RegisterPage from '../../pages/register-page/register-page';
 import ForgotPassword from '../../pages/forgot-password/forgot-password';
 import ResetPassword from '../../pages/reset-password/reset-password';
+import ProfilePage from '../../pages/profile-page/profile-page';
 
 const App = () => {
   const {modal, orderModal } = useSelector(store => ({
@@ -53,8 +54,8 @@ const App = () => {
         <Route exact path="/reset-password">
           <ResetPassword/>
         </Route>
-        <Route exact path="/profile">
-          {/* <ProfilePage/> */}
+        <Route path="/profile">
+          <ProfilePage/>
         </Route>
         <Route exact path="/ingredients/:id">
           {/* <IngredientPage/> */}
