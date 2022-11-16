@@ -1,11 +1,11 @@
 import styles from './register-page.module.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Input,
     Button,
     PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import { registration } from '../../services/actions/user';
 import { useSelector, useDispatch } from 'react-redux';
@@ -14,7 +14,9 @@ const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName ] = useState("");
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
+  const userData = useSelector(store => store.user.userData);
+  const history = useHistory();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -25,6 +27,10 @@ const RegisterPage = () => {
 
     dispatch(registration(email, password, name))
   }
+
+  useEffect(()=> {
+    userData && history.push('/')
+  }, [userData, history])
 
   return (
     <div className={styles.wrapper}>

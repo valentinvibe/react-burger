@@ -1,20 +1,39 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./login-page.module.css";
 import {
   Input,
   Button,
   PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { signIn } from "../../services/actions/user";
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const userData = useSelector((store) => store.user.userData);
+  const history = useHistory();
+
+  const handleSubmitForm = (e) => {
+    e.preventDefault();
+
+    if (!email || !password) {
+      return
+    }
+    dispatch(signIn(email, password))
+  }
+
+  useEffect(()=>{
+    userData && history.push('/');
+    console.log(userData)
+  },[userData, history])
 
   return (
     <div className={styles.wrapper}>
       <h2 className="text text_type_main-medium">Вход</h2>
-      <form className={styles.form}>
+      <form onSubmit={handleSubmitForm} className={styles.form}>
         <div className="mt-6 mb-6">
           <Input
             type={'email'}

@@ -83,8 +83,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         loginRequest: false,
-        accessToken: action.payload.accessToken,
-        userData: action.payload.user,
+        userData: action.payload,
       };
     }
     case LOGIN_FAILED: {
