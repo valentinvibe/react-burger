@@ -22,8 +22,7 @@ import {
   REFRESH_TOKEN_FAILED,
   SEND_USER_DATA,
   SEND_USER_DATA_SUCCESS,
-  SEND_USER_DATA_FAILED,
-  SET_FORGOT_PASSWORD_STATE
+  SEND_USER_DATA_FAILED
 } from '../actions/user';
 
 const initialState = {
@@ -217,12 +216,6 @@ export const userReducer = (state = initialState, action) => {
         sendUserDataRequest: false,
         sendUserDataRequestFailed: true,
       };
-    }
-    case SET_FORGOT_PASSWORD_STATE: {
-      return {
-        ...state,
-        isPasswordForgot: action.payload,
-      }
     }
     default: {
       return state;

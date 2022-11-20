@@ -80,6 +80,57 @@ const loginUser = (url, email, password) => {
   }).then((res) => checkResponse(res));
 }
 
+//Обновление токена
+const refreshToken = (url, refreshToken) => {
+  return fetch(`${url}auth/token`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "token": refreshToken
+    })
+  }).then((res) => checkResponse(res));
+}
+
+//Выход из системы
+const logout = (url, refreshToken) => {
+  return fetch(`${url}auth/logout`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      "token": refreshToken
+    })
+  }).then((res) => checkResponse(res));
+}
+
+//Получение данных о пользователе
+const getUserData = (url, token) => {
+  return fetch(`${url}auth/user`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      "authorization": token
+    }
+  }).then((res) => checkResponse(res));
+}
+
+const updateUserData = (url, token, email, name, password) => {
+  return fetch(`${url}auth/user`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "authorization": token
+    },
+    body: JSON.stringify({
+      "email": email,
+      "name": name,
+      "password": password
+    })
+  }).then((res) => checkResponse(res));
+}
 
 
 export {
@@ -88,7 +139,10 @@ export {
   forgotPassword,
   resetPassword,
   registerNewUser,
-  loginUser
+  loginUser,
+  refreshToken,
+  logout,
+  getUserData
 }
 
 

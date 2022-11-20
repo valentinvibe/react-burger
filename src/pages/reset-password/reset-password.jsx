@@ -8,15 +8,18 @@ import {
 import { Link } from "react-router-dom";
 import { resetPassword } from "../../utils/api";
 import { baseUrl } from "../../utils/variables";
+import { getCookie } from "../../utils/cookie";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
+  const token = getCookie('accessToken');
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    resetPassword(baseUrl, password, /*token*/);
+    resetPassword(baseUrl, password, token);
   }
+
 
 
   return (

@@ -1,7 +1,7 @@
 import { registerNewUser } from "../../utils/api";
 import { baseUrl } from "../../utils/variables";
-import { setCookie } from "../../utils/cookie";
-import { loginUser } from "../../utils/api";
+import { clearCookie, setCookie } from "../../utils/cookie";
+import { loginUser, logout } from "../../utils/api";
 
 
 export const REGISTRATION = 'REGISTRATION';
@@ -35,8 +35,6 @@ export const LOGOUT_FAILED = 'LOGOUT_FAILED';
 export const REFRESH_TOKEN = 'REFRESH_TOKEN';
 export const REFRESH_TOKEN_SUCCESS = 'REFRESH_TOKEN_SUCCESS';
 export const REFRESH_TOKEN_FAILED = 'REFRESH_TOKEN_FAILED';
-
-export const SET_FORGOT_PASSWORD_STATE = 'SET_FORGOT_PASSWORD_STATE';
 
 
 export function registration(email, password, name) {
@@ -78,5 +76,22 @@ export function signIn (email, password) {
       dispatch({ type: LOGIN_FAILED});
       console.log(err)
     })
+  }
+}
+
+
+export function logOut(refreshToken) {
+  return function(dispatch) {
+    dispatch({type: LOGOUT})
+
+    logout(refreshToken)
+      .then(() => {
+        clearCookie('refreshToken')
+        dispatch({type: LOGIN_SUCCESS})
+      })
+      .catch((err) => {
+        dispatch({type: LOGOUT_FAILED})
+        console.log(err)
+      })
   }
 }

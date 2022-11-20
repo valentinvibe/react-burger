@@ -2,11 +2,20 @@ import styles from "./profile-page.module.css";
 import { NavLink, Route, useRouteMatch } from "react-router-dom";
 import EditData from "./components/edit-data/edit-data";
 import OrdersHistory from "./components/orders-history/orders-history";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../services/actions/user";
+import { getCookie } from "../../utils/cookie";
 
 const linkClass = `${styles.link} text text_type_main-medium pt-4 pb-5 text_color_inactive`;
 
 const ProfilePage = () => {
   const { path, url } = useRouteMatch();
+  const dispatch = useDispatch();
+
+  const handleLogoutClick = () => {
+    const refreshToken = getCookie('refreshToken');
+    dispatch(logOut(refreshToken));
+  }
 
   return (
     <main className={styles.wrapper}>
@@ -21,7 +30,7 @@ const ProfilePage = () => {
         </NavLink>
         <NavLink
         exact
-          to={`${url}/orders`}
+          to={`${url}/orders/`}
           className={linkClass}
           activeClassName={styles.active}
         >
@@ -31,6 +40,7 @@ const ProfilePage = () => {
           to="/login"
           className={linkClass}
           activeClassName={styles.active}
+          onClick={handleLogoutClick}
         >
           Выход
         </NavLink>
@@ -47,7 +57,7 @@ const ProfilePage = () => {
       <Route exact path={`${path}/orders`}>
         <OrdersHistory />
       </Route>
-      <Route exact path="/profile/orders/:id"></Route>
+      <Route path="/profile/orders/:id"></Route>
     </main>
   );
 };

@@ -27,7 +27,6 @@ const LoginPage = () => {
 
   useEffect(()=>{
     userData && history.push('/');
-    console.log(userData)
   },[userData, history])
 
   return (
