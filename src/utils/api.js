@@ -17,7 +17,7 @@ const addNewOrder = (url, order) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "ingredients": order
+      'ingredients': order
     })
   })
   .then((res) => checkResponse(res))
@@ -58,9 +58,9 @@ const registerNewUser = (url, email, name, password) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      "email": email,
-      "password" : password,
-      "name" : name
+      'email': email,
+      'password' : password,
+      'name' : name
     })
   })
   .then((res) => checkResponse(res))
@@ -69,13 +69,13 @@ const registerNewUser = (url, email, name, password) => {
 //Авторизация пользователя
 const loginUser = (url, email, password) => {
   return fetch(`${url}auth/login`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      "email": email,
-      "password": password
+      'email': email,
+      'password': password
     }),
   }).then((res) => checkResponse(res));
 }
@@ -83,12 +83,12 @@ const loginUser = (url, email, password) => {
 //Обновление токена
 const refreshToken = (url, refreshToken) => {
   return fetch(`${url}auth/token`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      "token": refreshToken
+      'token': refreshToken
     })
   }).then((res) => checkResponse(res));
 }
@@ -96,12 +96,12 @@ const refreshToken = (url, refreshToken) => {
 //Выход из системы
 const logout = (url, refreshToken) => {
   return fetch(`${url}auth/logout`, {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      "token": refreshToken
+      'token': refreshToken
     })
   }).then((res) => checkResponse(res));
 }
@@ -109,25 +109,25 @@ const logout = (url, refreshToken) => {
 //Получение данных о пользователе
 const getUserData = (url, token) => {
   return fetch(`${url}auth/user`, {
-    method: "GET",
+    method: 'GET',
     headers: {
-      "Content-Type": "application/json",
-      "authorization": token
+      'Content-Type': 'application/json',
+      'authorization': token
     }
   }).then((res) => checkResponse(res));
 }
 
 const updateUserData = (url, token, email, name, password) => {
   return fetch(`${url}auth/user`, {
-    method: "PATCH",
+    method: 'PATCH',
     headers: {
-      "Content-Type": "application/json",
-      "authorization": token
+      'Content-Type': 'application/json',
+      'authorization': token
     },
     body: JSON.stringify({
-      "email": email,
-      "name": name,
-      "password": password
+      'email': email,
+      'name': name,
+      'password': password
     })
   }).then((res) => checkResponse(res));
 }
@@ -142,7 +142,8 @@ export {
   loginUser,
   refreshToken,
   logout,
-  getUserData
+  getUserData,
+  updateUserData
 }
 
 

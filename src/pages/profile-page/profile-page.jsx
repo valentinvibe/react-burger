@@ -12,6 +12,7 @@ const ProfilePage = () => {
   const { path, url } = useRouteMatch();
   const dispatch = useDispatch();
 
+
   const handleLogoutClick = () => {
     const refreshToken = getCookie('refreshToken');
     dispatch(logOut(refreshToken));

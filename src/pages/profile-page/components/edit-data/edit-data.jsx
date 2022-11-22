@@ -1,11 +1,21 @@
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
+import { getUserData } from '../../../../utils/api';
+import { getCookie } from '../../../../utils/cookie';
 import styles from './edit-data.module.css';
+import { baseUrl } from '../../../../utils/variables';
 
 const EditData = () => {
   const [ name, setName ] = useState('');
   const [ login, setLogin ] = useState('');
   const [ password, setPassword ] = useState('');
+
+  const accessToken = getCookie('accessToken');
+  getUserData(baseUrl, accessToken)
+  .then(res => {
+    console.log(res)
+  })
+  console.log(accessToken);
 
   return(
     <section className={styles.content}>
