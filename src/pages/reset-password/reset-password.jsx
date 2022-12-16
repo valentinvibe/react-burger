@@ -1,23 +1,26 @@
-import { useState } from "react";
-import styles from "./reset-password.module.css";
+import { useState } from 'react';
+import styles from './reset-password.module.css';
 import {
   Input,
   Button,
   PasswordInput
-} from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link } from "react-router-dom";
-import { resetPassword } from "../../utils/api";
-import { baseUrl } from "../../utils/variables";
-import { getCookie } from "../../utils/cookie";
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import { Link } from 'react-router-dom';
+import { resetPasswords } from '../../services/actions/user';
+import { getCookie } from '../../utils/cookie';
+import { useHistory} from 'react-router-dom';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const token = getCookie('accessToken');
 
+  const history = useHistory();
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    resetPassword(baseUrl, password, token);
+    resetPasswords(password, token);
+    history.replace({pathname: '/login'})
   }
 
 

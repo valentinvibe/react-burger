@@ -5,24 +5,19 @@ import {
   Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Link, useHistory } from "react-router-dom";
-import { forgotPassword } from "../../utils/api";
-import { baseUrl } from "../../utils/variables";
+import { useDispatch } from "react-redux";
+import { forgotPasswords } from "../../services/actions/user";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
+  const dispatch = useDispatch();
   const history = useHistory();
 
   const onSubmitForm = (e) => {
     e.preventDefault();
-    forgotPassword(baseUrl, email)
-    .then(()=> {
-      history.replace({pathname: '/reset-password'})
-    })
-    .catch(() => {
-      console.log(`что-то пошло не так`)
-    })
+    dispatch(forgotPasswords(email))
+    history.replace({pathname: '/reset-password'})
     setEmail('');
-
   }
 
   return (

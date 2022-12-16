@@ -1,9 +1,9 @@
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useState } from 'react';
-import { getUserData } from '../../../../utils/api';
+import { useEffect, useState } from 'react';
 import { getCookie } from '../../../../utils/cookie';
 import styles from './edit-data.module.css';
-import { baseUrl } from '../../../../utils/variables';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUser } from '../../../../services/actions/user';
 
 const EditData = () => {
   const [ name, setName ] = useState('');
@@ -11,11 +11,19 @@ const EditData = () => {
   const [ password, setPassword ] = useState('');
 
   const accessToken = getCookie('accessToken');
-  getUserData(baseUrl, accessToken)
-  .then(res => {
-    console.log(res)
-  })
-  console.log(accessToken);
+  const userData = useSelector((store) => store.user.userData)
+
+  const dispatch = useDispatch();
+
+  useEffect(()=> {
+    dispatch(getUser(accessToken))
+  },[dispatch,accessToken])
+
+  useEffect(()=> {
+    setName(userData.name);
+    setLogin(userData.email);
+  },[userData])
+
 
   return(
     <section className={styles.content}>

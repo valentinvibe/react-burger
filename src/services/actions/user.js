@@ -1,7 +1,7 @@
-import { registerNewUser } from "../../utils/api";
+import { forgotPassword, registerNewUser, resetPassword } from "../../utils/api";
 import { baseUrl } from "../../utils/variables";
 import { clearCookie, setCookie } from "../../utils/cookie";
-import { loginUser, logout } from "../../utils/api";
+import { loginUser, logout, getUserData } from "../../utils/api";
 
 
 export const REGISTRATION = 'REGISTRATION';
@@ -13,7 +13,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILED = 'LOGIN_FAILED';
 
 export const FORGOT_PASSWORD = 'FORGOT_PASSWORD';
-export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SECCESS';
+export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
 export const FORGOT_PASSWORD_FAILED = 'FORGOT_PASSWORD_FAILED';
 
 export const RESET_PASSWORD = 'RESET_PASSWORD';
@@ -48,6 +48,7 @@ export function registration(email, password, name) {
       dispatch({ type: REGISTRATION_SUCCESS })
       setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
       setCookie('refreshToken', res.refreshToken);
+      dispatch({ type: LOGIN_SUCCESS, payload: res.user})
     })
     .catch((err) => {
       dispatch({ type: REGISTRATION_FAILED })
@@ -87,11 +88,58 @@ export function logOut(refreshToken) {
     logout(refreshToken)
       .then(() => {
         clearCookie('refreshToken')
-        dispatch({type: LOGIN_SUCCESS})
+        dispatch({type: LOGOUT_SUCCESS})
       })
       .catch((err) => {
         dispatch({type: LOGOUT_FAILED})
         console.log(err)
       })
+  }
+}
+
+export function getUser(token) {
+  return function(dispatch) {
+    dispatch({type: LOGIN})
+
+    getUserData(baseUrl, token)
+    .then((res) => {
+      dispatch({ type: LOGIN_SUCCESS, payload: res.user})
+    })
+    .catch((err) => {
+      dispatch({type: LOGIN_FAILED});
+      console.log(err);
+    })
+  }
+}
+
+export function forgotPasswords(email) {
+  return function(dispatch) {
+    dispatch({type: FORGOT_PASSWORD})
+
+    forgotPassword(baseUrl, email)
+    .then((res) => {
+      if (res.success) {
+        dispatch({type: FORGOT_PASSWORD_SUCCESS})
+      }
+    })
+    .catch((err) => {
+      dispatch({type: FORGOT_PASSWORD_FAILED});
+      console.log(err);
+    })
+  }
+}
+
+export function resetPasswords(password, token) {
+  return function(dispatch) {
+    dispatch({type: RESET_PASSWORD})
+
+    resetPassword(baseUrl, password, token)
+    .then((res) => {
+      dispatch({type: RESET_PASSWORD_SUCCESS})
+    })
+    .catch((err) => {
+      dispatch({type: RESET_PASSWORD_FAILED});
+      console.log(err)
+    })
   }
 }

@@ -18,30 +18,37 @@ import ForgotPassword from '../../pages/forgot-password/forgot-password';
 import ResetPassword from '../../pages/reset-password/reset-password';
 import ProfilePage from '../../pages/profile-page/profile-page';
 
+import { ProtectedRoute } from '../protected-route/protected-route';
+import { getCookie } from '../../utils/cookie';
+import { getUser } from '../../services/actions/user';
+
 const App = () => {
   const {modal, orderModal } = useSelector(store => ({
     modal: store.modal.ingredientModal,
     orderModal: store.modal.orderModal
   }))
 
+  const accessToken = getCookie('accessToken');
+
   const dispatch = useDispatch();
 
   useEffect(() => {
    dispatch(getItems());
-  },[dispatch])
+   dispatch(getUser(accessToken))
+  },[dispatch, accessToken])
 
   return (
     <>
       <AppHeader/>
       <Switch>
-        <Route exact path="/">
+        <ProtectedRoute exact path="/">
           <main className={styles.content}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients/>
               <BurgerConstructor/>
             </DndProvider>
           </main>
-        </Route>
+        </ProtectedRoute>
         <Route exact path="/login">
           <LoginPage/>
         </Route>
@@ -54,12 +61,12 @@ const App = () => {
         <Route exact path="/reset-password">
           <ResetPassword/>
         </Route>
-        <Route path="/profile">
+        <ProtectedRoute path="/profile">
           <ProfilePage/>
-        </Route>
-        <Route exact path="/ingredients/:id">
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/ingredients/:id">
           {/* <IngredientPage/> */}
-        </Route>
+        </ProtectedRoute>
         <Route>
           <NotFound404/>
         </Route>

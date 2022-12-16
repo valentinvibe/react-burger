@@ -1,5 +1,5 @@
 import styles from "./profile-page.module.css";
-import { NavLink, Route, useRouteMatch } from "react-router-dom";
+import { NavLink, Route, useRouteMatch, useHistory} from "react-router-dom";
 import EditData from "./components/edit-data/edit-data";
 import OrdersHistory from "./components/orders-history/orders-history";
 import { useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ const linkClass = `${styles.link} text text_type_main-medium pt-4 pb-5 text_colo
 const ProfilePage = () => {
   const { path, url } = useRouteMatch();
   const dispatch = useDispatch();
+  const history = useHistory();
 
 
   const handleLogoutClick = () => {
@@ -58,7 +59,6 @@ const ProfilePage = () => {
       <Route exact path={`${path}/orders`}>
         <OrdersHistory />
       </Route>
-      <Route path="/profile/orders/:id"></Route>
     </main>
   );
 };
