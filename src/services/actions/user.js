@@ -1,6 +1,6 @@
 import { forgotPassword, registerNewUser, resetPassword } from "../../utils/api";
 import { baseUrl } from "../../utils/variables";
-import { clearCookie, setCookie } from "../../utils/cookie";
+import { deleteCookie, setCookie } from "../../utils/cookie";
 import { loginUser, logout, getUserData } from "../../utils/api";
 
 
@@ -85,9 +85,10 @@ export function logOut(refreshToken) {
   return function(dispatch) {
     dispatch({type: LOGOUT})
 
-    logout(refreshToken)
+    logout(baseUrl,refreshToken)
       .then(() => {
-        clearCookie('refreshToken')
+        deleteCookie('refreshToken')
+        deleteCookie('accessToken')
         dispatch({type: LOGOUT_SUCCESS})
       })
       .catch((err) => {

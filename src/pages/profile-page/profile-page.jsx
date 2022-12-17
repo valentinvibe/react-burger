@@ -1,10 +1,11 @@
-import styles from "./profile-page.module.css";
-import { NavLink, Route, useRouteMatch, useHistory} from "react-router-dom";
-import EditData from "./components/edit-data/edit-data";
-import OrdersHistory from "./components/orders-history/orders-history";
-import { useDispatch } from "react-redux";
-import { logOut } from "../../services/actions/user";
-import { getCookie } from "../../utils/cookie";
+import { useCallback } from 'react';
+import styles from './profile-page.module.css';
+import { NavLink, Route, useRouteMatch, useHistory} from 'react-router-dom';
+import EditData from './components/edit-data/edit-data';
+import OrdersHistory from './components/orders-history/orders-history';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../services/actions/user';
+import { getCookie } from '../../utils/cookie';
 
 const linkClass = `${styles.link} text text_type_main-medium pt-4 pb-5 text_color_inactive`;
 
@@ -12,11 +13,13 @@ const ProfilePage = () => {
   const { path, url } = useRouteMatch();
   const dispatch = useDispatch();
   const history = useHistory();
+  
 
 
   const handleLogoutClick = () => {
     const refreshToken = getCookie('refreshToken');
     dispatch(logOut(refreshToken));
+    history.replace({pathname: '/login'})
   }
 
   return (
@@ -39,7 +42,8 @@ const ProfilePage = () => {
           История заказов
         </NavLink>
         <NavLink
-          to="/login"
+        exact
+          to='/login'
           className={linkClass}
           activeClassName={styles.active}
           onClick={handleLogoutClick}
