@@ -43,7 +43,6 @@ const initialState = {
   sendUserDataRequest: false,
   sendUserDataRequestFailed: false,
   isPasswordForgot: false,
-  accessToken: null,
   userData: null
 };
 
@@ -165,7 +164,6 @@ export const userReducer = (state = initialState, action) => {
         ...state,
         logoutRequest: false,
         userData: null,
-        accessToken: null,
       };
     }
     case LOGOUT_FAILED: {
@@ -186,7 +184,6 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         refreshTokenRequest: false,
-        accessToken: action.payload,
       };
     }
     case REFRESH_TOKEN_FAILED: {

@@ -75,7 +75,7 @@ export function signIn (email, password) {
     })
     .catch((err) => {
       dispatch({ type: LOGIN_FAILED});
-      console.log(err)
+      console.log(err.status)
     })
   }
 }
@@ -108,7 +108,7 @@ export function getUser(token) {
     })
     .catch((err) => {
       dispatch({type: LOGIN_FAILED});
-      console.log(err);
+      console.log(err.status);
     })
   }
 }
@@ -137,6 +137,7 @@ export function resetPasswords(password, token) {
     resetPassword(baseUrl, password, token)
     .then((res) => {
       dispatch({type: RESET_PASSWORD_SUCCESS})
+      console.log(res)
     })
     .catch((err) => {
       dispatch({type: RESET_PASSWORD_FAILED});
