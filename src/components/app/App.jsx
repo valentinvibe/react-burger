@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './app.module.css';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
@@ -21,65 +21,33 @@ import ProfilePage from '../../pages/profile-page/profile-page';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { getCookie } from '../../utils/cookie';
 import { getUser } from '../../services/actions/user';
+import ContentSwitch  from '../content-switch/content-switch'
 
 const App = () => {
-  const {modal, orderModal } = useSelector(store => ({
+  const { modal, orderModal } = useSelector(store => ({
     modal: store.modal.ingredientModal,
     orderModal: store.modal.orderModal
   }))
 
   const accessToken = getCookie('accessToken');
-
   const dispatch = useDispatch();
 
+  const isLoad = useSelector((store) => store.data.ingredientsRequest);
+
   useEffect(() => {
-   dispatch(getItems());
-   dispatch(getUser(accessToken))
+    dispatch(getItems());
+    dispatch(getUser(accessToken));
+
   },[dispatch, accessToken])
 
   return (
     <>
-      <AppHeader/>
-      <Switch>
-        <ProtectedRoute exact path="/">
-          <main className={styles.content}>
-            <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients/>
-              <BurgerConstructor/>
-            </DndProvider>
-          </main>
-        </ProtectedRoute>
-        <Route exact path="/login">
-          <LoginPage/>
-        </Route>
-        <Route exact path="/register">
-          <RegisterPage/>
-        </Route>
-        <Route exact path="/forgot-password">
-          <ForgotPassword/>
-        </Route>
-        <Route exact path="/reset-password">
-          <ResetPassword/>
-        </Route>
-        <ProtectedRoute path="/profile">
-          <ProfilePage/>
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/ingredients/:id">
-          {/* <IngredientPage/> */}
-        </ProtectedRoute>
-        <Route>
-          <NotFound404/>
-        </Route>
-      </Switch>
-
-      {orderModal &&
-      <Modal>
-        <OrderDetails/>
-      </Modal>}
-      {modal &&
-      <Modal title='Детали ингредиента'>
-        <IngredientDetails/>
-      </Modal>}
+      {!isLoad && (
+        <>
+        <AppHeader/>
+        <ContentSwitch/>
+        </>
+        )}
     </>
 
   );
