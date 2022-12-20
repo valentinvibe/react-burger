@@ -1,4 +1,4 @@
-import { forgotPassword, refreshToken, registerNewUser, resetPassword } from "../../utils/api";
+import { forgotPassword, refreshToken, registerNewUser, resetPassword, updateUserData } from "../../utils/api";
 import { baseUrl } from "../../utils/variables";
 import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
 import { loginUser, logout, getUserData } from "../../utils/api";
@@ -165,6 +165,24 @@ export function updateToken(token) {
     .catch((err) => {
       console.log(err)
       dispatch({type: REFRESH_TOKEN_FAILED})
+    })
+  }
+}
+
+export function updateProfile(token, email, name, password) {
+  return function(dispatch) {
+    dispatch({type: SEND_USER_DATA})
+
+    updateUserData(baseUrl, token, email, name, password)
+    .then((res) => {
+      dispatch({
+        type: SEND_USER_DATA_SUCCESS,
+        payload: res.user
+      })
+    })
+    .catch((err) => {
+      dispatch({type: SEND_USER_DATA_FAILED})
+      console.log(err)
     })
   }
 }
