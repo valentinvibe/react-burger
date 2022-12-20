@@ -117,12 +117,13 @@ const getUserData = (url, token) => {
   }).then((res) => checkResponse(res));
 }
 
+//Изменение данных о пользователе
 const updateUserData = (url, token, email, name, password) => {
   return fetch(`${url}auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
-      'authorization': token
+      'authorization': 'Bearer ' + token
     },
     body: JSON.stringify({
       'email': email,

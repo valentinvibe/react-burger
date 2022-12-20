@@ -1,6 +1,6 @@
-import { forgotPassword, registerNewUser, resetPassword } from "../../utils/api";
+import { forgotPassword, refreshToken, registerNewUser, resetPassword } from "../../utils/api";
 import { baseUrl } from "../../utils/variables";
-import { deleteCookie, setCookie } from "../../utils/cookie";
+import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
 import { loginUser, logout, getUserData } from "../../utils/api";
 
 
@@ -109,6 +109,8 @@ export function getUser(token) {
     .catch((err) => {
       dispatch({type: LOGIN_FAILED});
       console.log(err.status);
+
+      dispatch(updateToken(getCookie('refreshToken')))
     })
   }
 }
@@ -142,6 +144,27 @@ export function resetPasswords(password, token) {
     .catch((err) => {
       dispatch({type: RESET_PASSWORD_FAILED});
       console.log(err)
+    })
+  }
+}
+
+
+export function updateToken(token) {
+  return function(dispatch) {
+    dispatch({type: REFRESH_TOKEN})
+
+    refreshToken(baseUrl, token)
+    .then((res) => {
+      dispatch({type: REFRESH_TOKEN_SUCCESS})
+      setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+      setCookie('refreshToken', res.refreshToken);
+    })
+    .then(() => {
+      getUser(getCookie('accessToken'));
+    })
+    .catch((err) => {
+      console.log(err)
+      dispatch({type: REFRESH_TOKEN_FAILED})
     })
   }
 }
