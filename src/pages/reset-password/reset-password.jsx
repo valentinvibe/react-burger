@@ -8,17 +8,19 @@ import {
 import { Link } from 'react-router-dom';
 import { resetPasswords } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';
-import { useHistory} from 'react-router-dom';
+import { useHistory, Redirect, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const token = getCookie('accessToken');
+  const userData = useSelector(store => store.user.userData);
 
   const isForgotPassword = useSelector((store) => store.user.isPasswordForgot)
 
   const history = useHistory();
+  const { state } = useLocation();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -31,6 +33,14 @@ const ResetPassword = () => {
       history.replace({pathname: '/forgot-password'})
     }
   },[isForgotPassword])
+
+  if (userData) {
+    return (
+      <Redirect
+        to={ state?.from || '/'}
+      />
+    );
+  }
 
 
 

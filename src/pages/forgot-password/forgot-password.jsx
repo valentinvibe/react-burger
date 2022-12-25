@@ -4,20 +4,30 @@ import {
   Input,
   Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useHistory, useLocation, Redirect } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { forgotPasswords } from "../../services/actions/user";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
+  const { state } = useLocation();
+  const userData = useSelector((store) => store.user.userData);
 
   const onSubmitForm = (e) => {
     e.preventDefault();
     dispatch(forgotPasswords(email))
     history.replace({pathname: '/reset-password'})
     setEmail('');
+  }
+
+  if (userData) {
+    return (
+      <Redirect
+        to={ state?.from || '/'}
+      />
+    );
   }
 
   return (
