@@ -25,14 +25,14 @@ const ContentSwitch = () => {
   return (
     <>
       <Switch>
-        <ProtectedRoute exact path="/">
+        <Route exact path="/">
           <main className={styles.content}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
               <BurgerConstructor />
             </DndProvider>
           </main>
-        </ProtectedRoute>
+        </Route>
         <Route exact path="/login">
           <LoginPage />
         </Route>
@@ -48,9 +48,9 @@ const ContentSwitch = () => {
         <ProtectedRoute path="/profile">
           <ProfilePage />
         </ProtectedRoute>
-        <ProtectedRoute exact path="/ingredients/:id">
+        <Route exact path="/ingredients/:id">
           {/* <IngredientPage/> */}
-        </ProtectedRoute>
+        </Route>
         <Route>
           <NotFound404 />
         </Route>

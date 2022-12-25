@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./login-page.module.css";
 import {
   Input,
   Button,
   PasswordInput
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useHistory } from "react-router-dom";
+import { Link, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../services/actions/user";
 
@@ -14,7 +14,7 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.user.userData);
-  const history = useHistory();
+  const { state } = useLocation();
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
@@ -25,9 +25,13 @@ const LoginPage = () => {
     dispatch(signIn(email, password))
   }
 
-  useEffect(()=>{
-    userData && history.push('/');
-  },[userData, history])
+  if (userData) {
+    return (
+      <Redirect
+        to={ state?.from || '/'}
+      />
+    );
+  }
 
   return (
     <div className={styles.wrapper}>

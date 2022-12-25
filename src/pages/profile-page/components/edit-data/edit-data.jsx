@@ -53,6 +53,7 @@ const EditData = () => {
     setName(userData.name);
     setEmail(userData.email);
     setPassword('');
+    setIsDataChanged(false)
   }
 
 

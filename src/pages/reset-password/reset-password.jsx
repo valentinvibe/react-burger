@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './reset-password.module.css';
 import {
   Input,
@@ -9,11 +9,14 @@ import { Link } from 'react-router-dom';
 import { resetPasswords } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';
 import { useHistory} from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const token = getCookie('accessToken');
+
+  const isForgotPassword = useSelector((store) => store.user.isPasswordForgot)
 
   const history = useHistory();
 
@@ -22,6 +25,12 @@ const ResetPassword = () => {
     resetPasswords(password, token);
     history.replace({pathname: '/login'})
   }
+
+  useEffect(()=> {
+    if (!isForgotPassword) {
+      history.replace({pathname: '/forgot-password'})
+    }
+  },[isForgotPassword])
 
 
 
