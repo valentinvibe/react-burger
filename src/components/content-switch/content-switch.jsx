@@ -1,5 +1,5 @@
 import styles from "../app/app.module.css";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route/protected-route";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -17,14 +17,16 @@ import Modal from "../modal/modal";
 import { useSelector } from "react-redux";
 
 const ContentSwitch = () => {
-  const { modal, orderModal } = useSelector((store) => ({
-    modal: store.modal.ingredientModal,
+  const { orderModal } = useSelector((store) => ({
     orderModal: store.modal.orderModal,
   }));
+  const location = useLocation();
+  const from = location.state && location.state.from;
+  const isOpen = useSelector((store) => store.modal.isOpen)
 
   return (
     <>
-      <Switch>
+      <Switch location={from || location}>
         <Route exact path="/">
           <main className={styles.content}>
             <DndProvider backend={HTML5Backend}>
@@ -49,7 +51,7 @@ const ContentSwitch = () => {
           <ProfilePage />
         </ProtectedRoute>
         <Route exact path="/ingredients/:id">
-          {/* <IngredientPage/> */}
+          <IngredientDetails title="Детали ингредиента"/>
         </Route>
         <Route>
           <NotFound404 />
@@ -61,10 +63,14 @@ const ContentSwitch = () => {
           <OrderDetails />
         </Modal>
       )}
-      {modal && (
-        <Modal title="Детали ингредиента">
-          <IngredientDetails />
-        </Modal>
+
+      {isOpen && (
+        <Route exact path="/ingredients/:id">
+          <Modal title="Детали ингредиента">
+            <IngredientDetails />
+          </Modal>
+        </Route>
+        
       )}
     </>
   );

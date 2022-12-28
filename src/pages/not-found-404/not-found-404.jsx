@@ -14,7 +14,11 @@ const NotFound404 = () => {
   return (
     <div className={styles.wrapper}>
       <h2 className={styles.title}>404 page not found</h2>
-      <Button onClick={onclick} type="primary" size="medium">
+      <Button 
+        onClick={onclick} 
+        type="primary" 
+        size="medium" 
+        htmlType={'button'}>
         На главную страницу
       </Button>
     </div>

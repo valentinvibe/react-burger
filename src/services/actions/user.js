@@ -108,7 +108,7 @@ export function getUser(token) {
     })
     .catch((err) => {
       dispatch({type: LOGIN_FAILED});
-      console.log(err.status);
+      console.log(err);
 
       dispatch(updateToken(getCookie('refreshToken')))
     })

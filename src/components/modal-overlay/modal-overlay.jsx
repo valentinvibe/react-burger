@@ -1,13 +1,19 @@
 import styles from './modal-overlay.module.css';
-import { useDispatch } from 'react-redux';
-import { CLOSE_INGREDIENT_MODAL, CLOSE_ORDER_MODAL } from '../../services/actions/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { CLOSE_ORDER_MODAL, CLOSE_MODAL, DEL_ORDER_NUMBER, CLEAR_CHOOSEN_INGREDIENTS} from '../../services/actions/actions';
 
 const ModalOverlay = () => {
   const dispatch = useDispatch();
+  const isOpen = useSelector((store) => store.modal.isOpen)
 
   function handleOverlayClick() {
-    dispatch({type: CLOSE_INGREDIENT_MODAL});
-    dispatch({type: CLOSE_ORDER_MODAL});
+    if (isOpen) {
+      dispatch({type: CLOSE_MODAL});
+    } else {
+      dispatch({type: CLOSE_ORDER_MODAL});
+      dispatch({type: DEL_ORDER_NUMBER});
+      dispatch({type: CLEAR_CHOOSEN_INGREDIENTS});
+    }
   }
 
   return(

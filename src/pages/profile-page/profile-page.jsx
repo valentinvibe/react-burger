@@ -1,6 +1,5 @@
-import { useCallback } from 'react';
 import styles from './profile-page.module.css';
-import { NavLink, Route, useRouteMatch, useHistory} from 'react-router-dom';
+import { NavLink, Route, useRouteMatch, useHistory } from 'react-router-dom';
 import EditData from './components/edit-data/edit-data';
 import OrdersHistory from './components/orders-history/orders-history';
 import { useDispatch } from 'react-redux';
@@ -14,8 +13,6 @@ const ProfilePage = () => {
   const { path, url } = useRouteMatch();
   const dispatch = useDispatch();
   const history = useHistory();
-  
-
 
   const handleLogoutClick = () => {
     const refreshToken = getCookie('refreshToken');
@@ -24,11 +21,12 @@ const ProfilePage = () => {
     history.replace({pathname: '/login'})
   }
 
+
   return (
     <main className={styles.wrapper}>
       <nav className={styles.nav}>
         <NavLink
-        exact
+          exact
           to={`${url}`}
           className={linkClass}
           activeClassName={styles.active}
@@ -36,7 +34,7 @@ const ProfilePage = () => {
           Профиль
         </NavLink>
         <NavLink
-        exact
+          exact
           to={`${url}/orders/`}
           className={linkClass}
           activeClassName={styles.active}
@@ -44,7 +42,7 @@ const ProfilePage = () => {
           История заказов
         </NavLink>
         <NavLink
-        exact
+          exact
           to='/login'
           className={linkClass}
           activeClassName={styles.active}

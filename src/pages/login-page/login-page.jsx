@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./login-page.module.css";
 import {
   Input,
@@ -9,6 +9,7 @@ import { Link, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../services/actions/user";
 
+
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,17 +19,20 @@ const LoginPage = () => {
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
-
     if (!email || !password) {
       return
     }
     dispatch(signIn(email, password))
   }
 
+  useEffect(() => {
+    console.log(state)
+  },[state])
+
   if (userData) {
     return (
       <Redirect
-        to={ state?.from || '/'}
+        to={{ pathname: state?.from || '/'}}
       />
     );
   }
@@ -53,7 +57,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" htmlType={'submit'}>
           Войти
         </Button>
       </form>

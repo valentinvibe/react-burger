@@ -6,28 +6,34 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  CLOSE_INGREDIENT_MODAL,
   CLOSE_ORDER_MODAL,
   DEL_ORDER_NUMBER,
-  CLEAR_CHOOSEN_INGREDIENTS
+  CLEAR_CHOOSEN_INGREDIENTS,
+  CLOSE_MODAL
  } from '../../services/actions/actions';
+ import { useHistory } from 'react-router-dom';
 
 
 
 const Modal = ({children, title=''}) => {
   const container = document.getElementById('react-modals');
   const dispatch = useDispatch();
-  const modalState = useSelector(store => store.modal)
+  const history = useHistory();
+  const isOpen = useSelector((store) => store.modal.isOpen);
 
   const handleCloseModal = useCallback(() => {
-    if (modalState.ingredientModal) {
-      dispatch({type: CLOSE_INGREDIENT_MODAL})
-    } else if (modalState.orderModal) {
+    if (isOpen) {
+      dispatch({type: CLOSE_MODAL})
+      history.replace({pathname: '/'})
+    } else {
       dispatch({type: CLOSE_ORDER_MODAL})
       dispatch({type: DEL_ORDER_NUMBER})
       dispatch({type: CLEAR_CHOOSEN_INGREDIENTS})
     }
-  },[modalState, dispatch])
+    
+    
+    
+  },[dispatch, history, isOpen])
 
   useEffect(() => {
     const closeModalByEsc = (e) => {
