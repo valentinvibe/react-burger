@@ -1,9 +1,9 @@
 import styles from "./ingredient-details.module.css";
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
+import PropTypes from 'prop-types';
 
 const IngredientDetails = ({title}) => {
-  const ingredient = useSelector(store => store.modal.detailsIngredient);
   const { id } = useParams();
   const ingredients = useSelector((state) => state.data.ingredients);
   const selectedIngredient = ingredients.find(ingredient => ingredient._id === id)
@@ -58,6 +58,10 @@ const IngredientDetails = ({title}) => {
     </>
     
   );
+}
+
+IngredientDetails.propTypes = {
+  title: PropTypes.string
 }
 
 export default IngredientDetails

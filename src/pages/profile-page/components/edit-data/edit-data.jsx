@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { getCookie } from '../../../../utils/cookie';
 import styles from './edit-data.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser, updateProfile } from '../../../../services/actions/user';
+import { updateProfile } from '../../../../services/actions/user';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 
@@ -13,15 +13,10 @@ const EditData = () => {
   const [ password, setPassword ] = useState('');
 
   const [isDataChanged, setIsDataChanged] = useState(false);
-
-  const accessToken = getCookie('accessToken');
   const userData = useSelector((store) => store.user.userData)
+  const accessToken = getCookie('accessToken');
 
   const dispatch = useDispatch();
-
-  useEffect(()=> {
-    dispatch(getUser(accessToken))
-  },[dispatch,accessToken])
 
   useEffect(()=> {
     if (userData) {
@@ -32,7 +27,8 @@ const EditData = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProfile(getCookie('accessToken'), email, name, password))
+    dispatch(updateProfile(accessToken, email, name, password))
+    console.log(`PRESSED SAVE`)
     setIsDataChanged(false)
   }
 
@@ -82,7 +78,7 @@ const EditData = () => {
             <Button onClick={onCancelEdit} type="secondary" size="medium" htmlType={'button'}>
               Отмена
             </Button>
-            <Button type="primary" size="medium" htmlType={'button'}>
+            <Button type="primary" size="medium" htmlType={'submit'}>
               Сохранить
             </Button>
           </div>

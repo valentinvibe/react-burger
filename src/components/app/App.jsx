@@ -3,8 +3,8 @@ import AppHeader from '../app-header/app-header';
 import { useDispatch, useSelector } from 'react-redux';
 import { getItems } from '../../services/actions/get-data'
 import { getCookie } from '../../utils/cookie';
-// import { getUser } from '../../services/actions/user';
-import ContentSwitch  from '../content-switch/content-switch'
+import ContentSwitch  from '../content-switch/content-switch';
+import { getUser } from '../../services/actions/user';
 
 const App = () => {
   const accessToken = getCookie('accessToken');
@@ -13,9 +13,10 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getItems());
-    // dispatch(getUser(accessToken));
-
-  },[dispatch, accessToken])
+    if (accessToken) {
+      dispatch(getUser(accessToken))
+    }
+  },[dispatch,accessToken])
 
   return (
     <>

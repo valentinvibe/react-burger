@@ -6,12 +6,12 @@ const checkResponse = (res) => {
 }
 
 const getIngredients = (url) => {
-    return fetch(`${url}ingredients`)
+    return fetch(`${url}/ingredients`)
     .then((res) => checkResponse(res))
 }
 
 const addNewOrder = (url, order) => {
-  return fetch(`${url}orders`, {
+  return fetch(`${url}/orders`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -24,7 +24,7 @@ const addNewOrder = (url, order) => {
 }
 
 const forgotPassword = (url, email) => {
-  return fetch(`${url}password-reset`, {
+  return fetch(`${url}/password-reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ const forgotPassword = (url, email) => {
 }
 
 const resetPassword = (url, password, token) => {
-  return fetch(`${url}password-reset/reset`, {
+  return fetch(`${url}/password-reset/reset`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -52,7 +52,7 @@ const resetPassword = (url, password, token) => {
 
 //Регистрация пользователя
 const registerNewUser = (url, email, name, password) => {
-  return fetch(`${url}auth/register`, {
+  return fetch(`${url}/auth/register`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -68,7 +68,7 @@ const registerNewUser = (url, email, name, password) => {
 
 //Авторизация пользователя
 const loginUser = (url, email, password) => {
-  return fetch(`${url}auth/login`, {
+  return fetch(`${url}/auth/login`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -82,7 +82,7 @@ const loginUser = (url, email, password) => {
 
 //Обновление токена
 const refreshToken = (url, refreshToken) => {
-  return fetch(`${url}auth/token`, {
+  return fetch(`${url}/auth/token`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ const refreshToken = (url, refreshToken) => {
 
 //Выход из системы
 const logout = (url, refreshToken) => {
-  return fetch(`${url}auth/logout`, {
+  return fetch(`${url}/auth/logout`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ const logout = (url, refreshToken) => {
 
 //Получение данных о пользователе
 const getUserData = (url, token) => {
-  return fetch(`${url}auth/user`, {
+  return fetch(`${url}/auth/user`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ const getUserData = (url, token) => {
 
 //Изменение данных о пользователе
 const updateUserData = (url, token, email, name, password) => {
-  return fetch(`${url}auth/user`, {
+  return fetch(`${url}/auth/user`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',

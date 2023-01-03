@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./login-page.module.css";
 import {
   Input,
@@ -16,6 +16,7 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const userData = useSelector((store) => store.user.userData);
   const { state } = useLocation();
+ 
 
   const handleSubmitForm = (e) => {
     e.preventDefault();
@@ -25,14 +26,10 @@ const LoginPage = () => {
     dispatch(signIn(email, password))
   }
 
-  useEffect(() => {
-    console.log(state)
-  },[state])
-
   if (userData) {
     return (
       <Redirect
-        to={{ pathname: state?.from || '/'}}
+        to={{ pathname: state ? state.from.pathname : '/'}}
       />
     );
   }
