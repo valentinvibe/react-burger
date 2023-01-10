@@ -5,11 +5,12 @@ import { getItems } from '../../services/actions/get-data'
 import { getCookie } from '../../utils/cookie';
 import ContentSwitch  from '../content-switch/content-switch';
 import { getUser } from '../../services/actions/user';
+import { getIsLoad } from '../../utils/functions';
 
 const App = () => {
   const accessToken = getCookie('accessToken');
   const dispatch = useDispatch();
-  const isLoad = useSelector((store) => store.data.ingredientsRequest);
+  const isLoad = useSelector(getIsLoad);
 
   useEffect(() => {
     dispatch(getItems());

@@ -4,10 +4,11 @@ import { delOrderIngredient } from '../../../services/actions/order';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDrag, useDrop } from 'react-dnd';
 import { useRef } from 'react';
+import { getSelectedIngredients } from '../../../utils/functions';
 
 const ConstructorItem = ({element, index, moveListItem}) => {
   const dispatch = useDispatch();
-  const selectedIngredients = useSelector(store => store.construct.data)
+  const selectedIngredients = useSelector(getSelectedIngredients);
 
   const onHandleClose = (index) => {
     dispatch(delOrderIngredient(selectedIngredients, index))

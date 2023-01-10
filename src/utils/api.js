@@ -114,7 +114,8 @@ const getUserData = (url, token) => {
       'Content-Type': 'application/json',
       'authorization': 'Bearer ' + token
     }
-  }).then((res) => checkResponse(res));
+  })
+  .then((res) => checkResponse(res));
 }
 
 //Изменение данных о пользователе

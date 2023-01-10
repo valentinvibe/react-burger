@@ -9,13 +9,18 @@ import { Link, Redirect, useLocation } from 'react-router-dom';
 
 import { registration } from '../../services/actions/user';
 import { useSelector, useDispatch } from 'react-redux';
+import { 
+  loginPage,
+  homePage
+} from '../../utils/variables';
+import { getUserData } from '../../utils/functions';
 
 const RegisterPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName ] = useState("");
   const dispatch = useDispatch();
-  const userData = useSelector(store => store.user.userData);
+  const userData = useSelector(getUserData);
   const { state } = useLocation();
 
   const handleFormSubmit = (e) => {
@@ -31,7 +36,7 @@ const RegisterPage = () => {
   if (userData) {
     return (
       <Redirect
-        to={ state?.from || '/'}
+        to={ state?.from || homePage }
       />
     );
   }
@@ -62,13 +67,17 @@ const RegisterPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button type="primary" size="medium">
+        <Button 
+          type="primary" 
+          size="medium"
+          htmlType="submit"  
+        >
           Зарегистрироваться
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive">
         {"Уже зарегистрированы? "}
-        <Link className={styles.link} to="/login">
+        <Link className={styles.link} to={loginPage}>
           Войти
         </Link>
       </p>

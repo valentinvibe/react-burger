@@ -2,13 +2,12 @@ import styles from "./not-found-404.module.css";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useHistory } from "react-router-dom";
 import {useCallback} from "react";
+import { homePage } from "../../utils/variables";
 
 const NotFound404 = () => {
-
     const history = useHistory();
-
     const onclick = useCallback(() => {
-        history.replace({pathname: '/'})
+        history.replace({pathname: homePage })
     }, [history])
 
   return (
@@ -18,7 +17,8 @@ const NotFound404 = () => {
         onClick={onclick} 
         type="primary" 
         size="medium" 
-        htmlType={'button'}>
+        htmlType='button'
+      >
         На главную страницу
       </Button>
     </div>

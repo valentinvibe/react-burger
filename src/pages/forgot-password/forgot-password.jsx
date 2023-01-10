@@ -4,30 +4,24 @@ import {
   Input,
   Button
 } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Link, useHistory, useLocation, Redirect } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { forgotPasswords } from "../../services/actions/user";
+import { 
+  resetPasswordPage,
+  loginPage
+} from "../../utils/variables";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
   const history = useHistory();
-  const { state } = useLocation();
-  const userData = useSelector((store) => store.user.userData);
 
   const onSubmitForm = (e) => {
     e.preventDefault();
     dispatch(forgotPasswords(email))
-    history.replace({pathname: '/reset-password'})
+    history.replace({pathname: resetPasswordPage })
     setEmail('');
-  }
-
-  if (userData) {
-    return (
-      <Redirect
-        to={ state?.from || '/'}
-      />
-    );
   }
 
   return (
@@ -44,13 +38,13 @@ const ForgotPassword = () => {
             width={'100%'}
           />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" htmlType="submit">
           Восстановить
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive">
         {"Вспомнили пароль? "}
-        <Link className={styles.link} to="/login">
+        <Link className={styles.link} to={loginPage}>
           Войти
         </Link>
       </p>

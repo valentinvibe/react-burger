@@ -16,18 +16,32 @@ import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { useSelector } from "react-redux";
 
+import { 
+  homePage,
+  loginPage,
+  registerPage,
+  forgotPasswordPage,
+  resetPasswordPage,
+  profilePage,
+  ingredientsPage
+} from "../../utils/variables";
+
+import { 
+  getOrderModal, 
+  getIsOpen 
+} from "../../utils/functions";
+
 const ContentSwitch = () => {
-  const { orderModal } = useSelector((store) => ({
-    orderModal: store.modal.orderModal,
-  }));
+  const orderModal = useSelector(getOrderModal);
+  const isOpen = useSelector(getIsOpen)
   const location = useLocation();
   const from = location.state && location.state.from;
-  const isOpen = useSelector((store) => store.modal.isOpen)
+  
 
   return (
     <>
       <Switch location={from || location}>
-        <Route exact path="/">
+        <Route exact path={homePage}>
           <main className={styles.content}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
@@ -35,22 +49,22 @@ const ContentSwitch = () => {
             </DndProvider>
           </main>
         </Route>
-        <Route exact path="/login">
+        <Route exact path={loginPage}>
           <LoginPage />
         </Route>
-        <Route exact path="/register">
+        <Route exact path={registerPage}>
           <RegisterPage />
         </Route>
-        <Route exact path="/forgot-password">
+        <ProtectedRoute exact path={forgotPasswordPage} onlyUnAuth={false}>
           <ForgotPassword />
-        </Route>
-        <Route exact path="/reset-password">
+        </ProtectedRoute>
+        <Route exact path={resetPasswordPage}>
           <ResetPassword />
         </Route>
-        <ProtectedRoute path="/profile">
+        <ProtectedRoute path={profilePage} onlyUnAuth={false}>
           <ProfilePage />
         </ProtectedRoute>
-        <Route exact path="/ingredients/:id">
+        <Route exact path={`${ingredientsPage}/:id`}>
           <IngredientDetails title="Детали ингредиента"/>
         </Route>
         <Route>
@@ -65,7 +79,7 @@ const ContentSwitch = () => {
       )}
 
       {isOpen && (
-        <Route exact path="/ingredients/:id">
+        <Route exact path={`${ingredientsPage}/:id`}>
           <Modal title="Детали ингредиента">
             <IngredientDetails />
           </Modal>

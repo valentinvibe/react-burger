@@ -13,18 +13,21 @@ import {
  } from '../../services/actions/actions';
  import { useHistory } from 'react-router-dom';
 
+ import { homePage } from '../../utils/variables';
+ import { getIsOpen } from '../../utils/functions';
+
 
 
 const Modal = ({children, title=''}) => {
   const container = document.getElementById('react-modals');
   const dispatch = useDispatch();
   const history = useHistory();
-  const isOpen = useSelector((store) => store.modal.isOpen);
+  const isOpen = useSelector(getIsOpen);
 
   const handleCloseModal = useCallback(() => {
     if (isOpen) {
       dispatch({type: CLOSE_MODAL})
-      history.replace({pathname: '/'})
+      history.replace({pathname: homePage })
     } else {
       dispatch({type: CLOSE_ORDER_MODAL})
       dispatch({type: DEL_ORDER_NUMBER})

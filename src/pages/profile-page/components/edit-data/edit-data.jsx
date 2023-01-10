@@ -1,11 +1,10 @@
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect, useState } from 'react';
-import { getCookie } from '../../../../utils/cookie';
 import styles from './edit-data.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateProfile } from '../../../../services/actions/user';
+import { refreshAndSend } from '../../../../services/actions/user';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-
+import { getUserData } from '../../../../utils/functions';
 
 const EditData = () => {
   const [ name, setName ] = useState('');
@@ -13,8 +12,7 @@ const EditData = () => {
   const [ password, setPassword ] = useState('');
 
   const [isDataChanged, setIsDataChanged] = useState(false);
-  const userData = useSelector((store) => store.user.userData)
-  const accessToken = getCookie('accessToken');
+  const userData = useSelector(getUserData);
 
   const dispatch = useDispatch();
 
@@ -27,8 +25,7 @@ const EditData = () => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(updateProfile(accessToken, email, name, password))
-    console.log(`PRESSED SAVE`)
+    dispatch(refreshAndSend(email, name, password))
     setIsDataChanged(false)
   }
 
@@ -75,10 +72,19 @@ const EditData = () => {
       {
         isDataChanged && (
           <div className={styles.buttonsContainer}>
-            <Button onClick={onCancelEdit} type="secondary" size="medium" htmlType={'button'}>
+            <Button 
+              onClick={onCancelEdit} 
+              type="secondary" 
+              size="medium" 
+              htmlType={'button'}
+            >
               Отмена
             </Button>
-            <Button type="primary" size="medium" htmlType={'submit'}>
+            <Button 
+              type="primary" 
+              size="medium" 
+              htmlType={'submit'}
+            >
               Сохранить
             </Button>
           </div>

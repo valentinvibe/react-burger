@@ -7,9 +7,11 @@ import { useDrag } from "react-dnd";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useMemo } from 'react'
 import { Link, useLocation } from "react-router-dom";
+import { ingredientsPage } from "../../utils/variables";
+import { getIngredients } from "../../utils/functions";
 
 const Ingredient = ({data}) => {
-  const ingredients = useSelector(store => store.construct)
+  const ingredients = useSelector(getIngredients)
   const dispatch = useDispatch();
   const location = useLocation();
   const handleClick = () => {
@@ -42,7 +44,7 @@ const Ingredient = ({data}) => {
       <Link 
         className={styles.link} 
         to={{
-          pathname: `/ingredients/${data._id}`,
+          pathname: `${ingredientsPage}/${data._id}`,
           state: {from: location}
         }}>
         <img className="ml-4 mr-4" src={data.image} alt={data.name}/>
@@ -53,7 +55,6 @@ const Ingredient = ({data}) => {
         <p className="text text text_type_main-default">{data.name}</p>
         { counter ? <Counter count={counter} size="default" /> : null}
       </Link>
-      
     </li>
   )
 }

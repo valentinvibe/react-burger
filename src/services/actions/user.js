@@ -165,6 +165,7 @@ export function updateToken(token) {
     .catch((err) => {
       console.log(err)
       dispatch({type: REFRESH_TOKEN_FAILED})
+      
     })
   }
 }
@@ -172,7 +173,7 @@ export function updateToken(token) {
 export function updateProfile(token, email, name, password) {
   return function(dispatch) {
     dispatch({type: SEND_USER_DATA})
-
+    
     updateUserData(baseUrl, token, email, name, password)
     .then((res) => {
       dispatch({
@@ -184,5 +185,28 @@ export function updateProfile(token, email, name, password) {
       dispatch({type: SEND_USER_DATA_FAILED})
       console.log(err)
     })
+  }
+}
+
+export function refreshAndSend(email, name, password) {
+  return function(dispatch) {
+    getUserData(baseUrl, getCookie('accessToken'))
+    .then(() => {
+      dispatch(updateProfile(getCookie('accessToken'), email, name, password))
+    })
+    .catch(() => {
+      refreshToken(baseUrl, getCookie('refreshToken'))
+      .then((res) => {
+        setCookie('accessToken', res.accessToken.split('Bearer ')[1]);
+        setCookie('refreshToken', res.refreshToken);
+      })
+      .then(() => {
+        dispatch(updateProfile(getCookie('accessToken'), email, name, password))
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+    })
+
   }
 }

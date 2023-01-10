@@ -4,10 +4,10 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import Ingredient from "../ingredient/burger-ingredient";
 import {useSelector} from 'react-redux';
 import { baseRefHeight } from '../../utils/variables';
+import { getData } from '../../utils/functions';
 
 const BurgerIngredients = () => {
-  const data = useSelector(store => store.data.ingredients);
-
+  const data = useSelector(getData);
   const bunRef = useRef(null);
   const sauceRef = useRef(null);
   const mainRef = useRef(null);

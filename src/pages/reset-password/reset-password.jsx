@@ -8,41 +8,35 @@ import {
 import { Link } from 'react-router-dom';
 import { resetPasswords } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';
-import { useHistory, Redirect, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { 
+  loginPage,
+  forgotPasswordPage
+} from '../../utils/variables';
+import { 
+  getIsForgotPassword
+} from '../../utils/functions';
 
 const ResetPassword = () => {
   const [password, setPassword] = useState('');
   const [code, setCode] = useState('');
   const token = getCookie('accessToken');
-  const userData = useSelector(store => store.user.userData);
-
-  const isForgotPassword = useSelector((store) => store.user.isPasswordForgot)
+  const isForgotPassword = useSelector(getIsForgotPassword);
 
   const history = useHistory();
-  const { state } = useLocation();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     resetPasswords(password, token);
-    history.replace({pathname: '/login'})
+    history.replace({pathname: {loginPage}})
   }
 
   useEffect(()=> {
     if (!isForgotPassword) {
-      history.replace({pathname: '/forgot-password'})
+      history.replace({pathname: forgotPasswordPage })
     }
-  },[isForgotPassword])
-
-  if (userData) {
-    return (
-      <Redirect
-        to={ state?.from || '/'}
-      />
-    );
-  }
-
-
+  },[isForgotPassword, history])
 
   return (
     <div className={styles.wrapper}>
@@ -63,13 +57,13 @@ const ResetPassword = () => {
             onChange={(e) => setCode(e.target.value)}
           />
         </div>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" htmlType='submit'>
           Сохранить
         </Button>
       </form>
       <p className="text text_type_main-default text_color_inactive">
         {"Вспомнили пароль? "}
-        <Link className={styles.link} to="/login">
+        <Link className={styles.link} to={loginPage}>
           Войти
         </Link>
       </p>

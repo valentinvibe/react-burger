@@ -8,13 +8,15 @@ import {
 import { Link, Redirect, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { signIn } from "../../services/actions/user";
+import { homePage } from "../../utils/variables";
+import { getUserData } from "../../utils/functions";
 
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const userData = useSelector((store) => store.user.userData);
+  const userData = useSelector(getUserData);
   const { state } = useLocation();
  
 
@@ -29,7 +31,7 @@ const LoginPage = () => {
   if (userData) {
     return (
       <Redirect
-        to={{ pathname: state ? state.from.pathname : '/'}}
+        to={{ pathname: state ? state.from.pathname : homePage }}
       />
     );
   }
