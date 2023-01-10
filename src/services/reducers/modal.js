@@ -4,13 +4,16 @@ import {
   CLOSE_INGREDIENT_MODAL,
   OPEN_ORDER_MODAL,
   CLOSE_ORDER_MODAL,
-  SET_INGREDIENT_INFO
+  SET_INGREDIENT_INFO,
+  CLOSE_MODAL,
+  OPEN_MODAL
 } from '../actions/actions'
 
 const initialState = {
   ingredientModal: false,
   detailsIngredient: [],
-  orderModal: false
+  orderModal: false,
+  isOpen: false
 }
 
 export const modalReducer = (state = initialState, action) => {
@@ -44,6 +47,18 @@ export const modalReducer = (state = initialState, action) => {
       return {
         ...state,
         detailsIngredient: action.item
+      }
+    }
+    case CLOSE_MODAL: {
+      return {
+        ...state,
+        isOpen: false
+      }
+    }
+    case OPEN_MODAL: {
+      return {
+        ...state,
+        isOpen: true
       }
     }
     default: {

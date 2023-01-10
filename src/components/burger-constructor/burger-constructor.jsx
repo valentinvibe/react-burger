@@ -13,12 +13,21 @@ import { addOrder } from '../../services/actions/order';
 import { useDrop } from 'react-dnd';
 
 import ConstructorItem from './components/constructor-item';
+import { useHistory } from 'react-router-dom';
+import { loginPage } from '../../utils/variables';
+
+import { 
+  getSelectedIngredients,
+  getSelectedBun,
+  getUserData
+} from '../../utils/functions';
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const selectedIngredients = useSelector(store => store.construct.data);
-  const selectedBun = useSelector(store => store.construct.bun);
-  let stateOrder = useSelector(store => store.construct.data)
+  const selectedIngredients = useSelector(getSelectedIngredients);
+  const selectedBun = useSelector(getSelectedBun);
+  const userData = useSelector(getUserData);
+  const history = useHistory();
 
   const moveListItem = useCallback(
     (dragIndex, hoverIndex) => {
@@ -43,11 +52,14 @@ const BurgerConstructor = () => {
   );
 
   const handleSubmitOrderClick = () => {
-    console.log(stateOrder)
-    if (stateOrder.length !== 0) {
+    if (selectedIngredients.length !== 0) {
       dispatch(addOrder(orderIngredients));
       dispatch({type: OPEN_ORDER_MODAL})
     }
+  }
+
+  const handleSignIn = () => {
+    history.replace({pathname: loginPage })
   }
 
   const orderIngredients = useMemo(
@@ -129,8 +141,13 @@ const BurgerConstructor = () => {
           <span className={styles.price}>{totalSum}</span>
           <img className={styles.currency} src={currency} alt="#"/>
       </div>
-        <Button type="primary" size="large" onClick={() => stateOrder ? handleSubmitOrderClick() : null}>
-          Оформить заказ
+        <Button 
+          type="primary" 
+          size="large" 
+          onClick={ userData ? handleSubmitOrderClick : handleSignIn }
+          htmlType={'button'}
+          >
+          {userData ? 'Оформить заказ' : 'Войти'}
         </Button>
       </div>
     </section>

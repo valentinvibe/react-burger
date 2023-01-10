@@ -1,33 +1,45 @@
 import styles from './app-header.module.css';
-import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-const link = `${styles.header__link} p-5 text text_type_main-default`
-const classes = link + ' ' + styles.active;
+import { Logo,
+         BurgerIcon,
+         ListIcon,
+         ProfileIcon
+} from '@ya.praktikum/react-developer-burger-ui-components';
+import { NavLink } from 'react-router-dom';
+import { 
+  homePage,
+  profilePage,
+  orderFeed
+} from '../../utils/variables';
+
+
+const link = `${styles.header__link} p-5 text text_type_main-default`;
+
 const AppHeader = () => {
   return (
     <header className={`${styles.header} pt-4 pb-3`}>
       <nav className={styles.header__navigation}>
         <ul className={styles.header__list}>
           <li className={styles.menuItem}>
-            <a href='/#' className={classes}>
+            <NavLink exact to={homePage} className={link} activeClassName={styles.active}>
               <BurgerIcon type="primary" />
               Конструктор
-            </a>
+            </NavLink>
           </li>
           <li className={styles.menuItem}>
-            <a href='/#' className={link}>
+            <NavLink to={orderFeed} className={link} activeClassName={styles.active}>
               <ListIcon type="primary" />
               Лента заказов
-            </a>
+            </NavLink>
           </li>
         </ul>
-        <a href="/#" className={styles.header__logoWrapper}>
+        <NavLink to={homePage} className={styles.header__logoWrapper}>
           <Logo/>
-        </a>
+        </NavLink>
         <div className={styles.menuItem}>
-          <a href='/#' className={link}>
+          <NavLink to={profilePage} className={link} activeClassName={styles.active}>
             <ProfileIcon type="primary" />
             Личный кабинет
-          </a>
+          </NavLink>
         </div>
       </nav>
     </header>

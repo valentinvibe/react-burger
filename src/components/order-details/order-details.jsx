@@ -1,10 +1,14 @@
 import styles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
 import { useSelector } from "react-redux";
+import { 
+  getOrder,
+  getOrderFailed
+} from "../../utils/functions";
 
 const OrderDetails = () => {
-  const order = useSelector(store => store.order.order);
-  const orderFailed = useSelector(store => store.order.orderFailed);
+  const order = useSelector(getOrder);
+  const orderFailed = useSelector(getOrderFailed);
 
   return(
     !orderFailed ? (
