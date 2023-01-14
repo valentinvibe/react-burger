@@ -11,3 +11,5 @@ export const forgotPasswordPage = '/forgot-password';
 export const resetPasswordPage = '/reset-password';
 export const registerPage = '/register';
 export const ingredientsPage = '/ingredients';
+
+export const feedPage = '/feed';

@@ -15,6 +15,7 @@ import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
 import { useSelector } from "react-redux";
+import Feed from "../../pages/feed-page/feed-page";
 
 import { 
   homePage,
@@ -23,13 +24,15 @@ import {
   forgotPasswordPage,
   resetPasswordPage,
   profilePage,
-  ingredientsPage
+  ingredientsPage,
+  feedPage
 } from "../../utils/variables";
 
 import { 
   getOrderModal, 
   getIsOpen 
 } from "../../utils/functions";
+
 
 const ContentSwitch = () => {
   const orderModal = useSelector(getOrderModal);
@@ -66,6 +69,9 @@ const ContentSwitch = () => {
         </ProtectedRoute>
         <Route exact path={`${ingredientsPage}/:id`}>
           <IngredientDetails title="Детали ингредиента"/>
+        </Route>
+        <Route exact path={feedPage}>
+          <Feed/>
         </Route>
         <Route>
           <NotFound404 />
