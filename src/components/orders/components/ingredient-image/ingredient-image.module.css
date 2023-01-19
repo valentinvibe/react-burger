@@ -3,6 +3,12 @@
   border-radius: 50%;
   background: linear-gradient(to right, rgba(128, 26, 178, 1), rgba(76, 76, 255, 1));
   padding: 2px;
+  position: relative;
+  margin-left: -20px;
+}
+
+.content:first-child {
+  margin-left: 0;
 }
 
 .item {

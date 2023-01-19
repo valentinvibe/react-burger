@@ -1,4 +1,3 @@
-// import { initialState } from "./reducers"
 import {
   OPEN_INGREDIENT_MODAL,
   CLOSE_INGREDIENT_MODAL,
@@ -6,64 +5,63 @@ import {
   CLOSE_ORDER_MODAL,
   SET_INGREDIENT_INFO,
   CLOSE_MODAL,
-  OPEN_MODAL
-} from '../actions/actions'
+  OPEN_MODAL,
+} from "../actions/actions";
 
 const initialState = {
   ingredientModal: false,
   detailsIngredient: [],
   orderModal: false,
-  isOpen: false
-}
+  isOpen: false,
+};
 
 export const modalReducer = (state = initialState, action) => {
   switch (action.type) {
     case OPEN_INGREDIENT_MODAL: {
       return {
         ...state,
-        ingredientModal: true
-      }
+        ingredientModal: true,
+      };
     }
     case CLOSE_INGREDIENT_MODAL: {
       return {
         ...state,
         ingredientModal: false,
-        detailsIngredient: []
-      }
+        detailsIngredient: [],
+      };
     }
     case OPEN_ORDER_MODAL: {
       return {
         ...state,
-        orderModal: true
-      }
+        orderModal: true,
+      };
     }
     case CLOSE_ORDER_MODAL: {
       return {
         ...state,
-        orderModal: false
-      }
+        orderModal: false,
+      };
     }
     case SET_INGREDIENT_INFO: {
       return {
         ...state,
-        detailsIngredient: action.item
-      }
+        detailsIngredient: action.item,
+      };
     }
     case CLOSE_MODAL: {
       return {
         ...state,
-        isOpen: false
-      }
+        isOpen: false,
+      };
     }
     case OPEN_MODAL: {
       return {
         ...state,
-        isOpen: true
-      }
+        isOpen: true,
+      };
     }
     default: {
-      return state
+      return state;
     }
   }
-
-}
+};

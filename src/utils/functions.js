@@ -14,4 +14,3 @@ export const getIngredients = (store) => store.construct;
 export const getOrder = (store) => store.order.order;
 export const getOrderFailed = (store) => store.order.orderFailed;
 export const getIsForgotPassword = (store) => store.user.isPasswordForgot;
-

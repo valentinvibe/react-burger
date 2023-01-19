@@ -1,5 +1,5 @@
 import styles from "../app/app.module.css";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { Switch, Route, useLocation, useRouteMatch } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route/protected-route";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -17,6 +17,8 @@ import Modal from "../modal/modal";
 import { useSelector } from "react-redux";
 import Feed from "../../pages/feed-page/feed-page";
 
+import SingleOrder from "../../pages/single-order/single-order";
+
 import { 
   homePage,
   loginPage,
@@ -25,7 +27,8 @@ import {
   resetPasswordPage,
   profilePage,
   ingredientsPage,
-  feedPage
+  feedPage,
+  orders
 } from "../../utils/variables";
 
 import { 
@@ -39,6 +42,8 @@ const ContentSwitch = () => {
   const isOpen = useSelector(getIsOpen)
   const location = useLocation();
   const from = location.state && location.state.from;
+
+  const { path } = useRouteMatch();
   
 
   return (
@@ -72,6 +77,13 @@ const ContentSwitch = () => {
         </Route>
         <Route exact path={feedPage}>
           <Feed/>
+        </Route>
+        <Route exact path={`${feedPage}/:id`}>
+          <p>Test data</p>
+        </Route>
+
+        <Route exact path={`${path}/${orders}/:id`}>
+          <SingleOrder/>
         </Route>
         <Route>
           <NotFound404 />

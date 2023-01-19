@@ -1,8 +1,18 @@
 import styles from './orders-history.module.css';
+import OrderCard from '../../../../components/orders/components/order-card/order-card';
 
 const OrdersHistory = () => {
   return(
-    <p>Orders History</p>
+    <div className={styles.wrapper}>
+      <OrderCard viewStatus={true}/>
+      <OrderCard viewStatus={true}/>
+      <OrderCard viewStatus={true}/>
+      <OrderCard viewStatus={true}/>
+      <OrderCard viewStatus={true}/>
+      <OrderCard viewStatus={true}/>
+      <OrderCard viewStatus={true}/>
+      <OrderCard viewStatus={true}/>
+    </div>
   )
 }
 

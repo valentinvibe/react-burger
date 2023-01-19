@@ -1,11 +1,10 @@
 .wrapper {
-  width: 536px;
+  max-width: 100%;
   background-color: #1c1c21;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
   border-radius: 40px;
   padding: 24px;
   list-style-type: none;
-  
 }
 
 .orderId {
@@ -25,9 +24,6 @@
 
 .ingredients {
   display: flex;
-  /* flex-direction: row; */
-  position: relative;
-  margin-left: -20px;
 }
 
 .ingredients:first-child {

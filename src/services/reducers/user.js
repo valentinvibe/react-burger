@@ -22,8 +22,8 @@ import {
   REFRESH_TOKEN_FAILED,
   SEND_USER_DATA,
   SEND_USER_DATA_SUCCESS,
-  SEND_USER_DATA_FAILED
-} from '../actions/user';
+  SEND_USER_DATA_FAILED,
+} from "../actions/user";
 
 const initialState = {
   registrationRequest: false,
@@ -43,11 +43,10 @@ const initialState = {
   sendUserDataRequest: false,
   sendUserDataRequestFailed: false,
   isPasswordForgot: false,
-  userData: null
+  userData: null,
 };
 
 export const userReducer = (state = initialState, action) => {
-
   switch (action.type) {
     case REGISTRATION: {
       return {
@@ -102,7 +101,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         forgotPasswordRequest: false,
-        isPasswordForgot: true
+        isPasswordForgot: true,
       };
     }
     case FORGOT_PASSWORD_FAILED: {
@@ -143,7 +142,7 @@ export const userReducer = (state = initialState, action) => {
       return {
         ...state,
         getUserDataRequest: false,
-        userData: action.payload
+        userData: action.payload,
       };
     }
     case GET_USER_DATA_FAILED: {
