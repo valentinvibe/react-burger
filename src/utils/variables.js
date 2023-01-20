@@ -1,4 +1,6 @@
 export const baseUrl = `https://norma.nomoreparties.space/api`;
+export const wsUrl = "wss://norma.nomoreparties.space/orders/all";
+export const wsOrdersUrl = "wss://norma.nomoreparties.space/orders";
 export const baseRefHeight = 250;
 
 export const homePage = "/";

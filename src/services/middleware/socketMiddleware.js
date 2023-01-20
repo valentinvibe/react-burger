@@ -1,44 +1,51 @@
-export const socketMiddleware = (wsUrl) => {
-  return (store) => {
-    let socket = null;
+import { getCookie } from "../../utils/cookie";
 
-    return (next) => (action) => {
-      const { dispatch, getState } = store;
-      const { type, payload } = action;
 
-      if (type === "WS_CONNECTION_START") {
-        // объект класса WebSocket
-        socket = new WebSocket(wsUrl);
-      }
-      if (socket) {
-        // функция, которая вызывается при открытии сокета
-        socket.onopen = (event) => {
-          dispatch({ type: "WS_CONNECTION_SUCCESS", payload: event });
-        };
+export const socketMiddleware = (wsUrl, wsActions, isAuth ) => {
+	return store => {
+		let socket = null;
 
-        // функция, которая вызывается при ошибке соединения
-        socket.onerror = (event) => {
-          dispatch({ type: "WS_CONNECTION_ERROR", payload: event });
-        };
+		return next => action => {
+			const { dispatch } = store;
+			const { type, payload } = action;
+			const { wsInit, wsSendMessage, onOpen, onClose, onError, onMessage } = wsActions;
+			const accessToken = getCookie('accessToken')
 
-        // функция, которая вызывается при получении события от сервера
-        socket.onmessage = (event) => {
-          const { data } = event;
-          dispatch({ type: "WS_GET_MESSAGE", payload: data });
-        };
-        // функция, которая вызывается при закрытии соединения
-        socket.onclose = (event) => {
-          dispatch({ type: "WS_CONNECTION_CLOSED", payload: event });
-        };
+			if (type === wsInit) {
+				if (!isAuth) {
+					socket = new WebSocket(wsUrl);
+				} else {
+					socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
+				}
+			}
+			if (socket) {
+				socket.onopen = event => {
+					dispatch({ type: onOpen, payload: event });
+				};
 
-        if (type === "WS_SEND_MESSAGE") {
-          const message = payload;
-          // функция для отправки сообщения на сервер
-          socket.send(JSON.stringify(message));
-        }
-      }
+				socket.onerror = event => {
+					dispatch({ type: onError, payload: event });
+				};
 
-      next(action);
-    };
-  };
+				socket.onmessage = event => {
+					const { data } = event;
+					const parsedData = JSON.parse(data);
+					const { success, ...restParsedData } = parsedData;
+
+					dispatch({ type: onMessage, payload: restParsedData });
+				};
+
+				socket.onclose = event => {
+					dispatch({ type: onClose, payload: event });
+				};
+
+				if (type === wsSendMessage) {
+					const data = { ...payload };
+					socket.send(JSON.stringify(data));
+				}
+			}
+
+			next(action);
+		};
+	};
 };
