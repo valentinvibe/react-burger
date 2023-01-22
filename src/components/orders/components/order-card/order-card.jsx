@@ -8,6 +8,7 @@ import { useEffect, useMemo } from "react";
 import { useHistory } from 'react-router-dom'
 import { orders } from "../../../../utils/variables";
 import { formatDate } from "../../../../utils/format-date";
+import { useRouteMatch } from 'react-router-dom';
 
 const OrderCard = ({ order, viewStatus }) => {
   const ingredients = useSelector(getData);
@@ -15,6 +16,8 @@ const OrderCard = ({ order, viewStatus }) => {
   const arrIngredientsLength = order.ingredients.length;
   const hideIngredients = arrIngredientsLength - 6;
   const history = useHistory();
+  const { path } = useRouteMatch();
+  // console.log(path)
   
   const orderIngredientsData = useMemo(() => {
     return order.ingredients.map((id) => {
@@ -34,7 +37,7 @@ const OrderCard = ({ order, viewStatus }) => {
   }, [orderIngredientsData]);
 
   const onClick = () => {
-    history.replace({pathname: `${orders}/${order._id}`})
+    history.replace({pathname: `${path}/${order._id}`})
   }
 
   useEffect(() => {

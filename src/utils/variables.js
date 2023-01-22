@@ -8,7 +8,7 @@ export const profilePage = "/profile";
 export const orderFeed = "/feed";
 
 export const loginPage = "/login";
-export const orders = "/orders";
+export const orders = "orders";
 export const forgotPasswordPage = "/forgot-password";
 export const resetPasswordPage = "/reset-password";
 export const registerPage = "/register";

@@ -64,7 +64,7 @@ const ProfilePage = () => {
       <Route exact path={`${path}`}>
         <EditData />
       </Route>
-      <Route exact path={`${path}/${orders}`}>
+      <Route  path={`${path}/${orders}`}>
         <OrdersHistory />
       </Route>
     </main>

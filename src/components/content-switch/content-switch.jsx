@@ -36,12 +36,16 @@ import {
   getIsOpen 
 } from "../../utils/functions";
 
+import { useRouteMatch } from 'react-router-dom';
+
 
 const ContentSwitch = () => {
   const orderModal = useSelector(getOrderModal);
   const isOpen = useSelector(getIsOpen)
   const location = useLocation();
   const from = location.state && location.state.from;
+
+  const { path } = useRouteMatch();
 
   return (
     <>
@@ -76,10 +80,10 @@ const ContentSwitch = () => {
           <Feed/>
         </Route>
         <Route exact path={`${feedPage}/:id`}>
-          <p>Test data</p>
+          <SingleOrder/>
         </Route>
 
-        <Route exact path={`${orders}/:id`}>
+        <Route exact path={`${path}/${orders}/:id`}>
           <SingleOrder/>
         </Route>
         <Route>
