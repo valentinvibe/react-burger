@@ -15,4 +15,19 @@ export const getOrder = (store) => store.order.order;
 export const getOrderFailed = (store) => store.order.orderFailed;
 export const getIsForgotPassword = (store) => store.user.isPasswordForgot;
 
-export const getWsMessages = (store) => store.ws.messages; 
+export const getWsMessages = (store) => store.wsFeed.messages;
+
+export const getWsOrders = (store) => store.wsOrders;
+
+export const filterOrders = (orders) => {
+    if (!orders) {
+        return null
+    }
+    const result = {done: [], pending: []}
+    orders.filter((item) => {
+        return item.status === "done" 
+        ? result.done.push(item.number) 
+        : result.pending.push(item.number)
+    })
+    return result
+}

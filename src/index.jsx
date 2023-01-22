@@ -8,7 +8,7 @@ import { rootReducer } from "./services/reducers";
 import thunk from "redux-thunk";
 import { BrowserRouter as Router } from "react-router-dom";
 import { socketMiddleware } from "./services/middleware/socketMiddleware";
-import { wsUrl, wsOrdersUrl } from "./utils/variables";
+import { wsUrlAll, wsOrdersUrl } from "./utils/variables";
 
 import {
   WS_FEED_CONNECTION_START,
@@ -53,7 +53,7 @@ const userOrdersWsActions = {
 const enhancer = composeEnhancers(
   applyMiddleware(
     thunk,
-    socketMiddleware(wsUrl, feedWsActions, false),
+    socketMiddleware(wsUrlAll, feedWsActions, false),
     socketMiddleware(wsOrdersUrl, userOrdersWsActions, true)
   )
 );

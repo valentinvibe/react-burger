@@ -7,8 +7,10 @@ import {
 
 const initialState = {
   wsConnected: false,
-  messages: [],
-  error: undefined,
+  orders: [],
+  total: 0,
+  totalToday: 0,
+  error: null,
 };
 
 export const wsFeedReducer = (state = initialState, action) => {
@@ -16,30 +18,33 @@ export const wsFeedReducer = (state = initialState, action) => {
     case WS_FEED_CONNECTION_SUCCESS:
       return {
         ...state,
-        error: undefined,
         wsConnected: true,
+        error: null,
       };
 
     case WS_FEED_CONNECTION_ERROR:
       return {
         ...state,
-        error: action.payload,
         wsConnected: false,
+        error: action.payload,
       };
 
     case WS_FEED_CONNECTION_CLOSED:
       return {
         ...state,
-        error: undefined,
         wsConnected: false,
+        error: null,
       };
 
     case WS_FEED_GET_MESSAGE:
       return {
         ...state,
-        error: undefined,
-        messages: [...state.messages, action.payload],
+        orders: action.payload.orders,
+        total: action.payload.total,
+        totalToday: action.payload.totalToday,
+        error: null,
       };
+
     default:
       return state;
   }

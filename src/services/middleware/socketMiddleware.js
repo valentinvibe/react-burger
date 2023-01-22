@@ -12,10 +12,10 @@ export const socketMiddleware = (wsUrl, wsActions, isAuth ) => {
 			const accessToken = getCookie('accessToken')
 
 			if (type === wsInit) {
-				if (!isAuth) {
-					socket = new WebSocket(wsUrl);
-				} else {
+				if (isAuth) {
 					socket = new WebSocket(`${wsUrl}?token=${accessToken}`);
+				} else {
+					socket = new WebSocket(wsUrl);
 				}
 			}
 			if (socket) {

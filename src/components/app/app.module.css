@@ -21,3 +21,9 @@
 *::-webkit-scrollbar-thumb:hover {
   background: #8282da;
 }
+
+
+::-webkit-scrollbar:horizontal{
+  height: 8px;
+}
+
