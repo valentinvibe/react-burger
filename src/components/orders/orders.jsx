@@ -1,21 +1,15 @@
 import styles from "./orders.module.css";
 import OrderCard from "./components/order-card/order-card";
 import { useSelector } from "react-redux";
-import { getWsOrders } from "../../utils/functions";
-import { v4 as uuidv4 } from 'uuid';
-import { useEffect } from "react";
+import { getWsFeed } from "../../utils/functions";
 
 const Orders = () => {
-  const { orders } = useSelector(getWsOrders);
-
-  useEffect(()=> {
-
-  },[orders])
+  const { orders } = useSelector(getWsFeed);
   
   return (
     <ul className={styles.ordersList}>
-      {orders && orders.map((item) => 
-        <OrderCard order={item} key={uuidv4()}/>
+      {orders && orders.map((item,index) => 
+        <OrderCard order={item} key={index}/>
       )}
     </ul>
   );

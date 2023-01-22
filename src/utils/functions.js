@@ -15,7 +15,7 @@ export const getOrder = (store) => store.order.order;
 export const getOrderFailed = (store) => store.order.orderFailed;
 export const getIsForgotPassword = (store) => store.user.isPasswordForgot;
 
-export const getWsMessages = (store) => store.wsFeed.messages;
+export const getWsFeed = (store) => store.wsFeed;
 
 export const getWsOrders = (store) => store.wsOrders;
 

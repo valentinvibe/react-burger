@@ -1,5 +1,5 @@
 import styles from "../app/app.module.css";
-import { Switch, Route, useLocation, useRouteMatch } from "react-router-dom";
+import { Switch, Route, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route/protected-route";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -43,9 +43,6 @@ const ContentSwitch = () => {
   const location = useLocation();
   const from = location.state && location.state.from;
 
-  const { path } = useRouteMatch();
-  
-
   return (
     <>
       <Switch location={from || location}>
@@ -82,7 +79,7 @@ const ContentSwitch = () => {
           <p>Test data</p>
         </Route>
 
-        <Route exact path={`${path}/${orders}/:id`}>
+        <Route exact path={`${orders}/:id`}>
           <SingleOrder/>
         </Route>
         <Route>

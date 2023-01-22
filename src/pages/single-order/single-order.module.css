@@ -1,3 +1,26 @@
 .wrapper {
+  margin-top: 122px;
   width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border: 1px solid red;
+}
+
+.number {
+  align-self: center;
+}
+
+.status {
+  color: #00cccc;
+}
+
+.ingredientsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-sizing: border-box;
+  height: 321px;
+  overflow-y: auto;
 }

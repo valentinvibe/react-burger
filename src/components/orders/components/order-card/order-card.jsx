@@ -5,13 +5,16 @@ import PropTypes from 'prop-types';
 import { useSelector } from "react-redux";
 import { getData } from "../../../../utils/functions";
 import { useEffect, useMemo } from "react";
-import { FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
+import { useHistory } from 'react-router-dom'
+import { orders } from "../../../../utils/variables";
+import { formatDate } from "../../../../utils/format-date";
 
 const OrderCard = ({ order, viewStatus }) => {
   const ingredients = useSelector(getData);
   const maxIngredients = 6;
   const arrIngredientsLength = order.ingredients.length;
   const hideIngredients = arrIngredientsLength - 6;
+  const history = useHistory();
   
   const orderIngredientsData = useMemo(() => {
     return order.ingredients.map((id) => {
@@ -30,16 +33,20 @@ const OrderCard = ({ order, viewStatus }) => {
     }, 0);
   }, [orderIngredientsData]);
 
+  const onClick = () => {
+    history.replace({pathname: `${orders}/${order._id}`})
+  }
+
   useEffect(() => {
 
   },[order])
   
   return (
-    <li className={`${styles.wrapper}`}>
+    <li onClick={onClick} className={`${styles.wrapper}`}>
       <div className={styles.orderId}>
         <p className="text text_type_digits-default">#{order ? order.number : null}</p>
         <p className="text text_type_main-default text_color_inactive">
-          {order ? (<FormattedDate date={new Date(order.createdAt)} />) : null}
+          {order ? (formatDate(order.createdAt)) : null}
         </p>
       </div>
       <p className="mt-6 text text_type_main-medium">

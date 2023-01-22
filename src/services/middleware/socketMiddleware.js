@@ -32,6 +32,9 @@ export const socketMiddleware = (wsUrl, wsActions, isAuth ) => {
 					const parsedData = JSON.parse(data);
 					const { success, ...restParsedData } = parsedData;
 
+					if(event.data === 'ping') {
+						socket.send('pong');
+					}
 					dispatch({ type: onMessage, payload: restParsedData });
 				};
 

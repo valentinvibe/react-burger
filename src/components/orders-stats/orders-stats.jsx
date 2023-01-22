@@ -1,10 +1,10 @@
 import { useSelector } from "react-redux";
 import styles from "./orders-stats.module.css";
 import { filterOrders } from "../../utils/functions";
-import { getWsOrders } from "../../utils/functions";
+import { getWsFeed } from "../../utils/functions";
 
 const OrdersStats = () => {
-  const { total, totalToday, orders } = useSelector(getWsOrders);
+  const { total, totalToday, orders } = useSelector(getWsFeed);
   const ordersStatus = orders ? filterOrders(orders) : null;
 
   return (
