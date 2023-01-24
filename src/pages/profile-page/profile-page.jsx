@@ -18,6 +18,7 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
+
   const handleLogoutClick = () => {
     const refreshToken = getCookie('refreshToken');
     dispatch(logOut(refreshToken));

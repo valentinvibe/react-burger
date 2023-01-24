@@ -5,7 +5,7 @@ import { getWsFeed } from "../../utils/functions";
 
 const OrdersStats = () => {
   const { total, totalToday, orders } = useSelector(getWsFeed);
-  const ordersStatus = orders ? filterOrders(orders) : null;
+  let ordersStatus = orders ? filterOrders(orders) : null;
 
   return (
     <div className={styles.wrapper}>

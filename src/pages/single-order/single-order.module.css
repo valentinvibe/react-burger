@@ -1,9 +1,9 @@
 .wrapper {
-  margin-top: 122px;
   width: 640px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  margin: auto;
 }
 
 .number {
@@ -22,4 +22,18 @@
   box-sizing: border-box;
   height: 321px;
   overflow-y: auto;
+}
+
+.footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.totalPrice {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 9px;
 }
