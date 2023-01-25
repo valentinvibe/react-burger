@@ -23,7 +23,8 @@ import {
   WS_ORDERS_CONNECTION_CLOSED,
   WS_ORDERS_CONNECTION_ERROR,
   WS_ORDERS_GET_MESSAGE
-} from './services/actions/ws-actions-types'
+} from './services/actions/ws-actions-types';
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 

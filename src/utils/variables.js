@@ -5,7 +5,6 @@ export const baseRefHeight = 250;
 
 export const homePage = "/";
 export const profilePage = "/profile";
-export const orderFeed = "/feed";
 
 export const loginPage = "/login";
 export const orders = "orders";

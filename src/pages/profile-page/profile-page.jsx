@@ -1,7 +1,7 @@
 import styles from './profile-page.module.css';
-import { NavLink, Route, useRouteMatch, useHistory } from 'react-router-dom';
-import EditData from './components/edit-data/edit-data';
-import OrdersHistory from './components/orders-history/orders-history';
+import { NavLink, Route, useRouteMatch, useHistory, Switch } from 'react-router-dom';
+import EditData from '../../components/edit-data/edit-data';
+import OrdersHistory from '../../components/orders-history/orders-history';
 import { useDispatch } from 'react-redux';
 import { logOut } from '../../services/actions/user';
 import { getCookie } from '../../utils/cookie';
@@ -61,13 +61,14 @@ const ProfilePage = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-
-      <Route exact path={`${path}`}>
-        <EditData />
-      </Route>
-      <Route  path={`${path}/${orders}`}>
-        <OrdersHistory />
-      </Route>
+      <Switch>
+        <Route exact path={`${path}`}>
+          <EditData />
+        </Route>
+        <Route exact path={`${path}/${orders}`}>
+          <OrdersHistory />
+        </Route>
+      </Switch>
     </main>
   );
 };

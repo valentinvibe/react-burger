@@ -1,12 +1,12 @@
 import styles from "./order-position.module.css";
-import IngredientImage from "../../../components/orders/components/ingredient-image/ingredient-image";
+import IngredientImage from "../orders/components/ingredient-image/ingredient-image";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useSelector } from "react-redux";
-import { getData } from "../../../utils/functions";
+import { getData } from "../../utils/functions";
 import { useMemo } from "react";
-import { uniq } from "../../../utils/functions";
+import { uniq } from "../../utils/functions";
 
-const OrderPosition = ({ ingredients }) => {
+const OrderPositions = ({ ingredients }) => {
   const data = useSelector(getData);
   
   const count = (elem) => {
@@ -46,4 +46,4 @@ const OrderPosition = ({ ingredients }) => {
   )
 };
 
-export default OrderPosition;
+export default OrderPositions;

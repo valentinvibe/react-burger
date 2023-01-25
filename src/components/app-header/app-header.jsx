@@ -6,7 +6,7 @@ import {
   ProfileIcon,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
-import { homePage, profilePage, orderFeed } from "../../utils/variables";
+import { homePage, profilePage, feedPage } from "../../utils/variables";
 
 const link = `${styles.header__link} p-5 text text_type_main-default`;
 
@@ -28,7 +28,7 @@ const AppHeader = () => {
           </li>
           <li className={styles.menuItem}>
             <NavLink
-              to={orderFeed}
+              to={feedPage}
               className={link}
               activeClassName={styles.active}
             >

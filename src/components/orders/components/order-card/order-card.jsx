@@ -4,7 +4,7 @@ import IngredientImage from "../ingredient-image/ingredient-image";
 import PropTypes from "prop-types";
 import { useSelector } from "react-redux";
 import { getData } from "../../../../utils/functions";
-import { useEffect, useMemo } from "react";
+import { useMemo } from "react";
 import { useHistory } from "react-router-dom";
 import { formatDate } from "../../../../utils/format-date";
 import { useRouteMatch } from "react-router-dom";
@@ -35,10 +35,9 @@ const OrderCard = ({ order, viewStatus }) => {
   }, [orderIngredientsData]);
 
   const onClick = () => {
-    history.replace({ pathname: `${path}/${order._id}` });
+    history.push({ pathname: `${path}/${order._id}` });
   };
 
-  // useEffect(() => {}, [order]);
 
   return (
     <li onClick={onClick} className={`${styles.wrapper}`}>

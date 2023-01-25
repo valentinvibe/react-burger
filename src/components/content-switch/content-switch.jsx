@@ -36,7 +36,6 @@ import {
   getIsOpen 
 } from "../../utils/functions";
 
-import { useRouteMatch } from 'react-router-dom';
 
 
 const ContentSwitch = () => {
@@ -44,8 +43,6 @@ const ContentSwitch = () => {
   const isOpen = useSelector(getIsOpen)
   const location = useLocation();
   const from = location.state && location.state.from;
-
-  const { path } = useRouteMatch();
 
   return (
     <>
@@ -83,9 +80,9 @@ const ContentSwitch = () => {
           <SingleOrder/>
         </Route>
 
-        <Route exact path={`${path}/${orders}/:id`}>
+        <ProtectedRoute exact path={`${profilePage}/${orders}/:id`} onlyUnAuth={false}>
           <SingleOrder/>
-        </Route>
+        </ProtectedRoute>
         <Route>
           <NotFound404 />
         </Route>

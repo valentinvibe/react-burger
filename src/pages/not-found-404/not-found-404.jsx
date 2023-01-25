@@ -3,11 +3,9 @@ import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { useHistory } from "react-router-dom";
 import {useCallback} from "react";
 import { homePage } from "../../utils/variables";
-import { useDispatch } from "react-redux";
 
 const NotFound404 = () => {
     const history = useHistory();
-    const dispatch = useDispatch();
     const onclick = useCallback(() => {
         history.replace({pathname: homePage })
     }, [history])

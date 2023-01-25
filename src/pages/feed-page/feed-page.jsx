@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import OrdersStats from "../../components/orders-stats/orders-stats";
 import Orders from "../../components/orders/orders";
 import {
+  WS_FEED_CONNECTION_CLOSED,
   WS_FEED_CONNECTION_START
 } from "../../services/actions/ws-actions-types";
 import styles from "./feed-page.module.css";
@@ -13,6 +14,10 @@ const Feed = () => {
 
   useEffect(() => {
     dispatch({ type: WS_FEED_CONNECTION_START });
+
+    return () => {
+      dispatch({type: WS_FEED_CONNECTION_CLOSED})
+    }
   }, [dispatch]);
 
   

@@ -1,8 +1,8 @@
 import styles from './single-order.module.css';
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import { useEffect, useMemo } from 'react';
-import OrderPosition from './components/order-position';
+import { useMemo } from 'react';
+import OrderPositions from '../../components/order-position-list/order-position';
 import { getData, getWsFeed} from '../../utils/functions';
 import { formatDate } from '../../utils/format-date';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,17 +16,13 @@ const SingleOrder = () => {
   )
   const orderIngredients = order[0].ingredients;
 
-  const findIngredient = (arr, ingredientId) => {
-    return arr.find((item) => item._id === ingredientId)
-  }  
-
   const orderIngredientsData = useMemo(() => {
     return orderIngredients.map((id) => {
       return data.find((item) => {
         return id === item._id;
       });
     });
-  }, [orderIngredients]);
+  }, [orderIngredients,data]);
 
   const orderTotalPrice = useMemo(() => {
     return orderIngredientsData.reduce((sum, item) => {
@@ -37,11 +33,10 @@ const SingleOrder = () => {
     }, 0);
   }, [orderIngredientsData]);
 
-  useEffect(()=> {
-    console.log(orderIngredientsData)
-  })
 
   return(
+    <>
+    { orders &&
     <div className={styles.wrapper}>
       <p className={`text text_type_digits-default ${styles.number}`}>#{order[0] ? order[0].number : null}</p>
       <p className="text text_type_main-medium mt-10">{order[0] ? order[0].name : null}</p>
@@ -57,7 +52,7 @@ const SingleOrder = () => {
       <p className="text text_type_main-medium mt-15">Состав:</p>
       <div className={`${styles.ingredientsContainer} mt-6 mb-10 pr-6`}>
       
-      <OrderPosition ingredients={orderIngredientsData}/>
+      <OrderPositions ingredients={orderIngredientsData}/>
       
       </div>
       <div className={styles.footer}>
@@ -69,7 +64,8 @@ const SingleOrder = () => {
           <CurrencyIcon type="primary" />
         </div>
       </div>
-    </div>
+    </div>}
+    </>
   )
 }
 
