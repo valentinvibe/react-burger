@@ -79,10 +79,13 @@ const ContentSwitch = () => {
         <Route exact path={`${feedPage}/:id`}>
           <SingleOrder/>
         </Route>
-
-        <ProtectedRoute exact path={`${profilePage}/${orders}/:id`} onlyUnAuth={false}>
+        <Route exact path={`${profilePage}/${orders}/:id`}>
           <SingleOrder/>
-        </ProtectedRoute>
+        </Route>
+
+        {/* <ProtectedRoute path={`${profilePage}/${orders}/:id`} onlyUnAuth={false}>
+          <SingleOrder/>
+        </ProtectedRoute> */}
         <Route>
           <NotFound404 />
         </Route>

@@ -10,6 +10,7 @@ import {
   loginPage,
   orders
 } from '../../utils/variables';
+import SingleOrder from '../single-order/single-order';
 
 const linkClass = `${styles.link} text text_type_main-medium pt-4 pb-5 text_color_inactive`;
 
@@ -68,6 +69,9 @@ const ProfilePage = () => {
         <Route exact path={`${path}/${orders}`}>
           <OrdersHistory />
         </Route>
+        {/* <Route exact path={`${path}/${orders}/:id`}>
+          <SingleOrder/>
+        </Route> */}
       </Switch>
     </main>
   );

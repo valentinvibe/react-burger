@@ -35,7 +35,7 @@ const OrderCard = ({ order, viewStatus }) => {
   }, [orderIngredientsData]);
 
   const onClick = () => {
-    history.push({ pathname: `${path}/${order._id}` });
+    history.replace({ pathname: `${path}/${order._id}` });
   };
 
 
