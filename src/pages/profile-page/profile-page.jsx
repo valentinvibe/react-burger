@@ -1,15 +1,18 @@
-import styles from './profile-page.module.css';
-import { NavLink, Route, useRouteMatch, useHistory, Switch } from 'react-router-dom';
-import EditData from '../../components/edit-data/edit-data';
-import OrdersHistory from '../../components/orders-history/orders-history';
-import { useDispatch } from 'react-redux';
-import { logOut } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie';
-import { LOGOUT_SUCCESS } from '../../services/actions/user';
+import styles from "./profile-page.module.css";
 import {
-  loginPage,
-  orders
-} from '../../utils/variables';
+  NavLink,
+  Route,
+  useRouteMatch,
+  useHistory,
+  Switch,
+} from "react-router-dom";
+import EditData from "../../components/edit-data/edit-data";
+import OrdersHistory from "../../components/orders-history/orders-history";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../services/actions/user";
+import { getCookie } from "../../utils/cookie";
+import { LOGOUT_SUCCESS } from "../../services/actions/user";
+import { loginPage, orders } from "../../utils/variables";
 
 const linkClass = `${styles.link} text text_type_main-medium pt-4 pb-5 text_color_inactive`;
 
@@ -18,13 +21,13 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-
   const handleLogoutClick = () => {
-    const refreshToken = getCookie('refreshToken');
+    const refreshToken = getCookie("refreshToken");
     dispatch(logOut(refreshToken));
-    dispatch({type: LOGOUT_SUCCESS });
-    history.replace({pathname: loginPage })
-  }
+    dispatch({ type: LOGOUT_SUCCESS });
+    history.replace({ pathname: loginPage });
+  };
+
 
 
   return (
@@ -55,9 +58,7 @@ const ProfilePage = () => {
         >
           Выход
         </NavLink>
-        <p
-          className={`text text_type_main-default text_color_inactive mt-20`}
-        >
+        <p className={`text text_type_main-default text_color_inactive mt-20`}>
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>

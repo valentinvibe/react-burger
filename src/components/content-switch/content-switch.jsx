@@ -28,19 +28,14 @@ import {
   profilePage,
   ingredientsPage,
   feedPage,
-  orders
+  orders,
 } from "../../utils/variables";
 
-import {
-  getOrderModal,
-  getIsOpen
-} from "../../utils/functions";
-
-
+import { getOrderModal, getIsOpen } from "../../utils/functions";
 
 const ContentSwitch = () => {
   const orderModal = useSelector(getOrderModal);
-  const isOpen = useSelector(getIsOpen)
+  const isOpen = useSelector(getIsOpen);
   const location = useLocation();
   const from = location.state && location.state.from;
 
@@ -67,25 +62,28 @@ const ContentSwitch = () => {
         <Route exact path={resetPasswordPage}>
           <ResetPassword />
         </Route>
-        <ProtectedRoute exact path={`${profilePage}/${orders}/:id`} onlyUnAuth={false}>
-          <SingleOrder/>
+        <ProtectedRoute
+          exact
+          path={`${profilePage}/${orders}/:id`}
+          onlyUnAuth={false}
+        >
+          <SingleOrder />
         </ProtectedRoute>
         <ProtectedRoute path={profilePage} onlyUnAuth={false}>
           <ProfilePage />
         </ProtectedRoute>
         <Route exact path={`${ingredientsPage}/:id`}>
-          <IngredientDetails title="Детали ингредиента"/>
+          <IngredientDetails title="Детали ингредиента" />
         </Route>
         <Route exact path={feedPage}>
-          <Feed/>
+          <Feed />
         </Route>
         <Route exact path={`${feedPage}/:id`}>
-          <SingleOrder/>
+          <SingleOrder />
         </Route>
         <Route exact path={`${profilePage}/${orders}/:id`}>
-          <SingleOrder/>
+          <SingleOrder />
         </Route>
-
 
         <Route>
           <NotFound404 />
@@ -104,7 +102,6 @@ const ContentSwitch = () => {
             <IngredientDetails />
           </Modal>
         </Route>
-
       )}
     </>
   );

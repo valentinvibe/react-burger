@@ -1,3 +1,5 @@
+import { getCookie } from "./cookie";
+
 const checkResponse = (res) => {
   if (res.ok) {
     return res.json();
@@ -14,6 +16,7 @@ const addNewOrder = (url, order) => {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      authorization: "Bearer " + getCookie('accessToken'),
     },
     body: JSON.stringify({
       ingredients: order,

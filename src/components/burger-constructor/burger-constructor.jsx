@@ -10,7 +10,7 @@ import {
   OPEN_ORDER_MODAL,
   ADD_INGREDIENT_ORDER,
   ADD_INGREDIENT_BUN_ORDER,
-  SORT_INGREDIENTS,
+  SORT_INGREDIENTS
 } from "../../services/actions/actions";
 import { addOrder } from "../../services/actions/order";
 import { useDrop } from "react-dnd";

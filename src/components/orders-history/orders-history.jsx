@@ -26,6 +26,11 @@ const OrdersHistory = () => {
     return <p>Loading</p>;
   }
 
+  if (orders.length === 0) {
+    return <p>Нет заказов</p>;
+  }
+
+
   return (
     <div className={styles.wrapper}>
       {orders
