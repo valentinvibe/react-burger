@@ -19,7 +19,7 @@ import Feed from "../../pages/feed-page/feed-page";
 
 import SingleOrder from "../../pages/single-order/single-order";
 
-import { 
+import {
   homePage,
   loginPage,
   registerPage,
@@ -31,9 +31,9 @@ import {
   orders
 } from "../../utils/variables";
 
-import { 
-  getOrderModal, 
-  getIsOpen 
+import {
+  getOrderModal,
+  getIsOpen
 } from "../../utils/functions";
 
 
@@ -67,6 +67,9 @@ const ContentSwitch = () => {
         <Route exact path={resetPasswordPage}>
           <ResetPassword />
         </Route>
+        <ProtectedRoute exact path={`${profilePage}/${orders}/:id`} onlyUnAuth={false}>
+          <SingleOrder/>
+        </ProtectedRoute>
         <ProtectedRoute path={profilePage} onlyUnAuth={false}>
           <ProfilePage />
         </ProtectedRoute>
@@ -83,9 +86,7 @@ const ContentSwitch = () => {
           <SingleOrder/>
         </Route>
 
-        {/* <ProtectedRoute path={`${profilePage}/${orders}/:id`} onlyUnAuth={false}>
-          <SingleOrder/>
-        </ProtectedRoute> */}
+
         <Route>
           <NotFound404 />
         </Route>
@@ -103,7 +104,7 @@ const ContentSwitch = () => {
             <IngredientDetails />
           </Modal>
         </Route>
-        
+
       )}
     </>
   );
