@@ -5,12 +5,11 @@ import { getWsFeed } from "../../utils/functions";
 
 const Orders = () => {
   const { orders } = useSelector(getWsFeed);
-  
+
   return (
     <ul className={styles.ordersList}>
-      {orders && orders.map((item,index) => 
-        <OrderCard order={item} key={index}/>
-      )}
+      {orders &&
+        orders.map((item, index) => <OrderCard order={item} key={index} />)}
     </ul>
   );
 };

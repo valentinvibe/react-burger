@@ -27,7 +27,8 @@ const OrderCard = ({ order, viewStatus }) => {
 
   const orderTotalPrice = useMemo(() => {
     return orderIngredientsData.reduce((sum, item) => {
-      if (item.type === "bun") {
+
+      if (item?.type === "bun") {
         return (sum += item.price * 2);
       }
       return (sum += item ? item.price : 0);
@@ -74,7 +75,7 @@ const OrderCard = ({ order, viewStatus }) => {
                   style={{ zIndex: zIndex }}
                   key={index}
                 >
-                  <IngredientImage image={item.image} alt={item.name} />
+                  <IngredientImage image={item?.image} alt={item?.name} />
                 </li>
               );
             })}

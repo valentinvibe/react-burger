@@ -10,7 +10,7 @@ import styles from "./feed-page.module.css";
 
 const Feed = () => {
   const dispatch = useDispatch();
-  
+
 
   useEffect(() => {
     dispatch({ type: WS_FEED_CONNECTION_START });
@@ -20,7 +20,7 @@ const Feed = () => {
     }
   }, [dispatch]);
 
-  
+
   return (
     <main className={styles.wrapper}>
       <h2 className={`${styles.title} text text_type_main-large`}>
