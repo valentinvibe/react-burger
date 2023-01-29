@@ -34,7 +34,7 @@ const OrdersHistory = () => {
   return (
     <div className={styles.wrapper}>
       {orders
-        ? orders.map((order) => (
+        ? orders.reverse().map((order) => (
             <OrderCard viewStatus={true} key={uuidv4()} order={order} />
           ))
         : null}

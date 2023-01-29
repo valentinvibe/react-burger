@@ -8,9 +8,9 @@ import {
 } from "../../services/actions/ws-actions-types";
 import styles from "./feed-page.module.css";
 
+
 const Feed = () => {
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     dispatch({ type: WS_FEED_CONNECTION_START });

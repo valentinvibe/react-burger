@@ -10,28 +10,39 @@ import {
   DEL_ORDER_NUMBER,
   CLEAR_CHOOSEN_INGREDIENTS,
   CLOSE_MODAL,
+  CLOSE_FEED_MODAL,
+  CLOSE_PROFILE_MODAL
 } from "../../services/actions/actions";
 import { useHistory } from "react-router-dom";
 
-import { homePage } from "../../utils/variables";
+import { feedPage, homePage, ordersPage, profilePage } from "../../utils/variables";
 import { getIsOpen } from "../../utils/functions";
 
 const Modal = ({ children, title = "" }) => {
   const container = document.getElementById("react-modals");
   const dispatch = useDispatch();
   const history = useHistory();
-  const isOpen = useSelector(getIsOpen);
+  const {isOpen, isFeedOrderOpen, isProfileOrderOpen, orderModal}  = useSelector(getIsOpen);
 
   const handleCloseModal = useCallback(() => {
     if (isOpen) {
       dispatch({ type: CLOSE_MODAL });
       history.replace({ pathname: homePage });
-    } else {
+    } if (orderModal) {
       dispatch({ type: CLOSE_ORDER_MODAL });
       dispatch({ type: DEL_ORDER_NUMBER });
       dispatch({ type: CLEAR_CHOOSEN_INGREDIENTS });
+      history.replace({ pathname: homePage });
     }
-  }, [dispatch, history, isOpen]);
+    if (isFeedOrderOpen) {
+      dispatch({type: CLOSE_FEED_MODAL})
+      history.replace({ pathname: feedPage });
+    }
+    if (isProfileOrderOpen) {
+      dispatch({type: CLOSE_PROFILE_MODAL})
+      history.replace({ pathname: `${profilePage}/${ordersPage}` });
+    }
+  }, [dispatch, history, isFeedOrderOpen, isOpen, isProfileOrderOpen, orderModal]);
 
   useEffect(() => {
     const closeModalByEsc = (e) => {

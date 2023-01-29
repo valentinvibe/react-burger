@@ -1,5 +1,5 @@
 export const getOrderModal = (store) => store.modal.orderModal;
-export const getIsOpen = (store) => store.modal.isOpen;
+export const getIsOpen = (store) => store.modal;
 
 export const getIsLoad = (store) => store.data.ingredientsRequest;
 export const getSelectedIngredients = (store) => store.construct.data;

@@ -13,6 +13,7 @@
   min-width: 720px;
   min-height: 300px;
   box-sizing: border-box;
+  z-index: 11;
 }
 
 .title {

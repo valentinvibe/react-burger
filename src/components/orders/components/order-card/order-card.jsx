@@ -2,12 +2,13 @@ import styles from "./order-card.module.css";
 import currency from "../../../../images/currency.png";
 import IngredientImage from "../ingredient-image/ingredient-image";
 import PropTypes from "prop-types";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getData } from "../../../../utils/functions";
 import { useMemo } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useRouteMatch } from "react-router-dom";
 import { formatDate } from "../../../../utils/format-date";
-import { useRouteMatch } from "react-router-dom";
+import { profilePage, ordersPage, feedPage } from "../../../../utils/variables";
+import { OPEN_PROFILE_MODAL, OPEN_FEED_MODAL } from "../../../../services/actions/actions";
 
 const OrderCard = ({ order, viewStatus }) => {
   const ingredients = useSelector(getData);
@@ -16,6 +17,10 @@ const OrderCard = ({ order, viewStatus }) => {
   const hideIngredients = arrIngredientsLength - 6;
   const history = useHistory();
   const { path } = useRouteMatch();
+
+  const isProfileOrders = `${profilePage}/${ordersPage}`;
+  const isFeedOrders = `${feedPage}`;
+  const dispatch = useDispatch();
 
   const orderIngredientsData = useMemo(() => {
     return order.ingredients.map((id) => {
@@ -36,7 +41,14 @@ const OrderCard = ({ order, viewStatus }) => {
   }, [orderIngredientsData]);
 
   const onClick = () => {
-    history.replace({ pathname: `${path}/${order._id}` });
+    if (path === isProfileOrders) {
+      dispatch({type: OPEN_PROFILE_MODAL})
+      history.replace({ pathname: `${path}/${order._id}` });
+    }
+    if (path === isFeedOrders) {
+      dispatch({type: OPEN_FEED_MODAL})
+      history.replace({ pathname: `${path}/${order._id}` });
+    }
   };
 
 

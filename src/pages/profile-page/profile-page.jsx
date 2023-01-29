@@ -3,8 +3,7 @@ import {
   NavLink,
   Route,
   useRouteMatch,
-  useHistory,
-  Switch,
+  useHistory
 } from "react-router-dom";
 import EditData from "../../components/edit-data/edit-data";
 import OrdersHistory from "../../components/orders-history/orders-history";
@@ -62,14 +61,17 @@ const ProfilePage = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
-      <Switch>
+
         <Route exact path={`${path}`}>
           <EditData />
         </Route>
-        <Route exact path={`${path}/${ordersPage}`}>
+
+        <Route path={`${path}/${ordersPage}`}>
           <OrdersHistory />
         </Route>
-      </Switch>
+
+
+
     </main>
   );
 };

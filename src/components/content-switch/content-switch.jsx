@@ -32,10 +32,11 @@ import {
 } from "../../utils/variables";
 
 import { getOrderModal, getIsOpen } from "../../utils/functions";
+import EditData from "../edit-data/edit-data";
 
 const ContentSwitch = () => {
   const orderModal = useSelector(getOrderModal);
-  const isOpen = useSelector(getIsOpen);
+  const {isOpen, isFeedOrderOpen, isProfileOrderOpen} = useSelector(getIsOpen);
   const location = useLocation();
   const from = location.state && location.state.from;
 
@@ -62,6 +63,9 @@ const ContentSwitch = () => {
         <Route exact path={resetPasswordPage}>
           <ResetPassword />
         </Route>
+        <ProtectedRoute path={profilePage} onlyUnAuth={false}>
+          <ProfilePage />
+        </ProtectedRoute>
         <ProtectedRoute
           exact
           path={`${profilePage}/${ordersPage}/:id`}
@@ -69,21 +73,18 @@ const ContentSwitch = () => {
         >
           <SingleOrder />
         </ProtectedRoute>
-        <ProtectedRoute path={profilePage} onlyUnAuth={false}>
-          <ProfilePage />
-        </ProtectedRoute>
         <Route exact path={`${ingredientsPage}/:id`}>
           <IngredientDetails title="Детали ингредиента" />
         </Route>
-        <Route exact path={feedPage}>
+        <Route path={feedPage}>
           <Feed />
         </Route>
         <Route exact path={`${feedPage}/:id`}>
           <SingleOrder />
         </Route>
-        <Route exact path={`${profilePage}/${ordersPage}/:id`}>
+        <ProtectedRoute path={`${profilePage}/${ordersPage}/:id`}>
           <SingleOrder />
-        </Route>
+        </ProtectedRoute>
 
         <Route>
           <NotFound404 />
@@ -102,6 +103,22 @@ const ContentSwitch = () => {
             <IngredientDetails />
           </Modal>
         </Route>
+      )}
+
+      { isFeedOrderOpen && (
+      <Route exact path={`${feedPage}/:id`}>
+        <Modal>
+          <SingleOrder/>
+        </Modal>
+      </Route>
+      )}
+
+      { isProfileOrderOpen && (
+      <ProtectedRoute path={`${profilePage}/${ordersPage}/:id`} onlyUnAuth={false}>
+        <Modal>
+          <SingleOrder/>
+        </Modal>
+      </ProtectedRoute>
       )}
     </>
   );

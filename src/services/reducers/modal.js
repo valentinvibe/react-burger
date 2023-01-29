@@ -6,6 +6,10 @@ import {
   SET_INGREDIENT_INFO,
   CLOSE_MODAL,
   OPEN_MODAL,
+  OPEN_FEED_MODAL,
+  CLOSE_FEED_MODAL,
+  OPEN_PROFILE_MODAL,
+  CLOSE_PROFILE_MODAL
 } from "../actions/actions";
 
 const initialState = {
@@ -13,6 +17,8 @@ const initialState = {
   detailsIngredient: [],
   orderModal: false,
   isOpen: false,
+  isFeedOrderOpen: false,
+  isProfileOrderOpen: false
 };
 
 export const modalReducer = (state = initialState, action) => {
@@ -58,6 +64,30 @@ export const modalReducer = (state = initialState, action) => {
       return {
         ...state,
         isOpen: true,
+      };
+    }
+    case OPEN_FEED_MODAL: {
+      return {
+       ...state,
+        isFeedOrderOpen: true,
+      };
+    }
+    case CLOSE_FEED_MODAL: {
+      return {
+      ...state,
+      isFeedOrderOpen: false,
+      };
+    }
+    case OPEN_PROFILE_MODAL: {
+      return {
+      ...state,
+      isProfileOrderOpen: true,
+      };
+    }
+    case CLOSE_PROFILE_MODAL: {
+      return {
+     ...state,
+     isProfileOrderOpen: false,
       };
     }
     default: {
