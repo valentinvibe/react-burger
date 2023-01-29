@@ -25,8 +25,8 @@ export const filterOrders = (orders) => {
     }
     const result = {done: [], pending: []}
     orders.filter((item) => {
-        return item.status === "done" 
-        ? result.done.push(item.number) 
+        return item.status === "done"
+        ? result.done.push(item.number)
         : result.pending.push(item.number)
     })
     return result

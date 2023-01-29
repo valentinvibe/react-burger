@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { logOut } from "../../services/actions/user";
 import { getCookie } from "../../utils/cookie";
 import { LOGOUT_SUCCESS } from "../../services/actions/user";
-import { loginPage, orders } from "../../utils/variables";
+import { loginPage, ordersPage } from "../../utils/variables";
 
 const linkClass = `${styles.link} text text_type_main-medium pt-4 pb-5 text_color_inactive`;
 
@@ -43,7 +43,7 @@ const ProfilePage = () => {
         </NavLink>
         <NavLink
           exact
-          to={`${url}/${orders}`}
+          to={`${url}/${ordersPage}`}
           className={linkClass}
           activeClassName={styles.active}
         >
@@ -66,7 +66,7 @@ const ProfilePage = () => {
         <Route exact path={`${path}`}>
           <EditData />
         </Route>
-        <Route exact path={`${path}/${orders}`}>
+        <Route exact path={`${path}/${ordersPage}`}>
           <OrdersHistory />
         </Route>
       </Switch>

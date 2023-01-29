@@ -7,7 +7,7 @@ export const homePage = "/";
 export const profilePage = "/profile";
 
 export const loginPage = "/login";
-export const orders = "orders";
+export const ordersPage = "orders";
 export const forgotPasswordPage = "/forgot-password";
 export const resetPasswordPage = "/reset-password";
 export const registerPage = "/register";

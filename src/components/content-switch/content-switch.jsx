@@ -28,7 +28,7 @@ import {
   profilePage,
   ingredientsPage,
   feedPage,
-  orders,
+  ordersPage,
 } from "../../utils/variables";
 
 import { getOrderModal, getIsOpen } from "../../utils/functions";
@@ -64,7 +64,7 @@ const ContentSwitch = () => {
         </Route>
         <ProtectedRoute
           exact
-          path={`${profilePage}/${orders}/:id`}
+          path={`${profilePage}/${ordersPage}/:id`}
           onlyUnAuth={false}
         >
           <SingleOrder />
@@ -81,7 +81,7 @@ const ContentSwitch = () => {
         <Route exact path={`${feedPage}/:id`}>
           <SingleOrder />
         </Route>
-        <Route exact path={`${profilePage}/${orders}/:id`}>
+        <Route exact path={`${profilePage}/${ordersPage}/:id`}>
           <SingleOrder />
         </Route>
 
