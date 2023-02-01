@@ -14,7 +14,6 @@ export function addOrder(order) {
     });
     addNewOrder(baseUrl, order)
       .then((res) => {
-        console.log(res)
         if (res && res.success) {
           dispatch({
             type: CREATE_ORDER_SUCCESS,

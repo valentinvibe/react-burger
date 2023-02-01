@@ -3,7 +3,8 @@ import {
   NavLink,
   Route,
   useRouteMatch,
-  useHistory
+  // useHistory,
+  Switch
 } from "react-router-dom";
 import EditData from "../../components/edit-data/edit-data";
 import OrdersHistory from "../../components/orders-history/orders-history";
@@ -18,13 +19,14 @@ const linkClass = `${styles.link} text text_type_main-medium pt-4 pb-5 text_colo
 const ProfilePage = () => {
   const { path, url } = useRouteMatch();
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
+
 
   const handleLogoutClick = () => {
     const refreshToken = getCookie("refreshToken");
     dispatch(logOut(refreshToken));
     dispatch({ type: LOGOUT_SUCCESS });
-    history.replace({ pathname: loginPage });
+    //history.replace({ pathname: loginPage });
   };
 
 
@@ -61,14 +63,18 @@ const ProfilePage = () => {
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
+      <Switch>
+
+
+        <Route exact path={`${path}/${ordersPage}`}>
+          <OrdersHistory />
+        </Route>
 
         <Route exact path={`${path}`}>
           <EditData />
         </Route>
 
-        <Route path={`${path}/${ordersPage}`}>
-          <OrdersHistory />
-        </Route>
+      </Switch>
 
 
 

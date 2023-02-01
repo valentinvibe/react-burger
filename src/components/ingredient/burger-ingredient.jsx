@@ -47,7 +47,7 @@ const Ingredient = ({ data }) => {
         className={styles.link}
         to={{
           pathname: `${ingredientsPage}/${data._id}`,
-          state: { from: location },
+          state: { background: location },
         }}
       >
         <img className="ml-4 mr-4" src={data.image} alt={data.name} />

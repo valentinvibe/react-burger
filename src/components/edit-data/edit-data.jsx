@@ -72,17 +72,17 @@ const EditData = () => {
       {
         isDataChanged && (
           <div className={styles.buttonsContainer}>
-            <Button 
-              onClick={onCancelEdit} 
-              type="secondary" 
-              size="medium" 
+            <Button
+              onClick={onCancelEdit}
+              type="secondary"
+              size="medium"
               htmlType={'button'}
             >
               Отмена
             </Button>
-            <Button 
-              type="primary" 
-              size="medium" 
+            <Button
+              type="primary"
+              size="medium"
               htmlType={'submit'}
             >
               Сохранить

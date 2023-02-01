@@ -8,9 +8,11 @@ import {
   WS_ORDERS_CONNECTION_CLOSED,
   WS_ORDERS_CONNECTION_START,
 } from "../../services/actions/ws-actions-types";
+import { Link, useLocation } from "react-router-dom"
 
 const OrdersHistory = () => {
   const { orders } = useSelector(getWsOrders);
+  const location = useLocation();
 
   const dispatch = useDispatch();
 
@@ -34,9 +36,21 @@ const OrdersHistory = () => {
   return (
     <div className={styles.wrapper}>
       {orders
-        ? orders.reverse().map((order) => (
+        ? orders.reverse().map((order) => {
+          return(
+            <Link
+              key={uuidv4()}
+              className={styles.link}
+              to={{
+                pathname: `${location.pathname}/${order._id}`,
+                  state: {background : location }
+              }}
+            >
             <OrderCard viewStatus={true} key={uuidv4()} order={order} />
-          ))
+            </Link>
+          )
+
+        })
         : null}
     </div>
   );

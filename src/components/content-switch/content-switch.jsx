@@ -31,18 +31,16 @@ import {
   ordersPage,
 } from "../../utils/variables";
 
-import { getOrderModal, getIsOpen } from "../../utils/functions";
-import EditData from "../edit-data/edit-data";
+import { getOrderModal } from "../../utils/functions";
 
 const ContentSwitch = () => {
   const orderModal = useSelector(getOrderModal);
-  const {isOpen, isFeedOrderOpen, isProfileOrderOpen} = useSelector(getIsOpen);
   const location = useLocation();
-  const from = location.state && location.state.from;
+  const background = location.state?.background;
 
   return (
     <>
-      <Switch location={from || location}>
+      <Switch location={background || location}>
         <Route exact path={homePage}>
           <main className={styles.content}>
             <DndProvider backend={HTML5Backend}>
@@ -63,27 +61,25 @@ const ContentSwitch = () => {
         <Route exact path={resetPasswordPage}>
           <ResetPassword />
         </Route>
-        <ProtectedRoute path={profilePage} onlyUnAuth={false}>
-          <ProfilePage />
-        </ProtectedRoute>
-        <ProtectedRoute
-          exact
-          path={`${profilePage}/${ordersPage}/:id`}
-          onlyUnAuth={false}
-        >
-          <SingleOrder />
-        </ProtectedRoute>
+
         <Route exact path={`${ingredientsPage}/:id`}>
           <IngredientDetails title="Детали ингредиента" />
         </Route>
-        <Route path={feedPage}>
+
+        <Route exact path={feedPage}>
           <Feed />
         </Route>
+
         <Route exact path={`${feedPage}/:id`}>
           <SingleOrder />
         </Route>
-        <ProtectedRoute path={`${profilePage}/${ordersPage}/:id`}>
+
+        <ProtectedRoute exact path={`${profilePage}/${ordersPage}/:id`} onlyUnAuth={false}>
           <SingleOrder />
+        </ProtectedRoute>
+
+        <ProtectedRoute path={profilePage} onlyUnAuth={false}>
+          <ProfilePage />
         </ProtectedRoute>
 
         <Route>
@@ -97,7 +93,7 @@ const ContentSwitch = () => {
         </Modal>
       )}
 
-      {isOpen && (
+      {background && (
         <Route exact path={`${ingredientsPage}/:id`}>
           <Modal title="Детали ингредиента">
             <IngredientDetails />
@@ -105,16 +101,16 @@ const ContentSwitch = () => {
         </Route>
       )}
 
-      { isFeedOrderOpen && (
-      <Route exact path={`${feedPage}/:id`}>
+      { background  && (
+      <Route path={`${feedPage}/:id`}>
         <Modal>
           <SingleOrder/>
         </Modal>
       </Route>
       )}
 
-      { isProfileOrderOpen && (
-      <ProtectedRoute path={`${profilePage}/${ordersPage}/:id`} onlyUnAuth={false}>
+      { background && (
+      <ProtectedRoute exact path={`${profilePage}/${ordersPage}/:id`} onlyUnAuth={false}>
         <Modal>
           <SingleOrder/>
         </Modal>

@@ -10,3 +10,8 @@
     overflow-x: hidden;
     height: calc(100vh - 194px);
 }
+
+.link {
+  text-decoration: none;
+  color: inherit;
+}
