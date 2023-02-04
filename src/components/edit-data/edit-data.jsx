@@ -2,9 +2,9 @@ import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-co
 import { useEffect, useState } from 'react';
 import styles from './edit-data.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { refreshAndSend } from '../../../../services/actions/user';
+import { refreshAndSend } from '../../services/actions/user';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getUserData } from '../../../../utils/functions';
+import { getUserData } from '../../utils/functions';
 
 const EditData = () => {
   const [ name, setName ] = useState('');
@@ -72,17 +72,17 @@ const EditData = () => {
       {
         isDataChanged && (
           <div className={styles.buttonsContainer}>
-            <Button 
-              onClick={onCancelEdit} 
-              type="secondary" 
-              size="medium" 
+            <Button
+              onClick={onCancelEdit}
+              type="secondary"
+              size="medium"
               htmlType={'button'}
             >
               Отмена
             </Button>
-            <Button 
-              type="primary" 
-              size="medium" 
+            <Button
+              type="primary"
+              size="medium"
               htmlType={'submit'}
             >
               Сохранить

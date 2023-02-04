@@ -1,39 +1,39 @@
-import { baseUrl } from "../../utils/variables"
+import { baseUrl } from "../../utils/variables";
 import {
   CREATE_ORDER_REQUEST,
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_FAILED,
-  REMOVE_INGREDIENT_ORDER
-} from './actions'
-import { addNewOrder } from "../../utils/api"
+  REMOVE_INGREDIENT_ORDER,
+} from "./actions";
+import { addNewOrder } from "../../utils/api";
 
 export function addOrder(order) {
-  return function(dispatch) {
+  return function (dispatch) {
     dispatch({
-      type: CREATE_ORDER_REQUEST
-    })
+      type: CREATE_ORDER_REQUEST,
+    });
     addNewOrder(baseUrl, order)
-      .then(res=> {
+      .then((res) => {
         if (res && res.success) {
           dispatch({
             type: CREATE_ORDER_SUCCESS,
-            item: res.order.number
-          })
+            item: res.order.number,
+          });
         }
       })
       .catch(() => {
-        dispatch({type: CREATE_ORDER_FAILED})
-      })
-  }
+        dispatch({ type: CREATE_ORDER_FAILED });
+      });
+  };
 }
 
 export function delOrderIngredient(selectedIngredients, index) {
-  return function(dispatch) {
+  return function (dispatch) {
     const cloneArr = selectedIngredients.slice();
-    cloneArr.splice(index,1);
+    cloneArr.splice(index, 1);
     dispatch({
       type: REMOVE_INGREDIENT_ORDER,
-      payload: cloneArr
-    })
-  }
+      payload: cloneArr,
+    });
+  };
 }

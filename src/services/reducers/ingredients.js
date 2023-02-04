@@ -2,12 +2,12 @@ import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
-} from '../actions/actions'
+} from "../actions/actions";
 
 export const initialState = {
   ingredients: [],
   ingredientsRequest: false,
-  ingredientsFailed: false
+  ingredientsFailed: false,
 };
 
 export const ingredientsReducer = (state = initialState, action) => {
@@ -15,26 +15,26 @@ export const ingredientsReducer = (state = initialState, action) => {
     case GET_INGREDIENTS_REQUEST: {
       return {
         ...state,
-        ingredientsRequest: true
-      }
+        ingredientsRequest: true,
+      };
     }
     case GET_INGREDIENTS_SUCCESS: {
       return {
         ...state,
         ingredientsRequest: false,
         ingredientsFailed: false,
-        ingredients: action.items
-      }
+        ingredients: action.items,
+      };
     }
     case GET_INGREDIENTS_FAILED: {
       return {
         ...state,
         ingredientsRequest: false,
-        ingredientsFailed: true
-      }
+        ingredientsFailed: true,
+      };
     }
     default: {
-      return state
+      return state;
     }
   }
-}
+};

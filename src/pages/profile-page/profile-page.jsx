@@ -1,29 +1,34 @@
-import styles from './profile-page.module.css';
-import { NavLink, Route, useRouteMatch, useHistory } from 'react-router-dom';
-import EditData from './components/edit-data/edit-data';
-import OrdersHistory from './components/orders-history/orders-history';
-import { useDispatch } from 'react-redux';
-import { logOut } from '../../services/actions/user';
-import { getCookie } from '../../utils/cookie';
-import { LOGOUT_SUCCESS } from '../../services/actions/user';
-import { 
-  loginPage,
-  orders
-} from '../../utils/variables';
+import styles from "./profile-page.module.css";
+import {
+  NavLink,
+  Route,
+  useRouteMatch,
+  // useHistory,
+  Switch
+} from "react-router-dom";
+import EditData from "../../components/edit-data/edit-data";
+import OrdersHistory from "../../components/orders-history/orders-history";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../services/actions/user";
+import { getCookie } from "../../utils/cookie";
+import { LOGOUT_SUCCESS } from "../../services/actions/user";
+import { loginPage, ordersPage } from "../../utils/variables";
 
 const linkClass = `${styles.link} text text_type_main-medium pt-4 pb-5 text_color_inactive`;
 
 const ProfilePage = () => {
   const { path, url } = useRouteMatch();
   const dispatch = useDispatch();
-  const history = useHistory();
+  // const history = useHistory();
+
 
   const handleLogoutClick = () => {
-    const refreshToken = getCookie('refreshToken');
+    const refreshToken = getCookie("refreshToken");
     dispatch(logOut(refreshToken));
-    dispatch({type: LOGOUT_SUCCESS });
-    history.replace({pathname: loginPage })
-  }
+    dispatch({ type: LOGOUT_SUCCESS });
+    //history.replace({ pathname: loginPage });
+  };
+
 
 
   return (
@@ -39,7 +44,7 @@ const ProfilePage = () => {
         </NavLink>
         <NavLink
           exact
-          to={`${url}/${orders}`}
+          to={`${url}/${ordersPage}`}
           className={linkClass}
           activeClassName={styles.active}
         >
@@ -54,19 +59,25 @@ const ProfilePage = () => {
         >
           Выход
         </NavLink>
-        <p
-          className={`text text_type_main-default text_color_inactive mt-20`}
-        >
+        <p className={`text text_type_main-default text_color_inactive mt-20`}>
           В этом разделе вы можете изменить свои персональные данные
         </p>
       </nav>
+      <Switch>
 
-      <Route exact path={`${path}`}>
-        <EditData />
-      </Route>
-      <Route exact path={`${path}/${orders}`}>
-        <OrdersHistory />
-      </Route>
+
+        <Route exact path={`${path}/${ordersPage}`}>
+          <OrdersHistory />
+        </Route>
+
+        <Route exact path={`${path}`}>
+          <EditData />
+        </Route>
+
+      </Switch>
+
+
+
     </main>
   );
 };
