@@ -7,10 +7,11 @@ import {
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import { NavLink } from "react-router-dom";
 import { homePage, profilePage, feedPage } from "../../utils/variables";
+import { FC } from 'react'
 
 const link = `${styles.header__link} p-5 text text_type_main-default`;
 
-const AppHeader = () => {
+const AppHeader : FC = () => {
   return (
     <header className={`${styles.header} pt-4 pb-3`}>
       <nav className={styles.header__navigation}>
