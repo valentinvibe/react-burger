@@ -1,17 +1,17 @@
 import { getCookie } from "./cookie";
 
-const checkResponse = (res) => {
+const checkResponse = (res : Response) => {
   if (res.ok) {
     return res.json();
   }
   return Promise.reject(`Ошибка ${res.status} ${res.statusText}`);
 };
 
-const getIngredients = (url) => {
+const getIngredients = (url : string) => {
   return fetch(`${url}/ingredients`).then((res) => checkResponse(res));
 };
 
-const addNewOrder = (url, order) => {
+const addNewOrder = (url : string, order : Array<string>) => {
   return fetch(`${url}/orders`, {
     method: "POST",
     headers: {
@@ -24,7 +24,7 @@ const addNewOrder = (url, order) => {
   }).then((res) => checkResponse(res));
 };
 
-const forgotPassword = (url, email) => {
+const forgotPassword = (url : string, email : string) => {
   return fetch(`${url}/password-reset`, {
     method: "POST",
     headers: {
@@ -36,7 +36,7 @@ const forgotPassword = (url, email) => {
   }).then((res) => checkResponse(res));
 };
 
-const resetPassword = (url, password, token) => {
+const resetPassword = (url : string, password : string, token : string) => {
   return fetch(`${url}/password-reset/reset`, {
     method: "POST",
     headers: {
@@ -50,7 +50,7 @@ const resetPassword = (url, password, token) => {
 };
 
 //Регистрация пользователя
-const registerNewUser = (url, email, name, password) => {
+const registerNewUser = (url : string, email : string, name : string, password : string) => {
   return fetch(`${url}/auth/register`, {
     method: "POST",
     headers: {
@@ -65,7 +65,7 @@ const registerNewUser = (url, email, name, password) => {
 };
 
 //Авторизация пользователя
-const loginUser = (url, email, password) => {
+const loginUser = (url : string , email : string, password : string) => {
   return fetch(`${url}/auth/login`, {
     method: "POST",
     headers: {
@@ -79,7 +79,7 @@ const loginUser = (url, email, password) => {
 };
 
 //Обновление токена
-const refreshToken = (url, refreshToken) => {
+const refreshToken = (url : string, refreshToken : string) => {
   return fetch(`${url}/auth/token`, {
     method: "POST",
     headers: {
@@ -92,7 +92,7 @@ const refreshToken = (url, refreshToken) => {
 };
 
 //Выход из системы
-const logout = (url, refreshToken) => {
+const logout = (url : string, refreshToken : string) => {
   return fetch(`${url}/auth/logout`, {
     method: "POST",
     headers: {
@@ -105,7 +105,7 @@ const logout = (url, refreshToken) => {
 };
 
 //Получение данных о пользователе
-const getUserData = (url, token) => {
+const getUserData = (url : string, token : string) => {
   return fetch(`${url}/auth/user`, {
     method: "GET",
     headers: {
@@ -116,7 +116,7 @@ const getUserData = (url, token) => {
 };
 
 //Изменение данных о пользователе
-const updateUserData = (url, token, email, name, password) => {
+const updateUserData = (url : string, token : string, email : string, name : string, password : string) => {
   return fetch(`${url}/auth/user`, {
     method: "PATCH",
     headers: {

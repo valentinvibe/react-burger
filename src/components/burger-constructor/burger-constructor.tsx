@@ -1,11 +1,12 @@
+import { FC } from 'react';
 import styles from "./burger-constructor.module.css";
 import {
   ConstructorElement,
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import currency from "../../images/currency.png";
-import { useMemo, useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useMemo, useEffect, useCallback } from "react"
+import { useSelector, useDispatch } from "../../services/types/hooks";
 import {
   OPEN_ORDER_MODAL,
   ADD_INGREDIENT_ORDER,
@@ -24,8 +25,13 @@ import {
   getSelectedBun,
   getUserData,
 } from "../../utils/functions";
+import { TIngredient } from "../../services/types";
 
-const BurgerConstructor = () => {
+interface IDropItem {
+  data: TIngredient
+}
+
+const BurgerConstructor : FC = () => {
   const dispatch = useDispatch();
   const selectedIngredients = useSelector(getSelectedIngredients);
   const selectedBun = useSelector(getSelectedBun);
@@ -33,7 +39,7 @@ const BurgerConstructor = () => {
   const history = useHistory();
 
   const moveListItem = useCallback(
-    (dragIndex, hoverIndex) => {
+    (dragIndex : number, hoverIndex : number) => {
       const dragItem = selectedIngredients[dragIndex];
       const hoverItem = selectedIngredients[hoverIndex];
 
@@ -52,7 +58,7 @@ const BurgerConstructor = () => {
   const totalSum = useMemo(
     () =>
       selectedIngredients.reduce(
-        (sum, ingredient) => sum + ingredient.price,
+        (sum : number, ingredient : TIngredient) => sum + ingredient.price,
         selectedBun.price ? selectedBun.price * 2 : 0
       ),
     [selectedIngredients, selectedBun]
@@ -70,7 +76,7 @@ const BurgerConstructor = () => {
   };
 
   const orderIngredients = useMemo(
-    () => selectedIngredients.map((element) => element._id),
+    () => selectedIngredients.map((element : TIngredient) => element._id),
     [selectedIngredients]
   );
 
@@ -82,13 +88,13 @@ const BurgerConstructor = () => {
 
   const [, dropTarget] = useDrop({
     accept: "ingredient",
-    drop(item) {
+    drop(item : IDropItem) {
       dispatch({
         type:
           item.data.type === "bun"
             ? ADD_INGREDIENT_BUN_ORDER
             : ADD_INGREDIENT_ORDER,
-        payload: item,
+        data: item.data,
       });
     },
   });
@@ -132,7 +138,7 @@ const BurgerConstructor = () => {
           ) : (
             <ul className={`${styles.listScroll} mt-4 mb-4`}>
               {selectedIngredients.length > 0
-                ? selectedIngredients.map((element, index) => (
+                ? selectedIngredients.map((element : TIngredient, index : number) => (
                     <ConstructorItem
                       key={element._id + index}
                       element={element}

@@ -1,4 +1,5 @@
 import styles from "../app/app.module.css";
+import React from "react";
 import { Switch, Route, useLocation } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route/protected-route";
 import { DndProvider } from "react-dnd";

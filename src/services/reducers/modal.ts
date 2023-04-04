@@ -12,6 +12,18 @@ import {
   CLOSE_PROFILE_MODAL
 } from "../actions/actions";
 
+import { TModalActions } from "../types/modal-types";
+import { TIngredient } from "../types";
+
+export interface IinitialState {
+  ingredientModal: boolean,
+  detailsIngredient: Array<TIngredient>,
+  orderModal: boolean,
+  isOpen: boolean,
+  isFeedOrderOpen: boolean,
+  isProfileOrderOpen: boolean
+}
+
 const initialState = {
   ingredientModal: false,
   detailsIngredient: [],
@@ -21,7 +33,7 @@ const initialState = {
   isProfileOrderOpen: false
 };
 
-export const modalReducer = (state = initialState, action) => {
+export const modalReducer = (state : IinitialState = initialState, action : TModalActions) => {
   switch (action.type) {
     case OPEN_INGREDIENT_MODAL: {
       return {

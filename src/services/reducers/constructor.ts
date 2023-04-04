@@ -6,23 +6,31 @@ import {
   CLEAR_CHOOSEN_INGREDIENTS,
 } from "../actions/actions";
 
+import { TConstructorActions } from "../actions/constructor";
+import { TIngredient } from "../types";
+
+export interface IConstructorState {
+  data: Array<TIngredient>,
+  bun: TIngredient | null
+}
+
 const initialState = {
   data: [],
   bun: {},
 };
 
-export const constructorReducer = (state = initialState, action) => {
+export const constructorReducer = (state = initialState, action : TConstructorActions) : IConstructorState=> {
   switch (action.type) {
     case ADD_INGREDIENT_ORDER: {
       return {
         ...state,
-        data: [...state.data, action.payload.data],
+        data: [...state.data, action.data],
       };
     }
     case ADD_INGREDIENT_BUN_ORDER: {
       return {
         ...state,
-        bun: action.payload.data,
+        bun: action.payload,
       };
     }
     case REMOVE_INGREDIENT_ORDER: {

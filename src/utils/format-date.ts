@@ -1,4 +1,4 @@
-export const formatDate = (date) => {
+export const formatDate = (date : Date) => {
     const createdAt = new Date(date);
     const today = new Date();
     today.setHours(0, 0, 0, 0);
@@ -13,7 +13,7 @@ export const formatDate = (date) => {
       createdAt.getMinutes() > 9
         ? createdAt.getMinutes()
         : `0${createdAt.getMinutes()}`;
-    const getDays = (days) =>
+    const getDays = (days : number) =>
       days === 0
         ? "Сегодня"
         : days === 1

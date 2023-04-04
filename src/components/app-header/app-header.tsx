@@ -9,7 +9,7 @@ import { NavLink } from "react-router-dom";
 import { homePage, profilePage, feedPage } from "../../utils/variables";
 import { FC } from 'react'
 
-const link = `${styles.header__link} p-5 text text_type_main-default`;
+const link : string = `${styles.header__link} p-5 text text_type_main-default`;
 
 const AppHeader : FC = () => {
   return (

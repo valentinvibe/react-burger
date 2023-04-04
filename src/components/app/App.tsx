@@ -1,6 +1,6 @@
 import { useEffect, FC } from "react";
 import AppHeader from "../app-header/app-header";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/hooks";
 import { getItems } from "../../services/actions/get-data";
 import { getCookie } from "../../utils/cookie";
 import ContentSwitch from "../content-switch/content-switch";
