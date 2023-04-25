@@ -1,5 +1,6 @@
 import { RootState } from "../services/types";
-import { Tingredient } from "../services/types";
+import { TIngredient } from "../services/types";
+import { TOrder } from "../services/types/order";
 
 export const getOrderModal = (store : RootState) => store.modal.orderModal;
 export const getIsOpen = (store : RootState) => store.modal;
@@ -22,12 +23,17 @@ export const getWsFeed = (store : RootState) => store.wsFeed;
 
 export const getWsOrders = (store : RootState) => store.wsOrders;
 
-export const filterOrders = (orders) => {
+type TResult = {
+    done: Array<number>,
+    pending: Array<number>
+}
+
+export const filterOrders = (orders : Array<TOrder>) => {
     if (!orders) {
         return null
     }
-    const result = {done: [], pending: []}
-    orders.filter((item) => {
+    const result : TResult = {done: [], pending: []}
+    orders.filter((item : TOrder) => {
         return item.status === "done"
         ? result.done.push(item.number)
         : result.pending.push(item.number)
@@ -35,8 +41,11 @@ export const filterOrders = (orders) => {
     return result
 }
 
-export const uniq = (arr : Array<Tingredient>) => {
-    let result = [];
+export const uniq = (arr : Array<TIngredient> | undefined) => {
+    let result : Array<TIngredient> = [];
+    if (arr === undefined) {
+        return result
+    }
     for (let i=0;i<arr.length;i++) {
         if (result.indexOf(arr[i]) === -1) {
             result.push(arr[i]);

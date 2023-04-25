@@ -1,3 +1,4 @@
+import { AppThunk } from "../services/types";
 import { getCookie } from "./cookie";
 
 const checkResponse = (res : Response) => {
@@ -79,7 +80,7 @@ const loginUser = (url : string , email : string, password : string) => {
 };
 
 //Обновление токена
-const refreshToken = (url : string, refreshToken : string) => {
+const refreshToken = (url : string, refreshToken : string | undefined) => {
   return fetch(`${url}/auth/token`, {
     method: "POST",
     headers: {
@@ -105,8 +106,8 @@ const logout = (url : string, refreshToken : string) => {
 };
 
 //Получение данных о пользователе
-const getUserData = (url : string, token : string) => {
-  return fetch(`${url}/auth/user`, {
+const getUserData = async (url : string, token : string | undefined) => {
+  return await fetch(`${url}/auth/user`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

@@ -7,30 +7,31 @@ import {
   CLEAR_CHOOSEN_INGREDIENTS,
 } from './actions';
 
+
 export interface IAddIngredientOrder {
     readonly type: typeof ADD_INGREDIENT_ORDER,
-    readonly data: Array<TIngredient>
+    readonly data: TIngredient
 }
 
 export interface IAddIngredientBunOrder {
-    readonly type: typeof ADD_INGREDIENT_BUN_ORDER
-    readonly bun: TIngredient
+    readonly type: typeof ADD_INGREDIENT_BUN_ORDER,
+    readonly data: TIngredient
 }
 
 export interface IRemoveIngredientOrder {
     readonly type: typeof REMOVE_INGREDIENT_ORDER
-    readonly data: Array<TIngredient>
+    readonly data: TIngredient[]
 }
 
 export interface ISortIngredients {
     readonly type: typeof SORT_INGREDIENTS
-    readonly data: Array<TIngredient>
+    readonly data: TIngredient[]
 }
 
 export interface IClearChoosenIngredients {
     readonly type: typeof CLEAR_CHOOSEN_INGREDIENTS,
-    data: Array<TIngredient>,
-    bun: TIngredient
+    data: TIngredient[],
+    bun: TIngredient | null
 }
 
 export type TConstructorActions = 

@@ -5,10 +5,11 @@ import {
   GET_INGREDIENTS_FAILED,
 } from "./actions";
 import { baseUrl } from "../../utils/variables";
+import { AppDispatch } from "../types";
 
   
 export function getItems() {
-  return function (dispatch) {
+  return function (dispatch : AppDispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST,
     });

@@ -4,11 +4,11 @@ import {
   GET_INGREDIENTS_FAILED,
 } from "../actions/actions";
 
-import { Tingredient } from "../types";
+import { TIngredient } from "../types";
 import { TIngredientsActions } from "../types/get-data";
 
 export interface IInitialState {
-  ingredients: Array<Tingredient>,
+  ingredients: Array<TIngredient>,
   ingredientsRequest: boolean,
   ingredientsFailed: boolean,
 }
@@ -19,7 +19,7 @@ export const initialState = {
   ingredientsFailed: false,
 };
 
-export const ingredientsReducer = (state = initialState, action : TIngredientsActions) : IInitialState => {
+export const ingredientsReducer = (state : IInitialState = initialState, action : TIngredientsActions) => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {

@@ -1,4 +1,4 @@
-export const formatDate = (date : Date) => {
+export const formatDate = (date : string) => {
     const createdAt = new Date(date);
     const today = new Date();
     today.setHours(0, 0, 0, 0);

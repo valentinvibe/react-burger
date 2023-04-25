@@ -1,4 +1,3 @@
-import { type } from "os";
 import {
     OPEN_INGREDIENT_MODAL,
     CLOSE_INGREDIENT_MODAL,
@@ -30,6 +29,7 @@ export interface ICloseOrderModal {
 }
 
 export interface ISetIngredientInfo {
+  item: any;
   readonly type: typeof SET_INGREDIENT_INFO
 }
 

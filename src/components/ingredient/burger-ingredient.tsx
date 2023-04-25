@@ -1,0 +1,73 @@
+import styles from "./burger-ingredient.module.css";
+import currency from "../../images/currency.png";
+import { useDispatch, useSelector } from "../../services/types/hooks";
+import {
+  OPEN_MODAL,
+  SET_INGREDIENT_INFO,
+} from "../../services/actions/actions";
+import { useDrag } from "react-dnd";
+import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
+import { FC, useMemo } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { ingredientsPage } from "../../utils/variables";
+import { getIngredients } from "../../utils/functions";
+import { TIngredient } from "../../services/types";
+
+interface IProps {
+  data : TIngredient
+};
+
+const Ingredient : FC<IProps> = ({data}) => {
+  const ingredients = useSelector(getIngredients);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const handleClick = () => {
+    dispatch({
+      type: SET_INGREDIENT_INFO,
+      item: data,
+    });
+    dispatch({ type: OPEN_MODAL });
+  };
+
+  const [, dragRef] = useDrag({
+    type: "ingredient",
+    item: { data },
+  });
+
+  const counter = useMemo(() => {
+    let result = null;
+    if (ingredients.data) {
+      if (data.type === "bun" && ingredients.bun?._id === data._id) { 
+        result = 1
+      } else {
+        result = ingredients.data.filter((item : TIngredient) => item._id === data._id).length;
+      }
+    }
+    
+    return result;
+  }, [data, ingredients]);
+
+  return (
+    <li ref={dragRef} className={styles.card} onClick={handleClick}>
+      <Link
+        className={styles.link}
+        to={{
+          pathname: `${ingredientsPage}/${data._id}`,
+          state: { background: location },
+        }}
+      >
+        <img className="ml-4 mr-4" src={data.image} alt={data.name} />
+        <div className={`${styles.priceContainer} mt-2 mb-2`}>
+          <span className="text text_type_digits-default pr-2">
+            {data.price}
+          </span>
+          <img className={styles.currency} src={currency} alt="Валюта" />
+        </div>
+        <p className="text text text_type_main-default">{data.name}</p>
+        {counter ? <Counter count={counter} size="default" /> : null}
+      </Link>
+    </li>
+  );
+};
+
+export default Ingredient;

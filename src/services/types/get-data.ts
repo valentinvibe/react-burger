@@ -6,7 +6,7 @@ import {
   } from "../actions/actions";
 
 
-import { Tingredient } from "./index";
+import { TIngredient } from "./index";
 
 export interface IGetIngredientsRequest {
   readonly type: typeof GET_INGREDIENTS_REQUEST
@@ -14,7 +14,7 @@ export interface IGetIngredientsRequest {
   
 export interface IGetIngredientsSuccess {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly ingredients: Array<Tingredient>
+  readonly items: Array<TIngredient>
 }
   
 export interface IGetIngredientsFailed {
@@ -34,4 +34,21 @@ export type TWSActions = {
   onClose: string;
   onError: string;
   onMessage: string;
+}
+
+export type TFeed = {
+	createdAt: string;
+	ingredients: Array<string>;
+	name: string;
+	number: number;
+	status: string;
+	updatedAt: string;
+	_id: string;
+}
+
+export type TFeedResponse = {
+	success: boolean;
+	total: number;
+	totalToday: number;
+	orders: Array<TFeed>;
 }

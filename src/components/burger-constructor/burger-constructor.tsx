@@ -5,7 +5,7 @@ import {
   Button,
 } from "@ya.praktikum/react-developer-burger-ui-components";
 import currency from "../../images/currency.png";
-import { useMemo, useEffect, useCallback } from "react"
+import { useEffect, useCallback, useState } from "react"
 import { useSelector, useDispatch } from "../../services/types/hooks";
 import {
   OPEN_ORDER_MODAL,
@@ -37,6 +37,8 @@ const BurgerConstructor : FC = () => {
   const selectedBun = useSelector(getSelectedBun);
   const userData = useSelector(getUserData);
   const history = useHistory();
+  const [totalSum, setTotalSum] = useState<number>(0)
+  const [orderIngredients, setOrderIngredients] = useState<Array<string>>([]);
 
   const moveListItem = useCallback(
     (dragIndex : number, hoverIndex : number) => {
@@ -49,20 +51,24 @@ const BurgerConstructor : FC = () => {
 
       dispatch({
         type: SORT_INGREDIENTS,
-        payload: updatedIngredients,
+        data: updatedIngredients,
       });
     },
     [selectedIngredients, dispatch]
   );
 
-  const totalSum = useMemo(
-    () =>
-      selectedIngredients.reduce(
+  useEffect(()=> {
+    let total;
+    if (selectedIngredients) {
+      total = selectedIngredients.reduce(
         (sum : number, ingredient : TIngredient) => sum + ingredient.price,
-        selectedBun.price ? selectedBun.price * 2 : 0
-      ),
-    [selectedIngredients, selectedBun]
-  );
+        selectedBun ? selectedBun.price * 2 : 0)
+      setTotalSum(total)
+    }
+    
+  },[selectedIngredients, selectedBun])
+
+  
 
   const handleSubmitOrderClick = () => {
     if (selectedIngredients.length !== 0) {
@@ -75,10 +81,13 @@ const BurgerConstructor : FC = () => {
     history.replace({ pathname: loginPage });
   };
 
-  const orderIngredients = useMemo(
-    () => selectedIngredients.map((element : TIngredient) => element._id),
-    [selectedIngredients]
-  );
+
+  useEffect(()=> {
+    if (selectedIngredients) {
+    const temp = selectedIngredients.map((element : TIngredient) => element._id)
+    setOrderIngredients(temp)
+    }
+  },[selectedIngredients])
 
   const addNewOrder = useCallback(() => {
     if (selectedBun) {
@@ -89,13 +98,11 @@ const BurgerConstructor : FC = () => {
   const [, dropTarget] = useDrop({
     accept: "ingredient",
     drop(item : IDropItem) {
-      dispatch({
-        type:
-          item.data.type === "bun"
-            ? ADD_INGREDIENT_BUN_ORDER
-            : ADD_INGREDIENT_ORDER,
-        data: item.data,
-      });
+      if (item.data.type === 'bun') {
+        dispatch({type: ADD_INGREDIENT_BUN_ORDER, data: item.data})
+      } else {
+        dispatch({type: ADD_INGREDIENT_ORDER, data: item.data})
+      }
     },
   });
 
@@ -106,13 +113,13 @@ const BurgerConstructor : FC = () => {
   return (
     <section ref={dropTarget} className={`${styles.container} mr-5 pl-4`}>
       <ul className={`${styles.itemList} mt-25`}>
-        {selectedBun._id ? (
+        {selectedBun ? (
           <li className={`${styles.item} mr-4`}>
             <ConstructorElement
               type="top"
               isLocked={true}
               text={`${selectedBun.name} (верх)`}
-              price={selectedBun.price ? selectedBun.price : null}
+              price={selectedBun.price}
               thumbnail={selectedBun.image_mobile}
             />
           </li>
@@ -127,7 +134,7 @@ const BurgerConstructor : FC = () => {
         )}
 
         <li>
-          {selectedIngredients.length === 0 ? (
+          {selectedIngredients?.length === 0 ? (
             <div style={{ textAlign: "center" }} className="p-5">
               <p
                 className={`${styles.nonIngredients} text text_type_main-small`}
@@ -137,7 +144,7 @@ const BurgerConstructor : FC = () => {
             </div>
           ) : (
             <ul className={`${styles.listScroll} mt-4 mb-4`}>
-              {selectedIngredients.length > 0
+              {selectedIngredients?.length > 0
                 ? selectedIngredients.map((element : TIngredient, index : number) => (
                     <ConstructorItem
                       key={element._id + index}
@@ -145,19 +152,19 @@ const BurgerConstructor : FC = () => {
                       index={index}
                       moveListItem={moveListItem}
                     />
-                  ))
+                ))
                 : null}
             </ul>
           )}
         </li>
 
-        {selectedBun._id ? (
+        {selectedBun ? (
           <li className={`${styles.item} mr-4`}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
               text={`${selectedBun.name} (низ)`}
-              price={selectedBun.price ? selectedBun.price : null}
+              price={selectedBun.price}
               thumbnail={selectedBun.image_mobile}
             />
           </li>
@@ -178,7 +185,7 @@ const BurgerConstructor : FC = () => {
           <img className={styles.currency} src={currency} alt="#" />
         </div>
         <Button
-          type="primary"
+          type = "primary"
           size="large"
           onClick={userData ? handleSubmitOrderClick : handleSignIn}
           htmlType={"button"}
