@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styles from './reset-password.module.css';
 import {
   Input,
@@ -18,10 +18,10 @@ import {
   getIsForgotPassword
 } from '../../utils/functions';
 import { FC } from 'react';
+import { useForm } from '../../hooks/use-form';
 
 const ResetPassword : FC = () => {
-  const [password, setPassword] = useState('');
-  const [code, setCode] = useState('');
+  const { values, handleValues } = useForm({ password: "", code: "" });
   const token = getCookie('accessToken');
   const isForgotPassword = useSelector(getIsForgotPassword);
 
@@ -29,7 +29,7 @@ const ResetPassword : FC = () => {
 
   const handleFormSubmit = (e : React.FormEvent) => {
     e.preventDefault();
-    resetPasswords(password, token);
+    resetPasswords(values.password, token);
     history.replace({pathname: loginPage})
   }
 
@@ -46,16 +46,18 @@ const ResetPassword : FC = () => {
         <div className="mt-6 mb-6">
         <PasswordInput
           placeholder={'Введите новый пароль'}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={values.password}
+          onChange={handleValues}
+          name={"password"}
           />
         </div>
         <div className="mb-6">
           <Input
             type={'text'}
-            value={code}
+            value={values.code}
             placeholder={'Введите код из письма'}
-            onChange={(e) => setCode(e.target.value)}
+            onChange={handleValues}
+            name={"code"}
           />
         </div>
         <Button type="primary" size="medium" htmlType='submit'>

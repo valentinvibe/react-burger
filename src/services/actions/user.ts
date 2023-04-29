@@ -6,7 +6,7 @@ import {
   updateUserData,
 } from "../../utils/api";
 import { baseUrl } from "../../utils/variables";
-import { deleteCookie, getCookie, setCookie } from "../../utils/cookie";
+import { deleteCookie, setCookie } from "../../utils/cookie";
 import { loginUser, logout, getUserData } from "../../utils/api";
 import { AppDispatch, AppThunk } from "../types";
 
@@ -104,7 +104,7 @@ export const logOut : AppThunk = (refreshToken : string) => {
   }
 }
 
-export const getUser : AppThunk = (token : string) => {
+export const getUser = (token : string) => {
   return (dispatch : AppDispatch) => {
     dispatch({ type: LOGIN });
 
@@ -112,12 +112,18 @@ export const getUser : AppThunk = (token : string) => {
       .then((res) => {
         dispatch({ type: LOGIN_SUCCESS, payload: res.user });
       })
-      .catch((err) => {
+      .catch(() => {
         dispatch({ type: LOGIN_FAILED });
-        console.log(err);
-
-        // dispatch(updateToken(getCookie("refreshToken")));
-      });
+      })
+      .catch(()=> {
+        refreshToken(baseUrl)
+        .then((res) => {
+          console.log(res)
+          dispatch({ type: REFRESH_TOKEN_SUCCESS });
+          setCookie("accessToken", res.accessToken.split("Bearer ")[1]);
+          setCookie("refreshToken", res.refreshToken);
+        })
+      })
   }
 }
 
@@ -155,18 +161,15 @@ export const resetPasswords : AppThunk = (password : string, token : string) => 
   }
 }
 
-export const updateToken : AppThunk = (token : string | undefined) => {
+export const updateToken : AppThunk = () => {
   return (dispatch : AppDispatch) => {
     dispatch({ type: REFRESH_TOKEN });
 
-    refreshToken(baseUrl, token)
+    refreshToken(baseUrl)
       .then((res) => {
         dispatch({ type: REFRESH_TOKEN_SUCCESS });
         setCookie("accessToken", res.accessToken.split("Bearer ")[1]);
         setCookie("refreshToken", res.refreshToken);
-      })
-      .then(() => {
-        getUser(getCookie("accessToken"));
       })
       .catch((err) => {
         console.log(err);
@@ -195,21 +198,22 @@ export const updateProfile : AppThunk = (token: string, email: string, name: str
 
 // export const refreshAndSend : AppThunk = (email: string, name: string, password: string) => {
 //   return (dispatch : AppDispatch) => {
-//     getUserData(baseUrl, getCookie("accessToken"))
+//     const token : string = getCookie("accessToken")!
+//     getUserData(baseUrl, token)
 //       .then(() => {
 //         dispatch(
-//           updateProfile(getCookie("accessToken"), email, name, password)
+//           updateProfile(token, email, name, password)
 //         );
 //       })
 //       .catch(() => {
-//         refreshToken(baseUrl, getCookie("refreshToken"))
+//         refreshToken(baseUrl)
 //           .then((res) => {
 //             setCookie("accessToken", res.accessToken.split("Bearer ")[1]);
 //             setCookie("refreshToken", res.refreshToken);
 //           })
 //           .then(() => {
 //             dispatch(
-//               updateProfile(getCookie("accessToken"), email, name, password)
+//               updateProfile(token, email, name, password)
 //             );
 //           })
 //           .catch((err) => {

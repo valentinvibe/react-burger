@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/hooks";
 import styles from "./orders-stats.module.css";
 import { filterOrders } from "../../utils/functions";
 import { getWsFeed } from "../../utils/functions";

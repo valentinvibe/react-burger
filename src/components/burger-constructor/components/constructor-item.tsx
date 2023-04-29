@@ -8,10 +8,10 @@ import {
 import { useDrag, useDrop } from "react-dnd";
 import { FC, useRef } from "react";
 import { getSelectedIngredients } from "../../../utils/functions";
-import { TIngredient } from "../../../services/types";
+import { TConstructorIngredient } from "../../../services/types";
 
 interface IConstructorItem {
-  element: TIngredient,
+  element: TConstructorIngredient,
   index: number,
   moveListItem: any
 }

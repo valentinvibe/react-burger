@@ -1,6 +1,6 @@
 import styles from "./order-details.module.css";
 import doneImg from "../../images/done.svg";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/hooks";
 import { getOrder, getOrderFailed } from "../../utils/functions";
 import { FC } from "react";
 

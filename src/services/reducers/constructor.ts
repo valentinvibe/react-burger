@@ -7,10 +7,10 @@ import {
 } from "../actions/actions";
 
 import { TConstructorActions } from "../actions/constructor";
-import { TIngredient } from "../types";
+import { TConstructorIngredient, TIngredient } from "../types";
 
 type IConstructorState = {
-  data: Array<TIngredient>,
+  data: Array<TConstructorIngredient>,
   bun: TIngredient | null,
 }
 

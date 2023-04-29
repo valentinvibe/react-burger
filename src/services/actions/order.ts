@@ -6,7 +6,7 @@ import {
   REMOVE_INGREDIENT_ORDER,
 } from "./actions";
 import { addNewOrder } from "../../utils/api";
-import { AppDispatch, TIngredient } from "../types";
+import { AppDispatch, TConstructorIngredient } from "../types";
 
 export function addOrder(order : Array<string>) {
   return function (dispatch : AppDispatch) {
@@ -28,7 +28,7 @@ export function addOrder(order : Array<string>) {
   };
 }
 
-export function delOrderIngredient(selectedIngredients : Array<TIngredient>, index : number) {
+export function delOrderIngredient(selectedIngredients : Array<TConstructorIngredient>, index : number) {
   return function (dispatch : AppDispatch) {
     const cloneArr = selectedIngredients.slice();
     cloneArr.splice(index, 1);

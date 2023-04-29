@@ -1,54 +1,57 @@
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { useEffect, useState, FC, ChangeEvent, SyntheticEvent } from 'react';
+import { FormEvent, useEffect, useState, FC, ChangeEvent, SyntheticEvent } from 'react';
 import styles from './edit-data.module.css';
 import { useDispatch, useSelector } from '../../services/types/hooks';
 import { updateProfile } from '../../services/actions/user';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getUserData } from '../../utils/functions';
 import { getCookie } from '../../utils/cookie';
+import { useForm } from '../../hooks/use-form';
 
 const EditData : FC = () => {
-  const [ name, setName ] = useState('');
-  const [ email, setEmail ] = useState('');
-  const [ password, setPassword ] = useState('');
+  const dispatch = useDispatch();
+  const userData = useSelector(getUserData);
+  const { values, handleValues, setValues } = useForm({
+    name: '',
+    email: '',
+    password: '',
+  });
 
   const [isDataChanged, setIsDataChanged] = useState(false);
-  const userData = useSelector(getUserData);
-
-  const dispatch = useDispatch();
 
   useEffect(()=> {
     if (userData) {
-    setName(userData.name);
-    setEmail(userData.email);
+      setValues({name: userData.name, email: userData.email, password: ''})
     }
-  },[userData])
+  },[userData, setValues])
 
-  const onSubmit = (e : React.FormEvent) => {
+  const onSubmit = (e : FormEvent) => {
     e.preventDefault();
     const token = getCookie("accessToken");
-    dispatch(updateProfile(token!, email, name, password))
+    dispatch(updateProfile(token!, values.email, values.name, values.password))
     setIsDataChanged(false)
   }
 
   const onNameChange = (e : ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    setName(value)
+    setValues({name: value})
     value === userData?.name ? setIsDataChanged(false) : setIsDataChanged(true)
   }
 
   const onEmailChange = (e : ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
-    setEmail(value)
+    setValues({email: value})
     value === userData?.email ? setIsDataChanged(false) : setIsDataChanged(true)
   }
 
   const onCancelEdit = (e : SyntheticEvent) => {
     e.preventDefault();
     if (userData) {
-      setName(userData.name);
-      setEmail(userData.email);
-      setPassword('');
+      setValues({
+        name: userData.name,
+        email: userData.email,
+        password: '',
+      })
       setIsDataChanged(false)
     }
   }
@@ -59,19 +62,22 @@ const EditData : FC = () => {
       <Input
         placeholder='Имя'
         icon="EditIcon"
-        value={name}
+        value={values.name}
         onChange={onNameChange}
+        name={"name"}
       />
       <Input
         placeholder='Логин'
         icon="EditIcon"
-        value={email}
+        value={values.email}
         onChange={onEmailChange}
+        name={"email"}
       />
       <PasswordInput
         placeholder='Пароль'
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        value={values.password}
+        onChange={handleValues}
+        name={"password"}
       />
       {
         isDataChanged && (

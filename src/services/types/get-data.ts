@@ -6,7 +6,7 @@ import {
   } from "../actions/actions";
 
 
-import { TIngredient } from "./index";
+import { TConstructorIngredient } from "./index";
 
 export interface IGetIngredientsRequest {
   readonly type: typeof GET_INGREDIENTS_REQUEST
@@ -14,7 +14,7 @@ export interface IGetIngredientsRequest {
   
 export interface IGetIngredientsSuccess {
   readonly type: typeof GET_INGREDIENTS_SUCCESS;
-  readonly items: Array<TIngredient>
+  readonly items: Array<TConstructorIngredient>
 }
   
 export interface IGetIngredientsFailed {

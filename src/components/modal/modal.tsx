@@ -1,52 +1,30 @@
 import { createPortal } from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import modalStyles from "./modal.module.css";
-import { ReactNode, useCallback, useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import ModalOverlay from "../modal-overlay/modal-overlay";
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  DEL_ORDER_NUMBER,
-  CLEAR_CHOOSEN_INGREDIENTS,
-  CLOSE_ORDER_MODAL
-} from "../../services/actions/actions";
-import { useHistory } from "react-router-dom";
-import { getIsOpen } from "../../utils/functions";
 import { FC } from "react";
 
 interface IModal {
   title? : string
   children? : ReactNode
+  onClose: () => void
 }
 
-const Modal : FC<IModal> = ({ children, title = "" }) => {
+const Modal : FC<IModal> = ({ children, title = "", onClose }) => {
   const container = document.getElementById("react-modals") as HTMLElement;
-  const dispatch = useDispatch();
-  const history = useHistory();
-  const {orderModal}  = useSelector(getIsOpen);
-
-  const handleCloseModal = useCallback(() => {
-    if (orderModal) {
-      dispatch({ type: CLOSE_ORDER_MODAL });
-      dispatch({ type: DEL_ORDER_NUMBER });
-      dispatch({ type: CLEAR_CHOOSEN_INGREDIENTS });
-      return
-    }
-    history.goBack()
-  }, [dispatch, history, orderModal]);
-
-
-
+ 
   useEffect(() => {
-    const closeModalByEsc = (e : KeyboardEvent) => {
-      e.key === "Escape" && handleCloseModal();
+    const handleEscKeydown = (evt: KeyboardEvent) => {
+      if (evt.key === "Escape") {
+        onClose()
+      }
     };
-    document.addEventListener("keydown", closeModalByEsc);
-
+    document.addEventListener('keydown', handleEscKeydown);
     return () => {
-      document.removeEventListener("keydown", closeModalByEsc);
+      document.removeEventListener('keydown', handleEscKeydown);
     };
-  }, [container, handleCloseModal]);
+  }, [onClose]);
 
   return createPortal(
     <>
@@ -58,7 +36,7 @@ const Modal : FC<IModal> = ({ children, title = "" }) => {
             </h2>
           )}
           <button
-            onClick={handleCloseModal}
+            onClick={onClose}
             className={modalStyles.closeButton}
           >
             <CloseIcon type="primary" />
@@ -66,15 +44,10 @@ const Modal : FC<IModal> = ({ children, title = "" }) => {
         </div>
         {children}
       </div>
-      <ModalOverlay />
+      <ModalOverlay onClose={onClose}/>
     </>,
     container
   );
-};
-
-Modal.propTypes = {
-  children: PropTypes.element,
-  title: PropTypes.string,
 };
 
 export default Modal;

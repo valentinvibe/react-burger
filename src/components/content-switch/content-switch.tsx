@@ -1,6 +1,6 @@
 import styles from "../app/app.module.css";
 import React, {FC} from "react";
-import { Switch, Route, useLocation } from "react-router-dom";
+import { Switch, Route, useLocation, useHistory } from "react-router-dom";
 import { ProtectedRoute } from "../protected-route/protected-route";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -12,12 +12,9 @@ import ForgotPassword from "../../pages/forgot-password/forgot-password";
 import ResetPassword from "../../pages/reset-password/reset-password";
 import ProfilePage from "../../pages/profile-page/profile-page";
 import NotFound404 from "../../pages/not-found-404/not-found-404";
-import OrderDetails from "../order-details/order-details";
 import IngredientDetails from "../ingredient-details/ingredient-details";
 import Modal from "../modal/modal";
-import { useSelector } from "react-redux";
 import Feed from "../../pages/feed-page/feed-page";
-
 import SingleOrder from "../../pages/single-order/single-order";
 
 import {
@@ -31,14 +28,16 @@ import {
   feedPage,
   ordersPage,
 } from "../../utils/variables";
-
-import { getOrderModal } from "../../utils/functions";
 import { TLocationState } from "../../services/types";
 
 const ContentSwitch : FC = () => {
-  const orderModal = useSelector(getOrderModal);
   const location = useLocation<TLocationState>();
   const background = location.state?.background;
+  const history = useHistory();
+
+  const handleCloseModal = () => {
+    history.goBack();
+  };
 
   return (
     <>
@@ -57,7 +56,7 @@ const ContentSwitch : FC = () => {
         <Route exact path={registerPage}>
           <RegisterPage />
         </Route>
-        <ProtectedRoute exact path={forgotPasswordPage} onlyUnAuth={false}>
+        <ProtectedRoute exact path={forgotPasswordPage} onlyUnAuth={true}>
           <ForgotPassword />
         </ProtectedRoute>
         <Route exact path={resetPasswordPage}>
@@ -89,15 +88,15 @@ const ContentSwitch : FC = () => {
         </Route>
       </Switch>
 
-      {orderModal && (
+      {/* {orderModal && (
         <Modal>
           <OrderDetails />
         </Modal>
-      )}
+      )} */}
 
       {background && (
         <Route exact path={`${ingredientsPage}/:id`}>
-          <Modal title="Детали ингредиента">
+          <Modal onClose={handleCloseModal} title="Детали ингредиента">
             <IngredientDetails />
           </Modal>
         </Route>
@@ -105,7 +104,7 @@ const ContentSwitch : FC = () => {
 
       { background  && (
       <Route path={`${feedPage}/:id`}>
-        <Modal>
+        <Modal onClose={handleCloseModal}>
           <SingleOrder/>
         </Modal>
       </Route>
@@ -113,7 +112,7 @@ const ContentSwitch : FC = () => {
 
       { background && (
       <ProtectedRoute exact path={`${profilePage}/${ordersPage}/:id`} onlyUnAuth={false}>
-        <Modal>
+        <Modal onClose={handleCloseModal}>
           <SingleOrder/>
         </Modal>
       </ProtectedRoute>

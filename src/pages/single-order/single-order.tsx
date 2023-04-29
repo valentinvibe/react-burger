@@ -3,7 +3,7 @@ import { useParams, useRouteMatch } from 'react-router-dom'
 import { useSelector, useDispatch } from '../../services/types/hooks';
 import { useEffect, useMemo, FC } from 'react';
 import OrderPositions from '../../components/order-position-list/order-position';
-import { getData } from '../../utils/functions';
+import { getData, uniq } from '../../utils/functions';
 import { formatDate } from '../../utils/format-date';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { WS_ORDERS_CONNECTION_START, WS_ORDERS_CONNECTION_CLOSED, WS_FEED_CONNECTION_START, WS_FEED_CONNECTION_CLOSED } from '../../services/actions/ws-actions-types';
@@ -36,7 +36,8 @@ const SingleOrder : FC = () => {
   }, [order,data]);
 
   const orderTotalPrice = useMemo(() => {
-    return orderIngredientsData?.reduce((sum : number, item : TIngredient | undefined) => {
+    const temp = uniq(orderIngredientsData)
+    return temp?.reduce((sum : number, item : TIngredient | undefined) => {
       if (item?.type === "bun") {
         return (sum += item.price * 2);
       }

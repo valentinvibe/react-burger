@@ -1,8 +1,7 @@
 import styles from "./orders-history.module.css";
 import OrderCard from "../orders/components/order-card/order-card";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector, useDispatch } from "../../services/types/hooks";
 import { getWsOrders } from "../../utils/functions";
-import { v4 as uuidv4 } from "uuid";
 import { useEffect } from "react";
 import {
   WS_ORDERS_CONNECTION_CLOSED,
@@ -37,17 +36,17 @@ const OrdersHistory : FC = () => {
   return (
     <div className={styles.wrapper}>
       {orders
-        ? orders.reverse().map((order) => {
+        ? orders.reverse().map((order,index) => {
           return(
             <Link
-              key={uuidv4()}
+              key={index}
               className={styles.link}
               to={{
                 pathname: `${location.pathname}/${order._id}`,
                   state: {background : location }
               }}
             >
-            <OrderCard viewStatus={true} key={uuidv4()} order={order} />
+            <OrderCard viewStatus={true} key={index} order={order} />
             </Link>
           )
 

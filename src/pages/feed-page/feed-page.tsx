@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../services/types/hooks";
 import OrdersStats from "../../components/orders-stats/orders-stats";
 import Orders from "../../components/orders/orders";
 import {

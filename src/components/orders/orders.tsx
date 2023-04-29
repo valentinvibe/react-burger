@@ -1,9 +1,8 @@
 import styles from "./orders.module.css";
 import OrderCard from "./components/order-card/order-card";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/hooks";
 import { getWsFeed } from "../../utils/functions";
 import { useLocation, Link } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
 import { FC } from "react";
 
 
@@ -17,7 +16,7 @@ const Orders : FC = () => {
         orders.map((item, index) => {
           return(
             <Link
-              key={uuidv4()}
+              key={index}
               className={styles.link}
               to={{
                 pathname: `${location.pathname}/${item._id}`,

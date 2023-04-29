@@ -1,11 +1,9 @@
 import { Redirect, Route } from "react-router-dom";
-import { useSelector } from "react-redux";
-
+import { useSelector } from "../../services/types/hooks";
 import { useLocation } from "react-router-dom";
 import { ReactNode, useEffect } from "react";
 import { getUser } from "../../services/actions/user";
 import { getCookie } from "../../utils/cookie";
-import PropTypes from "prop-types";
 import { loginPage, homePage } from "../../utils/variables";
 import { getUserData } from "../../utils/functions";
 import { FC } from "react";

@@ -6,6 +6,8 @@ export const getOrderModal = (store : RootState) => store.modal.orderModal;
 export const getIsOpen = (store : RootState) => store.modal;
 
 export const getIsLoad = (store : RootState) => store.data.ingredientsRequest;
+
+export const FailedAuth = (store : RootState) => store.user.loginRequestFailed;
 export const getSelectedIngredients = (store : RootState) => store.construct.data;
 
 export const getSelectedBun = (store : RootState) => store.construct.bun;

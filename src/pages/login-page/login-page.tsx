@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import styles from "./login-page.module.css";
 import {
   Input,
@@ -11,12 +11,12 @@ import { signIn } from "../../services/actions/user";
 import { homePage } from "../../utils/variables";
 import { getUserData } from "../../utils/functions";
 import { TLocationState } from "../../services/types";
+import { useForm } from "../../hooks/use-form";
 
 
 
 const LoginPage : FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const { values, handleValues } = useForm({ email: "", password: "" });
   const dispatch = useDispatch();
   const userData = useSelector(getUserData);
   const { state } = useLocation<TLocationState>();
@@ -24,10 +24,10 @@ const LoginPage : FC = () => {
 
   const handleSubmitForm = (e : React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
+    if (!values.email || !values.password) {
       return
     }
-    dispatch(signIn(email, password))
+    dispatch(signIn(values.email, values.password))
   }
 
   if (userData) {
@@ -45,17 +45,19 @@ const LoginPage : FC = () => {
         <div className="mt-6 mb-6">
           <Input
             type={'email'}
-            value={email}
+            value={values.email}
             placeholder={'E-mail'}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleValues}
             size={'default'}
             width={'100%'}
+            name={"email"}
           />
         </div>
         <div className="mb-6">
           <PasswordInput
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={values.password}
+            onChange={handleValues}
+            name={"password"}
           />
         </div>
         <Button type="primary" size="medium" htmlType={'submit'}>

@@ -5,10 +5,11 @@ import {
 } from "../actions/actions";
 
 import { TIngredient } from "../types";
+import { TConstructorIngredient } from "../types";
 import { TIngredientsActions } from "../types/get-data";
 
 export interface IInitialState {
-  ingredients: Array<TIngredient>,
+  ingredients: Array<TConstructorIngredient>,
   ingredientsRequest: boolean,
   ingredientsFailed: boolean,
 }

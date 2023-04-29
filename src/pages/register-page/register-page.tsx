@@ -1,5 +1,4 @@
 import styles from './register-page.module.css';
-import { useState } from 'react';
 import {
     Input,
     Button,
@@ -16,11 +15,10 @@ import {
 import { getUserData } from '../../utils/functions';
 import { FC } from 'react';
 import { TLocationState } from '../../services/types';
+import { useForm } from '../../hooks/use-form';
 
 const RegisterPage : FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName ] = useState("");
+  const {values, handleValues} = useForm({name: "", email: "", password: ""});
   const dispatch = useDispatch();
   const userData = useSelector(getUserData);
   const { state } = useLocation<TLocationState>();
@@ -28,11 +26,11 @@ const RegisterPage : FC = () => {
   const handleFormSubmit = (e : React.FormEvent) => {
     e.preventDefault();
 
-    if (!email || !password || !name) {
+    if (!values.email || !values.password || !values.name) {
       return;
     }
 
-    dispatch(registration(email, password, name))
+    dispatch(registration(values.email, values.password, values.name))
   }
 
   if (userData) {
@@ -50,23 +48,26 @@ const RegisterPage : FC = () => {
       <div className="mt-6 mb-6">
           <Input
             type={'text'}
-            value={name}
+            value={values.name}
             placeholder={'Имя'}
-            onChange={(e) => setName(e.target.value)}
+            onChange={handleValues}
+            name={"name"}
           />
         </div>
         <div className="mb-6">
           <Input
             type={'email'}
-            value={email}
+            value={values.email}
             placeholder={'E-mail'}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleValues}
+            name={"email"}
           />
         </div>
         <div className="mb-6">
           <PasswordInput
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={values.password}
+            onChange={handleValues}
+            name={"password"}
           />
         </div>
         <Button 

@@ -1,7 +1,7 @@
 import styles from "./order-position.module.css";
 import IngredientImage from "../orders/components/ingredient-image/ingredient-image";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../services/types/hooks";
 import { getData } from "../../utils/functions";
 import { useEffect, useMemo, useState } from "react";
 import { uniq } from "../../utils/functions";

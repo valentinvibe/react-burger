@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { FormEvent } from "react";
 import styles from "./forgot-password.module.css";
 import {
   Input,
@@ -12,17 +12,17 @@ import {
   loginPage
 } from "../../utils/variables";
 import { FC } from "react";
+import { useForm } from "../../hooks/use-form";
 
 const ForgotPassword : FC = () => {
-  const [email, setEmail] = useState('');
+  const { values, handleValues } = useForm({ email: "" });
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onSubmitForm = (e : React.FormEvent) => {
+  const onSubmitForm = (e : FormEvent) => {
     e.preventDefault();
-    dispatch(forgotPasswords(email))
+    dispatch(forgotPasswords(values.email))
     history.replace({pathname: resetPasswordPage })
-    setEmail('');
   }
 
   return (
@@ -32,11 +32,12 @@ const ForgotPassword : FC = () => {
         <div className="mt-6 mb-6">
           <Input
             type={'email'}
-            value={email}
+            value={values.email}
             placeholder={'Укажите e-mail'}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleValues}
             size={'default'}
             width={'100%'}
+            name={"email"}
           />
         </div>
         <Button type="primary" size="medium" htmlType="submit">

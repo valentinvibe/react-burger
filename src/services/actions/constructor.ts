@@ -1,4 +1,4 @@
-import { TIngredient } from '../types';
+import { TConstructorIngredient, TIngredient } from '../types';
 import {
   ADD_INGREDIENT_ORDER,
   ADD_INGREDIENT_BUN_ORDER,
@@ -10,7 +10,7 @@ import {
 
 export interface IAddIngredientOrder {
     readonly type: typeof ADD_INGREDIENT_ORDER,
-    readonly data: TIngredient
+    readonly data: TConstructorIngredient
 }
 
 export interface IAddIngredientBunOrder {
@@ -20,17 +20,17 @@ export interface IAddIngredientBunOrder {
 
 export interface IRemoveIngredientOrder {
     readonly type: typeof REMOVE_INGREDIENT_ORDER
-    readonly data: TIngredient[]
+    readonly data: TConstructorIngredient[]
 }
 
 export interface ISortIngredients {
     readonly type: typeof SORT_INGREDIENTS
-    readonly data: TIngredient[]
+    readonly data: TConstructorIngredient[]
 }
 
 export interface IClearChoosenIngredients {
     readonly type: typeof CLEAR_CHOOSEN_INGREDIENTS,
-    data: TIngredient[],
+    data: TConstructorIngredient[],
     bun: TIngredient | null
 }
 

@@ -40,7 +40,7 @@ const Ingredient : FC<IProps> = ({data}) => {
       if (data.type === "bun" && ingredients.bun?._id === data._id) { 
         result = 1
       } else {
-        result = ingredients.data.filter((item : TIngredient) => item._id === data._id).length;
+        result = ingredients.data.filter((item) => item._id === data._id).length;
       }
     }
     

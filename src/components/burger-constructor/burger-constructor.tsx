@@ -8,10 +8,11 @@ import currency from "../../images/currency.png";
 import { useEffect, useCallback, useState } from "react"
 import { useSelector, useDispatch } from "../../services/types/hooks";
 import {
-  OPEN_ORDER_MODAL,
   ADD_INGREDIENT_ORDER,
   ADD_INGREDIENT_BUN_ORDER,
-  SORT_INGREDIENTS
+  SORT_INGREDIENTS,
+  DEL_ORDER_NUMBER,
+  CLEAR_CHOOSEN_INGREDIENTS
 } from "../../services/actions/actions";
 import { addOrder } from "../../services/actions/order";
 import { useDrop } from "react-dnd";
@@ -25,10 +26,13 @@ import {
   getSelectedBun,
   getUserData,
 } from "../../utils/functions";
-import { TIngredient } from "../../services/types";
+import { TConstructorIngredient } from "../../services/types";
+
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
 
 interface IDropItem {
-  data: TIngredient
+  data: TConstructorIngredient
 }
 
 const BurgerConstructor : FC = () => {
@@ -39,6 +43,7 @@ const BurgerConstructor : FC = () => {
   const history = useHistory();
   const [totalSum, setTotalSum] = useState<number>(0)
   const [orderIngredients, setOrderIngredients] = useState<Array<string>>([]);
+  const [modalActive, setModalActive] = useState<boolean>(false);
 
   const moveListItem = useCallback(
     (dragIndex : number, hoverIndex : number) => {
@@ -61,7 +66,7 @@ const BurgerConstructor : FC = () => {
     let total;
     if (selectedIngredients) {
       total = selectedIngredients.reduce(
-        (sum : number, ingredient : TIngredient) => sum + ingredient.price,
+        (sum, ingredient) => sum + ingredient.price,
         selectedBun ? selectedBun.price * 2 : 0)
       setTotalSum(total)
     }
@@ -73,9 +78,15 @@ const BurgerConstructor : FC = () => {
   const handleSubmitOrderClick = () => {
     if (selectedIngredients.length !== 0) {
       dispatch(addOrder(orderIngredients));
-      dispatch({ type: OPEN_ORDER_MODAL });
+      setModalActive(true)
     }
   };
+
+  const closeModal = () => {
+    setModalActive(false);
+    dispatch({ type: DEL_ORDER_NUMBER });
+    dispatch({ type: CLEAR_CHOOSEN_INGREDIENTS });
+  }
 
   const handleSignIn = () => {
     history.replace({ pathname: loginPage });
@@ -84,7 +95,7 @@ const BurgerConstructor : FC = () => {
 
   useEffect(()=> {
     if (selectedIngredients) {
-    const temp = selectedIngredients.map((element : TIngredient) => element._id)
+    const temp = selectedIngredients.map((element) => element._id)
     setOrderIngredients(temp)
     }
   },[selectedIngredients])
@@ -110,8 +121,17 @@ const BurgerConstructor : FC = () => {
     addNewOrder();
   }, [addNewOrder]);
 
+  useEffect(() => {
+
+  },[userData])
+
   return (
     <section ref={dropTarget} className={`${styles.container} mr-5 pl-4`}>
+       {modalActive && (
+        <Modal title="" onClose={closeModal}>
+          <OrderDetails />
+        </Modal>
+      )}
       <ul className={`${styles.itemList} mt-25`}>
         {selectedBun ? (
           <li className={`${styles.item} mr-4`}>
@@ -145,9 +165,9 @@ const BurgerConstructor : FC = () => {
           ) : (
             <ul className={`${styles.listScroll} mt-4 mb-4`}>
               {selectedIngredients?.length > 0
-                ? selectedIngredients.map((element : TIngredient, index : number) => (
+                ? selectedIngredients.map((element, index) => (
                     <ConstructorItem
-                      key={element._id + index}
+                      key={element.uniqueId}
                       element={element}
                       index={index}
                       moveListItem={moveListItem}
