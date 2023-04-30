@@ -6,10 +6,7 @@ import {
 } from "./actions";
 import { baseUrl } from "../../utils/variables";
 import { AppDispatch } from "../types";
-import { v4 as uuid } from "uuid";
-import { TConstructorIngredient } from "../types";
 
-  
 export function getItems() {
   return function (dispatch : AppDispatch) {
     dispatch({
@@ -18,13 +15,9 @@ export function getItems() {
 
     getIngredients(baseUrl).then((res) => {
       if (res && res.success) {
-        let temp : Array<TConstructorIngredient> = res.data;
-        const data : Array<TConstructorIngredient> = temp.map((element) => {
-          return element = {...element, 'uniqueId': uuid()}
-        });
         dispatch({
           type: GET_INGREDIENTS_SUCCESS,
-          items: data,
+          items: res.data,
         });
       } else {
         dispatch({ type: GET_INGREDIENTS_FAILED });

@@ -1,7 +1,7 @@
 import styles from "./order-card.module.css";
 import currency from "../../../../images/currency.png";
 import IngredientImage from "../ingredient-image/ingredient-image";
-import { useSelector } from "react-redux";
+import { useSelector } from "../../../../services/types/hooks";
 import { getData } from "../../../../utils/functions";
 import { useMemo, FC } from "react";
 import { formatDate } from "../../../../utils/format-date";

@@ -30,6 +30,7 @@ import { TConstructorIngredient } from "../../services/types";
 
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+import { v4 as uuid} from 'uuid';
 
 interface IDropItem {
   data: TConstructorIngredient
@@ -110,9 +111,9 @@ const BurgerConstructor : FC = () => {
     accept: "ingredient",
     drop(item : IDropItem) {
       if (item.data.type === 'bun') {
-        dispatch({type: ADD_INGREDIENT_BUN_ORDER, data: item.data})
+        dispatch({type: ADD_INGREDIENT_BUN_ORDER, data:  {...item.data, 'uniqueId': uuid()}})
       } else {
-        dispatch({type: ADD_INGREDIENT_ORDER, data: item.data})
+        dispatch({type: ADD_INGREDIENT_ORDER, data: {...item.data, 'uniqueId': uuid()}})
       }
     },
   });
@@ -166,7 +167,7 @@ const BurgerConstructor : FC = () => {
             <ul className={`${styles.listScroll} mt-4 mb-4`}>
               {selectedIngredients?.length > 0
                 ? selectedIngredients.map((element, index) => (
-                    <ConstructorItem
+                    <ConstructorItem 
                       key={element.uniqueId}
                       element={element}
                       index={index}
